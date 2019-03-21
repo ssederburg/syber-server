@@ -1,0 +1,40 @@
+{
+  "name": "syber-server",
+  "version": "0.0.1",
+  "description": "authorize validate compose transform map act respond framework",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ssederburg/syber-server.git"
+  },
+  "author": "Steven Sederburg <stevenscloud@live.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ssederburg/syber-server/issues"
+  },
+  "homepage": "https://github.com/ssederburg/syber-server#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "config": "^2.0.1",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.4",
+    "fs-extra": "^7.0.0",
+    "helmet": "^3.15.0",
+    "lodash": "^4.17.11",
+    "swagger-ui-express": "^4.0.1",
+    "ts-node": "^7.0.1",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/es6-promise": "^3.3.0",
+    "@types/express": "^4.16.0",
+    "@types/fs-extra": "^5.0.4",
+    "@types/node": "^10.12.18",
+    "typescript": "^3.1.3"
+  }
+}
