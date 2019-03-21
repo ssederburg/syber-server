@@ -1,4 +1,4 @@
-import { BaseProcessor } from './baseProcessor'
+import { BaseProcessor } from '../processors/baseProcessor'
 
 export class ProcessorDef {
     class?: typeof BaseProcessor

@@ -92,8 +92,8 @@ class RouteHandler {
                     });
                     return res.status(httpStatus).json(err);
                 }
-                let message = err;
-                let httpStatus = message.indexOf('timeout') >= 0 ? 408 : execContext.httpStatus;
+                const message = err.message;
+                let httpStatus = err.indexOf('timeout') >= 0 ? 408 : execContext.httpStatus;
                 if (httpStatus === 200)
                     httpStatus = 500;
                 const response = yield this.throwError(req, httpStatus, message, options, next);

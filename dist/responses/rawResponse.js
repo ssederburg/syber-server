@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const schemas_1 = require("../schemas");
-class RawResponse extends schemas_1.BaseProcessor {
-    fx(args) {
+const processors_1 = require("../processors");
+class RawResponse extends processors_1.BaseProcessor {
+    fx() {
         const result = new Promise((resolve, reject) => {
             try {
                 return resolve({
@@ -12,7 +12,7 @@ class RawResponse extends schemas_1.BaseProcessor {
                 });
             }
             catch (err) {
-                reject(err);
+                reject(this.handleError(err, 'RawResponse'));
             }
         });
         return result;

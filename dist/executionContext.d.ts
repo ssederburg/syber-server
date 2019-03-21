@@ -12,9 +12,6 @@ export declare class ExecutionContext {
     warnings: any[];
     log: any[];
     raw: any;
-    transformed: {};
-    mapped: {};
-    results: any[];
     private parameters;
     private wasOneCriticalFailure;
     constructor(req: RequestContext, schematic: Schematic, sharedResources: Array<SharedResource>, syberServer: SyberServer);

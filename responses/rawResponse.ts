@@ -1,10 +1,11 @@
-import { BaseProcessor, ProcessorResponse } from '../schemas'
+import { ProcessorResponse, ProcessorErrorResponse } from '../schemas'
+import { BaseProcessor } from '../processors'
 
 export class RawResponse extends BaseProcessor {
 
-    fx(args: any): Promise<ProcessorResponse> {
+    fx(): Promise<ProcessorResponse|ProcessorErrorResponse> {
 
-        const result: Promise<ProcessorResponse> = new Promise((resolve, reject) => {
+        const result: Promise<ProcessorResponse|ProcessorErrorResponse> = new Promise((resolve, reject) => {
 
             try {
                 return resolve({
@@ -14,7 +15,7 @@ export class RawResponse extends BaseProcessor {
                 })
             }
             catch (err) {
-                reject(err)
+                reject(this.handleError(err, 'RawResponse'))
             }
 
         })

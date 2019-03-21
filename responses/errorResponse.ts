@@ -1,10 +1,11 @@
-import { BaseProcessor, ProcessorResponse } from '../schemas'
+import { ProcessorResponse, ProcessorErrorResponse } from '../schemas'
+import { BaseProcessor } from '../processors'
 
 export class ErrorResponse extends BaseProcessor {
 
-    fx(args: any): Promise<ProcessorResponse> {
+    fx(): Promise<ProcessorResponse|ProcessorErrorResponse> {
 
-        const result: Promise<ProcessorResponse> = new Promise((resolve, reject) => {
+        const result: Promise<ProcessorResponse|ProcessorErrorResponse> = new Promise((resolve, reject) => {
 
             try {
                 return resolve({
@@ -19,16 +20,7 @@ export class ErrorResponse extends BaseProcessor {
                 })
             }
             catch (err) {
-                reject({
-                    successful: false,
-                    message: 'ERROR',
-                    data: Object.assign({}, {
-                        httpStatus: this.executionContext.httpStatus || 500,
-                        errors: this.executionContext.errors || ['Unknown Error'],
-                        warnings: this.executionContext.warnings || [],
-                        origin: `ErrorResponse.Reject`
-                    })
-                })
+                reject(this.handleError(err, 'ErrorResponse'))
             }
 
         })

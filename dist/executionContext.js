@@ -24,9 +24,6 @@ class ExecutionContext {
         this.warnings = [];
         this.log = [];
         this.raw = {};
-        this.transformed = {};
-        this.mapped = {};
-        this.results = [];
         this.parameters = [];
         this.wasOneCriticalFailure = false;
         this.correlationId = req.id;
@@ -189,7 +186,7 @@ class ExecutionContext {
     tryCatchWrapperForProcess(processor, process) {
         const result = new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const response = yield processor.fx(process ? process.args : null);
+                const response = yield processor.fx();
                 return resolve(response);
             }
             catch (err) {

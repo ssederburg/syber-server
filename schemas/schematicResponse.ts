@@ -1,5 +1,6 @@
-import { BaseProcessor, ProcessorDef, SchemaDef } from '../schemas'
+import { ProcessorDef, SchemaDef } from '../schemas'
 import { ExecutionContext } from '../'
+import { BaseProcessor } from '../processors'
 
 export class SchematicResponse extends ProcessorDef {
     httpStatus: number = 200

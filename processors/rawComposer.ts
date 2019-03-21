@@ -1,22 +1,19 @@
-import { BaseProcessor, ProcessorResponse } from '../schemas'
+import { ProcessorResponse, ProcessorErrorResponse } from '../schemas'
+import { BaseProcessor } from '../processors'
 
 export class RawComposer extends BaseProcessor {
 
-    fx(args?: any): Promise<ProcessorResponse> {
+    fx(): Promise<ProcessorResponse|ProcessorErrorResponse> {
 
-        const result: Promise<ProcessorResponse> = new Promise((resolve, reject) => {
+        const result: Promise<ProcessorResponse|ProcessorErrorResponse> = new Promise((resolve, reject) => {
             try {
-                this.executionContext.raw = Object.assign({}, this.executionContext.raw, args)
+                this.executionContext.raw = Object.assign({}, this.executionContext.raw, this.processorDef.args)
                 return resolve({
                     successful: true
                 })
             }
             catch (err) {
-                return reject({
-                    successful: false,
-                    message: `RawComposer.Error`,
-                    data: err
-                })
+                return reject(this.handleError(err, 'RawComposer'))
             }
         })
 

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const schemas_1 = require("../schemas");
-class FieldComposer extends schemas_1.BaseProcessor {
-    fx(args) {
+const processors_1 = require("../processors");
+class FieldComposer extends processors_1.BaseProcessor {
+    fx() {
         const result = new Promise((resolve, reject) => {
             try {
                 const output = {};
@@ -21,11 +21,7 @@ class FieldComposer extends schemas_1.BaseProcessor {
                 });
             }
             catch (err) {
-                return reject({
-                    successful: false,
-                    message: `FieldComposer.Error`,
-                    data: err
-                });
+                return reject(this.handleError(err, 'FieldComposer'));
             }
         });
         return result;

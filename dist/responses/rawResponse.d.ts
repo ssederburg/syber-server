@@ -1,4 +1,5 @@
-import { BaseProcessor, ProcessorResponse } from '../schemas';
+import { ProcessorResponse, ProcessorErrorResponse } from '../schemas';
+import { BaseProcessor } from '../processors';
 export declare class RawResponse extends BaseProcessor {
-    fx(args: any): Promise<ProcessorResponse>;
+    fx(): Promise<ProcessorResponse | ProcessorErrorResponse>;
 }

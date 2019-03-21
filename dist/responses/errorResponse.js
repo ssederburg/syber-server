@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const schemas_1 = require("../schemas");
-class ErrorResponse extends schemas_1.BaseProcessor {
-    fx(args) {
+const processors_1 = require("../processors");
+class ErrorResponse extends processors_1.BaseProcessor {
+    fx() {
         const result = new Promise((resolve, reject) => {
             try {
                 return resolve({
@@ -17,16 +17,7 @@ class ErrorResponse extends schemas_1.BaseProcessor {
                 });
             }
             catch (err) {
-                reject({
-                    successful: false,
-                    message: 'ERROR',
-                    data: Object.assign({}, {
-                        httpStatus: this.executionContext.httpStatus || 500,
-                        errors: this.executionContext.errors || ['Unknown Error'],
-                        warnings: this.executionContext.warnings || [],
-                        origin: `ErrorResponse.Reject`
-                    })
-                });
+                reject(this.handleError(err, 'ErrorResponse'));
             }
         });
         return result;

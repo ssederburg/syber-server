@@ -1,10 +1,11 @@
-import { BaseProcessor, ProcessorResponse } from '../schemas'
+import { ProcessorResponse, ProcessorErrorResponse } from '../schemas'
+import { BaseProcessor } from '../processors'
 
 export class FieldComposer extends BaseProcessor {
 
-    fx(args?: any): Promise<ProcessorResponse> {
+    fx(): Promise<ProcessorResponse|ProcessorErrorResponse> {
 
-        const result: Promise<ProcessorResponse> = new Promise((resolve, reject) => {
+        const result: Promise<ProcessorResponse|ProcessorErrorResponse> = new Promise((resolve, reject) => {
             try {
                 const output = {}
                 if (!this.executionContext.schematic.parameters || this.executionContext.schematic.parameters.length <= 0) {
@@ -22,11 +23,7 @@ export class FieldComposer extends BaseProcessor {
                 })
             }
             catch (err) {
-                return reject({
-                    successful: false,
-                    message: `FieldComposer.Error`,
-                    data: err
-                })
+                return reject(this.handleError(err, 'FieldComposer'))
             }
         })
 

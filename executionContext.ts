@@ -1,6 +1,7 @@
 import { Schematic } from './schematics'
 import { RequestContext, Parameter, Activity, SharedResource, 
-    ExecutionMode, ProcessorDef, BaseProcessor, ProcessorResponse, SchematicResponse } from './schemas'
+    ExecutionMode, ProcessorDef, ProcessorResponse, ProcessorErrorResponse, SchematicResponse } from './schemas'
+import { BaseProcessor } from './processors'
 import { Utilities } from './utilities/utilities'
 import { SyberServerEvents } from './events'
 import { SyberServer } from './syberServer'
@@ -18,10 +19,6 @@ export class ExecutionContext {
     public log = []
     
     public raw: any = {}
-    public transformed = {}
-    public mapped = {}
-
-    public results = []
 
     private parameters: Array<Parameter> = []
     private wasOneCriticalFailure: boolean = false
@@ -208,11 +205,11 @@ export class ExecutionContext {
 
     }
 
-    private tryCatchWrapperForProcess(processor: BaseProcessor, process: ProcessorDef): Promise<ProcessorResponse> {
+    private tryCatchWrapperForProcess(processor: BaseProcessor, process: ProcessorDef): Promise<ProcessorResponse|ProcessorErrorResponse> {
         
-        const result: Promise<ProcessorResponse> = new Promise(async(resolve, reject) => {
+        const result: Promise<ProcessorResponse|ProcessorErrorResponse> = new Promise(async(resolve, reject) => {
             try {
-                const response = await processor.fx(process ? process.args : null)
+                const response = await processor.fx()
                 return resolve(response)
             }
             catch (err) {
