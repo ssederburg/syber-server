@@ -11,7 +11,7 @@ export class RawResponse extends BaseProcessor {
                 return resolve({
                     successful: true,
                     message: 'OK',
-                    data: Object.assign({}, this.executionContext.raw)
+                    data: Object.assign({}, this.executionContext.document)
                 })
             }
             catch (err) {

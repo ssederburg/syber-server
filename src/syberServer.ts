@@ -195,7 +195,7 @@ export class SyberServer {
             try {
                 const executionContext = new ExecutionContext(req, new this.globalSchematic(), this.sharedResources, this)
                 executionContext.httpStatus = httpStatus
-                executionContext.raw = errText
+                executionContext.document = errText
                 executionContext.errors.push(errText)
                 const response = await executionContext.execute()
                 this.events.emit(SyberServerEvents.GlobalSchematicError, {

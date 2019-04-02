@@ -11,7 +11,7 @@ export declare class ExecutionContext {
     logger: ILogger;
     errors: any[];
     warnings: any[];
-    raw: any;
+    document: any;
     private parameters;
     private wasOneCriticalFailure;
     constructor(req: RequestContext, schematic: Schematic, sharedResources: Array<SharedResource>, syberServer: SyberServer);

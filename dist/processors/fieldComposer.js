@@ -31,7 +31,7 @@ var FieldComposer = (function (_super) {
                 _this.executionContext.schematic.parameters.forEach(function (parameter) {
                     output_1[parameter.name] = _this.executionContext.getParameterValue(parameter.name);
                 });
-                _this.executionContext.raw = Object.assign({}, output_1);
+                _this.executionContext.document = Object.assign({}, output_1);
                 return resolve({
                     successful: true
                 });

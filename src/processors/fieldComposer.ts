@@ -17,7 +17,7 @@ export class FieldComposer extends BaseProcessor {
                 this.executionContext.schematic.parameters.forEach((parameter) => {
                     output[parameter.name] = this.executionContext.getParameterValue(parameter.name)
                 })
-                this.executionContext.raw = Object.assign({}, output)
+                this.executionContext.document = Object.assign({}, output)
                 return resolve({
                     successful: true
                 })

@@ -21,7 +21,7 @@ var RawComposer = (function (_super) {
         var _this = this;
         var result = new Promise(function (resolve, reject) {
             try {
-                _this.executionContext.raw = Object.assign({}, _this.executionContext.raw, _this.processorDef.args);
+                _this.executionContext.document = Object.assign({}, _this.executionContext.document, _this.processorDef.args);
                 return resolve({
                     successful: true
                 });

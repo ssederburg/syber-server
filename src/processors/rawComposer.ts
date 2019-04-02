@@ -7,7 +7,7 @@ export class RawComposer extends BaseProcessor {
 
         const result: Promise<ProcessorResponse|ProcessorErrorResponse> = new Promise((resolve, reject) => {
             try {
-                this.executionContext.raw = Object.assign({}, this.executionContext.raw, this.processorDef.args)
+                this.executionContext.document = Object.assign({}, this.executionContext.document, this.processorDef.args)
                 return resolve({
                     successful: true
                 })

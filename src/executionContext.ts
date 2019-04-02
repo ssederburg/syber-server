@@ -19,7 +19,7 @@ export class ExecutionContext {
     public errors = []
     public warnings = []
     
-    public raw: any = {}
+    public document: any = {}
 
     private parameters: Array<Parameter> = []
     private wasOneCriticalFailure: boolean = false

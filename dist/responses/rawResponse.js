@@ -24,7 +24,7 @@ var RawResponse = (function (_super) {
                 return resolve({
                     successful: true,
                     message: 'OK',
-                    data: Object.assign({}, _this.executionContext.raw)
+                    data: Object.assign({}, _this.executionContext.document)
                 });
             }
             catch (err) {

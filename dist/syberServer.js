@@ -204,7 +204,7 @@ var SyberServer = (function () {
                         _a.trys.push([0, 2, , 3]);
                         executionContext = new ExecutionContext(req, new this.globalSchematic(), this.sharedResources, this);
                         executionContext.httpStatus = httpStatus;
-                        executionContext.raw = errText;
+                        executionContext.document = errText;
                         executionContext.errors.push(errText);
                         return [4, executionContext.execute()];
                     case 1:
