@@ -1,6 +1,6 @@
 {
   "name": "syber-server",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "authorize validate compose transform map act respond framework",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

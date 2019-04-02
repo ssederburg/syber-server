@@ -7,7 +7,7 @@ export class BaseProcessor {
     protected logger: ILogger = null
 
     constructor(protected executionContext: ExecutionContext, protected processorDef: ProcessorDef) {
-
+        this.logger = executionContext.logger
     }
 
     public fx(): Promise<ProcessorResponse|ProcessorErrorResponse> {
