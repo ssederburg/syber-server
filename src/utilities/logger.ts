@@ -6,32 +6,39 @@ import * as bluebird from 'bluebird'
 */
 export class Logger implements ILogger {
 
-    log(output: string, source?: string):  Promise<any> {
+    log(id: string, output: string, source: string):  Promise<any> {
         return new Promise<any>((resolve) => {
             console.log(source ? `${source}: ${output}`: `${output}`)
             resolve()
         })
     }
 
-    warn(output: string, source?: string):  Promise<any> {
+    info(id: string, output: string, source: string):  Promise<any> {
+        return new Promise<any>((resolve) => {
+            console.info(source ? `${source}: ${output}`: `${output}`)
+            resolve()
+        })
+    }
+
+    warn(id: string, output: string, source: string):  Promise<any> {
         return new Promise<any>((resolve) => {
             console.warn(source ? `${source}: ${output}`: `${output}`)
             resolve()
         })
     }
-    error(output: string, source?: string):  Promise<any> {
+    error(id: string, output: string, source: string):  Promise<any> {
         return new Promise<any>((resolve) => {
             console.error(source ? `${source}: ${output}`: `${output}`)
             resolve()
         })
     }
-    debug(output: string, source?: string):  Promise<any> {
+    debug(id: string, output: string, source: string):  Promise<any> {
         return new Promise<any>((resolve) => {
             console.debug(source ? `${source}: ${output}`: `${output}`)
             resolve()
         })
     }
-    dir(output: any, source?: string):  Promise<any> {
+    dir(id: string, output: any, source: string):  Promise<any> {
         return new Promise<any>((resolve) => {
             console.dir(source ? `${source}:\n${output}`: `${output}`)
             resolve()

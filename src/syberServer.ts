@@ -51,7 +51,7 @@ export class SyberServer {
 
     public registerHandler(verb: string, path: string, handler: any) {
         if (!this.express[verb]) {
-            this.logger.warn(`Attempted to Register Handler for verb ${verb} @ ${path}. Unknown verb. Handler registration ignored...`, `syberServer.registerHandler`)
+            this.logger.warn(`SYS${uuidv4()}`, `Attempted to Register Handler for verb ${verb} @ ${path}. Unknown verb. Handler registration ignored...`, `syberServer.registerHandler`)
             return
         }
 
@@ -63,7 +63,7 @@ export class SyberServer {
     public registerRoute(options: RouteOptions) {
         
         if (this.isStarted) {
-            this.logger.error(`Attempted to SyberServer.registerRoute after server started. Route Registration ignored...`, `syberServer.registerRoute`)
+            this.logger.error(`SYS${uuidv4()}`, `Attempted to SyberServer.registerRoute after server started. Route Registration ignored...`, `syberServer.registerRoute`)
             return
         }
 
@@ -96,7 +96,7 @@ export class SyberServer {
             }
         }
         
-        this.logger.log(`Loading swagger from ${process.cwd() + '/swagger.json'}`, `syberServer.start`)
+        this.logger.log(`SYS${uuidv4()}`, `Loading swagger from ${process.cwd() + '/swagger.json'}`, `syberServer.start`)
         const swaggerDocument = require(process.cwd() + '/swagger.json')
 
         this.express.use('/swagger.io', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
@@ -137,8 +137,9 @@ export class SyberServer {
             })
 
             process.on('uncaughtException', (err) => {
-                this.logger.error(`UncaughtException in SyberServer`, `syberServer.start.uncaughtException`)
-                this.logger.error(`${err.message}`, `syberServer.start.uncaughtException`)
+                const errorId = uuidv4()
+                this.logger.error(`SYS${errorId}`, `UncaughtException in SyberServer`, `syberServer.start.uncaughtException`)
+                this.logger.error(`SYS${errorId}`, `${err.message}`, `syberServer.start.uncaughtException`)
                 this.shutdown(true) // With Failure option means process.exit(1)
             })
 
@@ -148,7 +149,7 @@ export class SyberServer {
                 status: 0,
                 message: 'Locked In'
             })
-            this.logger.log(`\nServer listening on port:${this.options.port}\n`, `syberServer.start`)
+            this.logger.log(`SYS${uuidv4()}`, `\nServer listening on port:${this.options.port}\n`, `syberServer.start`)
         })
 
     }

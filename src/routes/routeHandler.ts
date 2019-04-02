@@ -7,6 +7,7 @@ import * as config from 'config'
 import { ExecutionContext } from '../executionContext'
 import { Utilities } from '../utilities/utilities'
 import { SyberServerEvents } from '../events'
+const uuidv4 = require('uuid/v4')
 
 import * as _ from 'lodash'
 
@@ -21,13 +22,13 @@ export class RouteHandler {
     public register(server: Express.Application, options: RouteOptions) {
 
         if (!options.verb) {
-            this.logger.warn(`Attempted to register route @${options.path} contained null verb. Route ignored...`, `routeHandler.register`)
+            this.logger.warn(`SYS${uuidv4()}`, `Attempted to register route @${options.path} contained null verb. Route ignored...`, `routeHandler.register`)
             return
         }
 
         options.verb = options.verb.toLowerCase()
         if (!server[options.verb]) {
-            this.logger.warn(`Attempted to register route @${options.path} for unrecognized verb ${options.verb}. Route ignored...`, `routeHandler.register`)
+            this.logger.warn(`SYS${uuidv4()}`, `Attempted to register route @${options.path} for unrecognized verb ${options.verb}. Route ignored...`, `routeHandler.register`)
             return
         }
 
@@ -53,7 +54,7 @@ export class RouteHandler {
             }
         }
         if (!options.schematic) {
-            this.logger.warn(`Attempted to execute route ${req.path} without a valid schematic. Route ignored.`, `routeHandler.execute`)
+            this.logger.warn(req.id, `Attempted to execute route ${req.path} without a valid schematic. Route ignored.`, `routeHandler.execute`)
             const response = await this.throwError(req, 400, `Invalid Request. Missing Schematic.`, options, next)
             return res.status(400).json(response)
         }
@@ -64,7 +65,7 @@ export class RouteHandler {
             const schematicInstance = new options.schematic()
             const timer = setTimeout(async() => {
                 if (res.headersSent) return
-                this.logger.log(`Timeout exceeded on path ${req.path}`, `routeHandler.execute`)
+                this.logger.log(req.id, `Timeout exceeded on path ${req.path}`, `routeHandler.execute`)
                 req.timedout = true
                 execContext.httpStatus = 408
                 const response = await this.throwError(req, 408, `Request Timed Out.`, options, next)

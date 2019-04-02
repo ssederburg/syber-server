@@ -24,7 +24,7 @@ var TestSyncSleepProcessor = (function (_super) {
             try {
                 var timeout = 0;
                 if (!_this.processorDef || !_this.processorDef.args || !_this.processorDef.args.timeout || !Utilities.isNumber(_this.processorDef.args.timeout)) {
-                    _this.logger.warn("SyberServer.TestSyncSleepProcessor.Warning: Invalid value set in schematic for args.timeout. Using default of 1 second.", "testSyncSleepProcessor.fx");
+                    _this.logger.warn(_this.executionContext.correlationId, "SyberServer.TestSyncSleepProcessor.Warning: Invalid value set in schematic for args.timeout. Using default of 1 second.", "testSyncSleepProcessor.fx");
                     timeout = 1000;
                 }
                 else {

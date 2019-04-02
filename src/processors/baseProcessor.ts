@@ -25,7 +25,7 @@ export class BaseProcessor {
             }
             result.err = err
             result.source = source
-            this.logger.error(result.message, source)
+            this.logger.error(this.executionContext.correlationId, result.message, source)
             return result
         }
         return err

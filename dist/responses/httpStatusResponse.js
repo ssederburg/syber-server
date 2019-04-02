@@ -22,7 +22,7 @@ var HttpStatusResponse = (function (_super) {
         var result = new Promise(function (resolve, reject) {
             try {
                 if (!_this.processorDef || !_this.processorDef.args || !_this.processorDef.args.httpStatus) {
-                    _this.logger.warn("Attempted to use HttpStatusResponse without setting argument for httpStatus in processor definition element", "httpStatusResponse.fx");
+                    _this.logger.warn(_this.executionContext.correlationId, "Attempted to use HttpStatusResponse without setting argument for httpStatus in processor definition element", "httpStatusResponse.fx");
                     _this.processorDef.args = {
                         httpStatus: 200
                     };

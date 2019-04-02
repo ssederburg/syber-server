@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 import { ExecutionContext } from '../executionContext';
 import { Utilities } from '../utilities/utilities';
 import { SyberServerEvents } from '../events';
+var uuidv4 = require('uuid/v4');
 var RouteHandler = (function () {
     function RouteHandler(syberServer) {
         this.syberServer = syberServer;
@@ -45,12 +46,12 @@ var RouteHandler = (function () {
     RouteHandler.prototype.register = function (server, options) {
         var _this = this;
         if (!options.verb) {
-            this.logger.warn("Attempted to register route @" + options.path + " contained null verb. Route ignored...", "routeHandler.register");
+            this.logger.warn("SYS" + uuidv4(), "Attempted to register route @" + options.path + " contained null verb. Route ignored...", "routeHandler.register");
             return;
         }
         options.verb = options.verb.toLowerCase();
         if (!server[options.verb]) {
-            this.logger.warn("Attempted to register route @" + options.path + " for unrecognized verb " + options.verb + ". Route ignored...", "routeHandler.register");
+            this.logger.warn("SYS" + uuidv4(), "Attempted to register route @" + options.path + " for unrecognized verb " + options.verb + ". Route ignored...", "routeHandler.register");
             return;
         }
         server[options.verb](options.path, function (req, res, next) {
@@ -75,7 +76,7 @@ var RouteHandler = (function () {
                         _a.label = 2;
                     case 2:
                         if (!!options.schematic) return [3, 4];
-                        this.logger.warn("Attempted to execute route " + req.path + " without a valid schematic. Route ignored.", "routeHandler.execute");
+                        this.logger.warn(req.id, "Attempted to execute route " + req.path + " without a valid schematic. Route ignored.", "routeHandler.execute");
                         return [4, this.throwError(req, 400, "Invalid Request. Missing Schematic.", options, next)];
                     case 3:
                         response = _a.sent();
@@ -90,7 +91,7 @@ var RouteHandler = (function () {
                                     case 0:
                                         if (res.headersSent)
                                             return [2];
-                                        this.logger.log("Timeout exceeded on path " + req.path, "routeHandler.execute");
+                                        this.logger.log(req.id, "Timeout exceeded on path " + req.path, "routeHandler.execute");
                                         req.timedout = true;
                                         execContext.httpStatus = 408;
                                         return [4, this.throwError(req, 408, "Request Timed Out.", options, next)];

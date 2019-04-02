@@ -71,7 +71,7 @@ var SyberServer = (function () {
     };
     SyberServer.prototype.registerHandler = function (verb, path, handler) {
         if (!this.express[verb]) {
-            this.logger.warn("Attempted to Register Handler for verb " + verb + " @ " + path + ". Unknown verb. Handler registration ignored...", "syberServer.registerHandler");
+            this.logger.warn("SYS" + uuidv4(), "Attempted to Register Handler for verb " + verb + " @ " + path + ". Unknown verb. Handler registration ignored...", "syberServer.registerHandler");
             return;
         }
         this.express[verb](path, function (req, res, next) {
@@ -80,7 +80,7 @@ var SyberServer = (function () {
     };
     SyberServer.prototype.registerRoute = function (options) {
         if (this.isStarted) {
-            this.logger.error("Attempted to SyberServer.registerRoute after server started. Route Registration ignored...", "syberServer.registerRoute");
+            this.logger.error("SYS" + uuidv4(), "Attempted to SyberServer.registerRoute after server started. Route Registration ignored...", "syberServer.registerRoute");
             return;
         }
         var routeHandler = new RouteHandler(this);
@@ -103,7 +103,7 @@ var SyberServer = (function () {
                 this.express.use(express.static(this.options.staticPath));
             }
         }
-        this.logger.log("Loading swagger from " + (process.cwd() + '/swagger.json'), "syberServer.start");
+        this.logger.log("SYS" + uuidv4(), "Loading swagger from " + (process.cwd() + '/swagger.json'), "syberServer.start");
         var swaggerDocument = require(process.cwd() + '/swagger.json');
         this.express.use('/swagger.io', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
         this.express.use(function (err, req, res, next) { return __awaiter(_this, void 0, void 0, function () {
@@ -152,8 +152,9 @@ var SyberServer = (function () {
                 _this.shutdown();
             });
             process.on('uncaughtException', function (err) {
-                _this.logger.error("UncaughtException in SyberServer", "syberServer.start.uncaughtException");
-                _this.logger.error("" + err.message, "syberServer.start.uncaughtException");
+                var errorId = uuidv4();
+                _this.logger.error("SYS" + errorId, "UncaughtException in SyberServer", "syberServer.start.uncaughtException");
+                _this.logger.error("SYS" + errorId, "" + err.message, "syberServer.start.uncaughtException");
                 _this.shutdown(true);
             });
             _this.events.emit(SyberServerEvents.ServerStarted, {
@@ -162,7 +163,7 @@ var SyberServer = (function () {
                 status: 0,
                 message: 'Locked In'
             });
-            _this.logger.log("\nServer listening on port:" + _this.options.port + "\n", "syberServer.start");
+            _this.logger.log("SYS" + uuidv4(), "\nServer listening on port:" + _this.options.port + "\n", "syberServer.start");
         });
     };
     SyberServer.prototype.shutdown = function (withError) {

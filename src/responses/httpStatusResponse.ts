@@ -9,7 +9,7 @@ export class HttpStatusResponse extends BaseProcessor {
 
             try {
                 if (!this.processorDef || !this.processorDef.args || !this.processorDef.args.httpStatus) {
-                    this.logger.warn(`Attempted to use HttpStatusResponse without setting argument for httpStatus in processor definition element`, `httpStatusResponse.fx`)
+                    this.logger.warn(this.executionContext.correlationId, `Attempted to use HttpStatusResponse without setting argument for httpStatus in processor definition element`, `httpStatusResponse.fx`)
                     this.processorDef.args = {
                         httpStatus: 200
                     }

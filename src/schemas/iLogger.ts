@@ -1,7 +1,7 @@
 export interface ILogger {
-    log(output: string, source?: string): Promise<any>
-    debug(output: string, source?: string):  Promise<any>
-    error(output: string, source?: string):  Promise<any>
-    warn(output: string, source?: string):  Promise<any>
-    dir?(output: any, source?: string):  Promise<any>
+    log(id: string, output: string, source: string): Promise<any>
+    debug(id: string, output: string, source: string):  Promise<any>
+    error(id: string, output: string, source: string):  Promise<any>
+    warn(id: string, output: string, source: string):  Promise<any>
+    dir?(id: string, output: any, source: string):  Promise<any>
 }
