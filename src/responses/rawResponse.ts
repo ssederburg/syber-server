@@ -1,4 +1,4 @@
-import { ProcessorResponse, ProcessorErrorResponse } from '../schemas'
+import { ProcessorResponse, ProcessorErrorResponse } from '../responses'
 import { BaseProcessor } from '../processors'
 
 export class RawResponse extends BaseProcessor {

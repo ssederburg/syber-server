@@ -1,6 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var SyberServerEvents;
+export var SyberServerEvents;
 (function (SyberServerEvents) {
     SyberServerEvents["ServerStarting"] = "server-starting";
     SyberServerEvents["ServerStarted"] = "server-started";
@@ -16,4 +14,4 @@ var SyberServerEvents;
     SyberServerEvents["ProcessorStarted"] = "processor-started";
     SyberServerEvents["ProcessorEnded"] = "processor-ended";
     SyberServerEvents["EndRequest"] = "end-request";
-})(SyberServerEvents = exports.SyberServerEvents || (exports.SyberServerEvents = {}));
+})(SyberServerEvents || (SyberServerEvents = {}));

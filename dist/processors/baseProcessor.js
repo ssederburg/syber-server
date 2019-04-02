@@ -1,19 +1,17 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const schemas_1 = require("../schemas");
-class BaseProcessor {
-    constructor(executionContext, processorDef) {
+import { ProcessorErrorResponse } from '../responses';
+var BaseProcessor = (function () {
+    function BaseProcessor(executionContext, processorDef) {
         this.executionContext = executionContext;
         this.processorDef = processorDef;
     }
-    fx() {
+    BaseProcessor.prototype.fx = function () {
         return Promise.resolve({
             successful: false
         });
-    }
-    handleError(err, source, httpStatus) {
-        if (!(err instanceof (schemas_1.ProcessorErrorResponse))) {
-            const result = new schemas_1.ProcessorErrorResponse();
+    };
+    BaseProcessor.prototype.handleError = function (err, source, httpStatus) {
+        if (!(err instanceof (ProcessorErrorResponse))) {
+            var result = new ProcessorErrorResponse();
             result.message = err.message;
             if (httpStatus) {
                 result.httpStatus = httpStatus;
@@ -23,6 +21,7 @@ class BaseProcessor {
             return result;
         }
         return err;
-    }
-}
-exports.BaseProcessor = BaseProcessor;
+    };
+    return BaseProcessor;
+}());
+export { BaseProcessor };

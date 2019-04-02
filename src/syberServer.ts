@@ -13,28 +13,32 @@ import {GlobalSchematic} from './schematics'
 import {SyberServerOptions} from './syberServerOptions'
 import * as _ from 'lodash'
 import * as config from 'config'
-import { RequestContext, SchematicResponse } from './schemas'
+import { RequestContext, SchematicResponse, ILogger } from './schemas'
 import { ExecutionContext } from './executionContext'
+import { Logger } from './utilities'
+
 const uuidv4 = require('uuid/v4')
 const swaggerUi = require('swagger-ui-express')
 
 export class SyberServer {
 
-    private server = null
     private isStarted: boolean = false
     private shuttingDown: boolean = false
     private globalSchematic: typeof GlobalSchematic = null
     private sharedResources: Array<any> = []
     
+    public logger: ILogger = null
     public events = new EventEmitter()
+    public express = null
 
     constructor (private options: SyberServerOptions) {
-        this.server = express()
-        this.server.use(helmet())
+        this.logger = options.logger ? options.logger : new Logger()
+        this.express = express()
+        this.express.use(helmet())
         
-        this.server.use(bodyParser.json())
+        this.express.use(bodyParser.json())
 
-        this.server.use((req, res, next) => {
+        this.express.use((req, res, next) => {
             req.id = uuidv4()
             return next()
         })
@@ -46,12 +50,12 @@ export class SyberServer {
     }
 
     public registerHandler(verb: string, path: string, handler: any) {
-        if (!this.server[verb]) {
-            console.warn(`Attempted to Register Handler for verb ${verb} @ ${path}. Unknown verb. Handler registration ignored...`)
+        if (!this.express[verb]) {
+            this.logger.warn(`Attempted to Register Handler for verb ${verb} @ ${path}. Unknown verb. Handler registration ignored...`, `syberServer.registerHandler`)
             return
         }
 
-        this.server[verb](path, (req: RequestContext, res: Express.Response, next: Express.NextFunction) => {
+        this.express[verb](path, (req: RequestContext, res: Express.Response, next: Express.NextFunction) => {
             return handler(req, res, next)
         })
     }
@@ -59,12 +63,12 @@ export class SyberServer {
     public registerRoute(options: RouteOptions) {
         
         if (this.isStarted) {
-            console.error(`Attempted to SyberServer.registerRoute after server started. Route Registration ignored...`)
+            this.logger.error(`Attempted to SyberServer.registerRoute after server started. Route Registration ignored...`, `syberServer.registerRoute`)
             return
         }
 
         const routeHandler = new RouteHandler(this)
-        routeHandler.register(this.server, options)
+        routeHandler.register(this.express, options)
 
     }
 
@@ -84,20 +88,20 @@ export class SyberServer {
                 // Create a virtual path prefix
                 // files accessed with path /staticBaseHref/staticPath
                 // example of staticBaseHref should start with / e.g. /static
-                this.server.use(this.options.baseHref, express.static(this.options.staticPath))
+                this.express.use(this.options.baseHref, express.static(this.options.staticPath))
             } else {
                 // Use a relative path without virtual path prefix
                 // files access with path /staticPath
-                this.server.use(express.static(this.options.staticPath))
+                this.express.use(express.static(this.options.staticPath))
             }
         }
         
-        console.log(`Loading swagger from ${process.cwd() + '/swagger.json'}`)
+        this.logger.log(`Loading swagger from ${process.cwd() + '/swagger.json'}`, `syberServer.start`)
         const swaggerDocument = require(process.cwd() + '/swagger.json')
 
-        this.server.use('/swagger.io', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+        this.express.use('/swagger.io', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
-        this.server.use(async(err, req, res, next) => {
+        this.express.use(async(err, req, res, next) => {
             if (err) {
                 if (res.headersSent) {
                     return
@@ -108,7 +112,7 @@ export class SyberServer {
             next(err)
         })
 
-        this.server.use(async(req, res, next) => {
+        this.express.use(async(req, res, next) => {
             // TODO: If not XHR, Assume HTML5 Mode URL and return root SPA page
             if (this.options.staticPath && !req.XHR && req.verb === 'GET') {
                 
@@ -117,7 +121,7 @@ export class SyberServer {
             return res.status(404).json(response)
         })
 
-        this.server.listen(this.options.port, err => {
+        this.express.listen(this.options.port, err => {
             if (err) throw err
 
             process.on('SIGTERM', () => {
@@ -133,8 +137,8 @@ export class SyberServer {
             })
 
             process.on('uncaughtException', (err) => {
-                console.error(`UncaughtException in SyberServer`)
-                console.error(JSON.stringify(err, null, 1))
+                this.logger.error(`UncaughtException in SyberServer`, `syberServer.start.uncaughtException`)
+                this.logger.error(`${err.message}`, `syberServer.start.uncaughtException`)
                 this.shutdown(true) // With Failure option means process.exit(1)
             })
 
@@ -144,7 +148,7 @@ export class SyberServer {
                 status: 0,
                 message: 'Locked In'
             })
-            console.log(`\nServer listening on http://localhost:${this.options.port}\n`)
+            this.logger.log(`\nServer listening on port:${this.options.port}\n`, `syberServer.start`)
         })
 
     }
@@ -210,11 +214,10 @@ export class SyberServer {
             catch (err) {
                 // TODO: What do we do with rejections from GlobalExecutionContext execution?
                 return resolve()
-            }    
+            }
         })
 
         return result
 
     }
 }
-

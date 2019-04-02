@@ -1,4 +1,4 @@
-import { IUserContext } from './iuserContext'
+import { IUserContext } from './iUserContext'
 
 export class RequestContext {
     id?: string

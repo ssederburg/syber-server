@@ -1,9 +1,8 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-class RequestContext {
-    constructor() {
+var RequestContext = (function () {
+    function RequestContext() {
         this.timedout = false;
         this.starttime = null;
     }
-}
-exports.RequestContext = RequestContext;
+    return RequestContext;
+}());
+export { RequestContext };

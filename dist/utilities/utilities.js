@@ -1,16 +1,16 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const _ = require("lodash");
-const config = require("config");
-const util = require("util");
-class Utilities {
-    static evalExpression(expression, source) {
-        const exprs = expression.split('||');
+import * as _ from 'lodash';
+import * as config from 'config';
+import * as util from 'util';
+var Utilities = (function () {
+    function Utilities() {
+    }
+    Utilities.evalExpression = function (expression, source) {
+        var exprs = expression.split('||');
         if (!exprs || exprs.length === 0) {
             return null;
         }
-        let result = null;
-        _.forEach(exprs, (expr) => {
+        var result = null;
+        _.forEach(exprs, function (expr) {
             if (Utilities.isNullOrUndefined(result) && expr) {
                 if (expr.indexOf('req.query.') === 0) {
                     result = source.query[expr.replace('req.query.', '')];
@@ -45,8 +45,8 @@ class Utilities {
             }
         });
         return result;
-    }
-    static isDataType(value, dataType) {
+    };
+    Utilities.isDataType = function (value, dataType) {
         switch (dataType) {
             case 'string':
                 return Utilities.isString(value);
@@ -61,62 +61,63 @@ class Utilities {
             case 'object':
                 return Utilities.isObject(value);
             default:
-                console.log(`Utilities.isDataType: No record of data type ${dataType}. Test ignored.`);
+                console.log("Utilities.isDataType: No record of data type " + dataType + ". Test ignored.");
                 return true;
         }
-    }
-    static isNullOrUndefined(value) {
+    };
+    Utilities.isNullOrUndefined = function (value) {
         return value === null || value === undefined;
-    }
-    static isArray(value) {
+    };
+    Utilities.isArray = function (value) {
         return Array.isArray(value);
-    }
-    static isDate(value) {
+    };
+    Utilities.isDate = function (value) {
         return util.types.isDate(value);
-    }
-    static isRegEx(value) {
+    };
+    Utilities.isRegEx = function (value) {
         return util.types.isRegExp(value);
-    }
-    static isBoolean(value) {
+    };
+    Utilities.isBoolean = function (value) {
         return typeof value === 'boolean';
-    }
-    static isFunction(value) {
+    };
+    Utilities.isFunction = function (value) {
         return typeof value === 'function';
-    }
-    static isNull(value) {
+    };
+    Utilities.isNull = function (value) {
         return value === null;
-    }
-    static isNumber(value) {
+    };
+    Utilities.isNumber = function (value) {
         return !isNaN(value);
-    }
-    static isObject(value) {
+    };
+    Utilities.isObject = function (value) {
         return value !== null && typeof value === 'object';
-    }
-    static isString(value) {
+    };
+    Utilities.isString = function (value) {
         return typeof value === 'string';
-    }
-    readValue(documentPath, source) {
+    };
+    Utilities.prototype.readValue = function (documentPath, source) {
         if (documentPath.indexOf('/') < 0)
             return source[documentPath];
-        const paths = documentPath.split('/');
-        let reader = source;
-        paths.forEach((element) => {
+        var paths = documentPath.split('/');
+        var reader = source;
+        paths.forEach(function (element) {
             if (reader !== null)
                 reader = reader[element];
         });
         return reader;
-    }
-    writeValue(documentPath, value, source) {
+    };
+    Utilities.prototype.writeValue = function (documentPath, value, source) {
         if (documentPath.indexOf('.') < 0)
             return source[documentPath] = value;
-        const paths = documentPath.split('/');
-        let reader = source;
-        paths.forEach((element, index) => {
+        var paths = documentPath.split('/');
+        var reader = source;
+        paths.forEach(function (element, index) {
             if (index >= paths.length - 1) {
                 return reader[element] = value;
             }
             reader = reader[element];
         });
-    }
-}
-exports.Utilities = Utilities;
+    };
+    return Utilities;
+}());
+export { Utilities };

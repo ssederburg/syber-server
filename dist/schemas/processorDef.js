@@ -1,10 +1,9 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-class ProcessorDef {
-    constructor() {
+var ProcessorDef = (function () {
+    function ProcessorDef() {
         this.args = {};
         this.ordinal = 0;
         this.description = null;
     }
-}
-exports.ProcessorDef = ProcessorDef;
+    return ProcessorDef;
+}());
+export { ProcessorDef };

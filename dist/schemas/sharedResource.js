@@ -1,8 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-class SharedResource {
-    constructor() {
+var SharedResource = (function () {
+    function SharedResource() {
         this.description = null;
     }
-}
-exports.SharedResource = SharedResource;
+    return SharedResource;
+}());
+export { SharedResource };

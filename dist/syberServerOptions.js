@@ -1,10 +1,10 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-class SyberServerOptions {
-    constructor() {
+var SyberServerOptions = (function () {
+    function SyberServerOptions() {
         this.port = 3000;
         this.staticPath = null;
         this.baseHref = null;
+        this.logger = null;
     }
-}
-exports.SyberServerOptions = SyberServerOptions;
+    return SyberServerOptions;
+}());
+export { SyberServerOptions };

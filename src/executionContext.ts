@@ -1,6 +1,7 @@
 import { Schematic } from './schematics'
 import { RequestContext, Parameter, Activity, SharedResource, 
-    ExecutionMode, ProcessorDef, ProcessorResponse, ProcessorErrorResponse, SchematicResponse } from './schemas'
+    ExecutionMode, ProcessorDef, SchematicResponse } from './schemas'
+import { ProcessorResponse, ProcessorErrorResponse } from './responses'
 import { BaseProcessor } from './processors'
 import { Utilities } from './utilities/utilities'
 import { SyberServerEvents } from './events'

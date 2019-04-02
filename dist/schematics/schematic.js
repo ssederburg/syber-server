@@ -1,12 +1,11 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-class Schematic {
-    constructor() {
+var Schematic = (function () {
+    function Schematic() {
         this.parameters = [];
         this.timeout = 5000;
         this.activities = [];
         this.responses = [];
         this.resources = [];
     }
-}
-exports.Schematic = Schematic;
+    return Schematic;
+}());
+export { Schematic };

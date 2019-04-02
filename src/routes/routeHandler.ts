@@ -1,5 +1,5 @@
 import * as Express from 'express'
-import { RequestContext } from "../schemas"
+import { RequestContext, ILogger } from "../schemas"
 import { Schematic } from '../schematics'
 import { SyberServer } from '../syberServer'
 import { RouteOptions } from './'
@@ -12,19 +12,22 @@ import * as _ from 'lodash'
 
 export class RouteHandler {
 
-    constructor(private syberServer: any) {} // SyberServer
+    private logger: ILogger = null
+    constructor(private syberServer: any) {
+        this.logger = syberServer.logger
+    } // SyberServer
 
     //#region Server Method Implementation
     public register(server: Express.Application, options: RouteOptions) {
 
         if (!options.verb) {
-            console.warn(`Attempted to register route @${options.path} contained null verb. Route ignored...`)
+            this.logger.warn(`Attempted to register route @${options.path} contained null verb. Route ignored...`, `routeHandler.register`)
             return
         }
 
         options.verb = options.verb.toLowerCase()
         if (!server[options.verb]) {
-            console.warn(`Attempted to register route @${options.path} for unrecognized verb ${options.verb}. Route ignored...`)
+            this.logger.warn(`Attempted to register route @${options.path} for unrecognized verb ${options.verb}. Route ignored...`, `routeHandler.register`)
             return
         }
 
@@ -50,7 +53,7 @@ export class RouteHandler {
             }
         }
         if (!options.schematic) {
-            console.log(`Attempted to execute route ${req.path} without a valid schematic. Route ignored.`)
+            this.logger.warn(`Attempted to execute route ${req.path} without a valid schematic. Route ignored.`, `routeHandler.execute`)
             const response = await this.throwError(req, 400, `Invalid Request. Missing Schematic.`, options, next)
             return res.status(400).json(response)
         }
@@ -61,7 +64,7 @@ export class RouteHandler {
             const schematicInstance = new options.schematic()
             const timer = setTimeout(async() => {
                 if (res.headersSent) return
-                console.log(`Timeout exceeded on path ${req.path}`)
+                this.logger.log(`Timeout exceeded on path ${req.path}`, `routeHandler.execute`)
                 req.timedout = true
                 execContext.httpStatus = 408
                 const response = await this.throwError(req, 408, `Request Timed Out.`, options, next)

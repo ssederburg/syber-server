@@ -1,5 +1,6 @@
-import { ExecutionContext } from "../executionContext"
-import { ProcessorDef, ProcessorResponse, ProcessorErrorResponse } from "../schemas"
+import { ExecutionContext } from '../executionContext'
+import { ProcessorDef } from '../schemas'
+import { ProcessorResponse, ProcessorErrorResponse } from '../responses'
 
 export class BaseProcessor {
 

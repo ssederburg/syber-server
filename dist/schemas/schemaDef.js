@@ -1,9 +1,8 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-class SchemaDef {
-    constructor() {
+var SchemaDef = (function () {
+    function SchemaDef() {
         this.id = '';
         this.schema = {};
     }
-}
-exports.SchemaDef = SchemaDef;
+    return SchemaDef;
+}());
+export { SchemaDef };
