@@ -1,8 +1,10 @@
 import { ExecutionContext } from '../executionContext'
-import { ProcessorDef } from '../schemas'
+import { ProcessorDef, ILogger } from '../schemas'
 import { ProcessorResponse, ProcessorErrorResponse } from '../responses'
 
 export class BaseProcessor {
+
+    protected logger: ILogger = null
 
     constructor(protected executionContext: ExecutionContext, protected processorDef: ProcessorDef) {
 
@@ -23,6 +25,7 @@ export class BaseProcessor {
             }
             result.err = err
             result.source = source
+            this.logger.error(result.message, source)
             return result
         }
         return err

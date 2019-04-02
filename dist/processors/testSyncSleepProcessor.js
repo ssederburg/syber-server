@@ -24,7 +24,7 @@ var TestSyncSleepProcessor = (function (_super) {
             try {
                 var timeout = 0;
                 if (!_this.processorDef || !_this.processorDef.args || !_this.processorDef.args.timeout || !Utilities.isNumber(_this.processorDef.args.timeout)) {
-                    console.log("SyberServer.TestSyncSleepProcessor.Warning: Invalid value set in schematic for args.timeout. Using default of 1 second.");
+                    _this.logger.warn("SyberServer.TestSyncSleepProcessor.Warning: Invalid value set in schematic for args.timeout. Using default of 1 second.", "testSyncSleepProcessor.fx");
                     timeout = 1000;
                 }
                 else {
@@ -37,7 +37,7 @@ var TestSyncSleepProcessor = (function (_super) {
                 }, timeout);
             }
             catch (err) {
-                return reject(_this.handleError(err, 'TestSyncSleepProcessor'));
+                return reject(_this.handleError(err, 'TestSyncSleepProcessor', 500));
             }
         });
         return result;

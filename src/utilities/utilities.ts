@@ -50,6 +50,8 @@ export class Utilities {
         
     }
 
+    // TODO: dataType as enum
+
     public static isDataType(value: any, dataType: string): boolean {
         switch(dataType) {
             case 'string':
@@ -65,8 +67,7 @@ export class Utilities {
             case 'object':
                 return Utilities.isObject(value)
             default:
-                console.log(`Utilities.isDataType: No record of data type ${dataType}. Test ignored.`)
-                return true
+                return false
         }
     }
 

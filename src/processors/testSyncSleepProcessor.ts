@@ -11,7 +11,7 @@ export class TestSyncSleepProcessor extends BaseProcessor {
                 let timeout = 0
                 
                 if (!this.processorDef || !this.processorDef.args || !this.processorDef.args.timeout || !Utilities.isNumber(this.processorDef.args.timeout)) {
-                    console.log(`SyberServer.TestSyncSleepProcessor.Warning: Invalid value set in schematic for args.timeout. Using default of 1 second.`)
+                    this.logger.warn(`SyberServer.TestSyncSleepProcessor.Warning: Invalid value set in schematic for args.timeout. Using default of 1 second.`, `testSyncSleepProcessor.fx`)
                     timeout = 1000
                 } else {
                     timeout = this.processorDef.args.timeout
@@ -25,7 +25,7 @@ export class TestSyncSleepProcessor extends BaseProcessor {
 
             }
             catch (err) {
-                return reject(this.handleError(err, 'TestSyncSleepProcessor'))
+                return reject(this.handleError(err, 'TestSyncSleepProcessor', 500))
             }
         })
 

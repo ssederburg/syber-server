@@ -3,6 +3,7 @@ var BaseProcessor = (function () {
     function BaseProcessor(executionContext, processorDef) {
         this.executionContext = executionContext;
         this.processorDef = processorDef;
+        this.logger = null;
     }
     BaseProcessor.prototype.fx = function () {
         return Promise.resolve({
@@ -18,6 +19,7 @@ var BaseProcessor = (function () {
             }
             result.err = err;
             result.source = source;
+            this.logger.error(result.message, source);
             return result;
         }
         return err;

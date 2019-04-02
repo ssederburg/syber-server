@@ -63,7 +63,7 @@ var TestAsyncSleepProcessor = (function (_super) {
                         _a.trys.push([0, 2, , 3]);
                         timeout = 0;
                         if (!this.processorDef || !this.processorDef.args || !this.processorDef.args.timeout || !Utilities.isNumber(this.processorDef.args.timeout)) {
-                            console.log("SyberServer.TestSyncSleepProcessor.Warning: Invalid value set in schematic for args.timeout. Using default of 1 second.");
+                            this.logger.warn("SyberServer.TestSyncSleepProcessor.Warning: Invalid value set in schematic for args.timeout. Using default of 1 second.", "testAsyncSleepProcessor.fx");
                             timeout = 1000;
                         }
                         else {
@@ -77,7 +77,7 @@ var TestAsyncSleepProcessor = (function (_super) {
                             })];
                     case 2:
                         err_1 = _a.sent();
-                        return [2, reject(this.handleError(err_1, 'TestAsyncSleepProcessor'))];
+                        return [2, reject(this.handleError(err_1, 'TestAsyncSleepProcessor', 500))];
                     case 3: return [2];
                 }
             });
@@ -87,6 +87,7 @@ var TestAsyncSleepProcessor = (function (_super) {
     TestAsyncSleepProcessor.prototype.runAsync = function (timeout) {
         return __awaiter(this, void 0, void 0, function () {
             var result;
+            var _this = this;
             return __generator(this, function (_a) {
                 result = new Promise(function (resolve, reject) {
                     try {
@@ -95,7 +96,7 @@ var TestAsyncSleepProcessor = (function (_super) {
                         }, timeout);
                     }
                     catch (err) {
-                        return reject();
+                        return reject(_this.handleError(err, "testAsyncSleepProcessor.runAsync", 500));
                     }
                 });
                 return [2, result];

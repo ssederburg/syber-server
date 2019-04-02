@@ -1,6 +1,6 @@
 import { Schematic } from './schematics'
 import { RequestContext, Parameter, Activity, SharedResource, 
-    ExecutionMode, ProcessorDef, SchematicResponse } from './schemas'
+    ExecutionMode, ProcessorDef, SchematicResponse, ILogger } from './schemas'
 import { ProcessorResponse, ProcessorErrorResponse } from './responses'
 import { BaseProcessor } from './processors'
 import { Utilities } from './utilities/utilities'
@@ -14,10 +14,10 @@ export class ExecutionContext {
 
     public httpStatus: number = 200
     public correlationId: string = ''
+    public logger: ILogger = null
 
     public errors = []
     public warnings = []
-    public log = []
     
     public raw: any = {}
 
@@ -26,6 +26,7 @@ export class ExecutionContext {
 
     constructor(public req: RequestContext, public schematic: Schematic, private sharedResources: Array<SharedResource>, private syberServer: SyberServer) { // SyberServer
         this.correlationId = req.id
+        this.logger = syberServer.logger
     }
 
     public execute(): Promise<any> {
@@ -43,15 +44,15 @@ export class ExecutionContext {
                 if (!this.wasOneCriticalFailure) {
                     this.wasOneCriticalFailure = true
                     if (this.httpStatus === 200) {
-                        console.warn(`Error was thrown within ExecutionContext WITHOUT setting httpStatus to non-200. Check code path and set http status to correct fail code...`)
+                        this.logger.warn(`Error was thrown within ExecutionContext WITHOUT setting httpStatus to non-200. Check code path and set http status to correct fail code...`, `executionContext.execute`)
                         this.httpStatus = 500
                     }
                     const firstErrorResponse = await this.respond()
-                    console.log(`executionContext.execute.error: Throwing ${JSON.stringify(firstErrorResponse, null, 1)}`)
+                    this.logger.log(`executionContext.execute.error: Throwing ${JSON.stringify(firstErrorResponse, null, 1)}`, `executionContext.execute`)
                     return reject(firstErrorResponse)
                 }
                 const secondErrorResponse = await this.errorResponse()
-                console.log(`executionContext.execute.error.secondchance: Throwing ${JSON.stringify(secondErrorResponse, null, 1)}`)
+                this.logger.log(`executionContext.execute.error.secondchance: Throwing ${JSON.stringify(secondErrorResponse, null, 1)}`, `executionContext.execute`)
                 return reject(secondErrorResponse)
             }
         })
@@ -103,7 +104,7 @@ export class ExecutionContext {
                             return resolve(true)
                         }
                     }).catch((err) => {
-                        console.log(`ExecutionContext.runActivities.error: ${JSON.stringify(err)}`)
+                        this.logger.log(`${err.message}`, `executionContext.runActivities`)
                         this.errors.push(`ExecutionContext.runActvities.error: ${err.message}`)
                         this.httpStatus = err.httpStatus
                         return reject(err)
@@ -160,7 +161,7 @@ export class ExecutionContext {
                 return resolve(true)
             }
             catch (err) {
-                console.log(`ExecutionContext.runProcesses.error: ${JSON.stringify(err, null, 1)}`)
+                this.logger.log(`${err.message}`, `executionContext.runProcesses`)
                 return reject(err)
             }
         })
@@ -176,10 +177,9 @@ export class ExecutionContext {
                 let theType: typeof BaseProcessor = null
                 let test: SchematicResponse = _.find(this.schematic.responses, { httpStatus: this.httpStatus })
                 if (!test) {
-                    console.log(`syber-server.executionContext.getGlobalSchematicResponse: httpStatus ${this.httpStatus}`)
                     test = this.syberServer.getGlobalSchematicResponse(this.httpStatus)
                     if (!test) {
-                        console.log(`syber-server.executionContext.respond.error: no record of response for http status ${this.httpStatus}`)
+                        this.logger.warn(`syber-server.executionContext.respond.error: no record of response for http status ${this.httpStatus}`, `executionContext.respond`)
                         theType = RawResponse
                     } else {
                         theType = test.class
@@ -302,8 +302,8 @@ export class ExecutionContext {
                 resolve()
             }
             catch (err) {
-                console.error(`ExecutionContext.loadParameters: ${err}`)
-                this.errors.push(`ExecutionContext.loadParameters: ${err}`)
+                this.logger.error(`${err.message}`, `executionContext.loadParameters`)
+                this.errors.push(`ExecutionContext.loadParameters: ${err.message}`)
                 if (this.httpStatus === 200) {
                     this.httpStatus = 500
                 }

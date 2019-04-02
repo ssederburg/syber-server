@@ -45,13 +45,14 @@ var ExecutionContext = (function () {
         this.syberServer = syberServer;
         this.httpStatus = 200;
         this.correlationId = '';
+        this.logger = null;
         this.errors = [];
         this.warnings = [];
-        this.log = [];
         this.raw = {};
         this.parameters = [];
         this.wasOneCriticalFailure = false;
         this.correlationId = req.id;
+        this.logger = syberServer.logger;
     }
     ExecutionContext.prototype.execute = function () {
         var _this = this;
@@ -76,18 +77,18 @@ var ExecutionContext = (function () {
                         if (!!this.wasOneCriticalFailure) return [3, 6];
                         this.wasOneCriticalFailure = true;
                         if (this.httpStatus === 200) {
-                            console.warn("Error was thrown within ExecutionContext WITHOUT setting httpStatus to non-200. Check code path and set http status to correct fail code...");
+                            this.logger.warn("Error was thrown within ExecutionContext WITHOUT setting httpStatus to non-200. Check code path and set http status to correct fail code...", "executionContext.execute");
                             this.httpStatus = 500;
                         }
                         return [4, this.respond()];
                     case 5:
                         firstErrorResponse = _a.sent();
-                        console.log("executionContext.execute.error: Throwing " + JSON.stringify(firstErrorResponse, null, 1));
+                        this.logger.log("executionContext.execute.error: Throwing " + JSON.stringify(firstErrorResponse, null, 1), "executionContext.execute");
                         return [2, reject(firstErrorResponse)];
                     case 6: return [4, this.errorResponse()];
                     case 7:
                         secondErrorResponse = _a.sent();
-                        console.log("executionContext.execute.error.secondchance: Throwing " + JSON.stringify(secondErrorResponse, null, 1));
+                        this.logger.log("executionContext.execute.error.secondchance: Throwing " + JSON.stringify(secondErrorResponse, null, 1), "executionContext.execute");
                         return [2, reject(secondErrorResponse)];
                     case 8: return [2];
                 }
@@ -148,7 +149,7 @@ var ExecutionContext = (function () {
                                             }
                                         });
                                     }); }).catch(function (err) {
-                                        console.log("ExecutionContext.runActivities.error: " + JSON.stringify(err));
+                                        _this.logger.log("" + err.message, "executionContext.runActivities");
                                         _this.errors.push("ExecutionContext.runActvities.error: " + err.message);
                                         _this.httpStatus = err.httpStatus;
                                         return reject(err);
@@ -210,7 +211,7 @@ var ExecutionContext = (function () {
                         return [2, resolve(true)];
                     case 2:
                         err_2 = _a.sent();
-                        console.log("ExecutionContext.runProcesses.error: " + JSON.stringify(err_2, null, 1));
+                        this.logger.log("" + err_2.message, "executionContext.runProcesses");
                         return [2, reject(err_2)];
                     case 3: return [2];
                 }
@@ -229,10 +230,9 @@ var ExecutionContext = (function () {
                         theType = null;
                         test = _.find(this.schematic.responses, { httpStatus: this.httpStatus });
                         if (!test) {
-                            console.log("syber-server.executionContext.getGlobalSchematicResponse: httpStatus " + this.httpStatus);
                             test = this.syberServer.getGlobalSchematicResponse(this.httpStatus);
                             if (!test) {
-                                console.log("syber-server.executionContext.respond.error: no record of response for http status " + this.httpStatus);
+                                this.logger.warn("syber-server.executionContext.respond.error: no record of response for http status " + this.httpStatus, "executionContext.respond");
                                 theType = RawResponse;
                             }
                             else {
@@ -356,8 +356,8 @@ var ExecutionContext = (function () {
                 resolve();
             }
             catch (err) {
-                console.error("ExecutionContext.loadParameters: " + err);
-                _this.errors.push("ExecutionContext.loadParameters: " + err);
+                _this.logger.error("" + err.message, "executionContext.loadParameters");
+                _this.errors.push("ExecutionContext.loadParameters: " + err.message);
                 if (_this.httpStatus === 200) {
                     _this.httpStatus = 500;
                 }

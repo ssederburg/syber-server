@@ -61,8 +61,7 @@ var Utilities = (function () {
             case 'object':
                 return Utilities.isObject(value);
             default:
-                console.log("Utilities.isDataType: No record of data type " + dataType + ". Test ignored.");
-                return true;
+                return false;
         }
     };
     Utilities.isNullOrUndefined = function (value) {
