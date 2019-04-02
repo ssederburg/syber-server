@@ -1,5 +1,5 @@
-var RouteOptions = (function () {
-    function RouteOptions() {
+export class RouteOptions {
+    constructor() {
         this.verb = 'GET';
         this.path = '';
         this.schematic = null;
@@ -7,9 +7,7 @@ var RouteOptions = (function () {
         this.useResolver = false;
         this.sharedResources = [];
     }
-    RouteOptions.prototype.resolve = function (req) {
+    resolve(req) {
         return null;
-    };
-    return RouteOptions;
-}());
-export { RouteOptions };
+    }
+}

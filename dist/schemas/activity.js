@@ -1,6 +1,6 @@
 import { ExecutionMode } from './';
-var Activity = (function () {
-    function Activity() {
+export class Activity {
+    constructor() {
         this.id = '';
         this.condition = '';
         this.ordinal = 0;
@@ -9,6 +9,4 @@ var Activity = (function () {
         this.processes = [];
         this.activities = [];
     }
-    return Activity;
-}());
-export { Activity };
+}

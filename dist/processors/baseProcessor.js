@@ -1,18 +1,18 @@
 import { ProcessorErrorResponse } from '../responses';
-var BaseProcessor = (function () {
-    function BaseProcessor(executionContext, processorDef) {
+export class BaseProcessor {
+    constructor(executionContext, processorDef) {
         this.executionContext = executionContext;
         this.processorDef = processorDef;
         this.logger = null;
     }
-    BaseProcessor.prototype.fx = function () {
+    fx() {
         return Promise.resolve({
             successful: false
         });
-    };
-    BaseProcessor.prototype.handleError = function (err, source, httpStatus) {
+    }
+    handleError(err, source, httpStatus) {
         if (!(err instanceof (ProcessorErrorResponse))) {
-            var result = new ProcessorErrorResponse();
+            const result = new ProcessorErrorResponse();
             result.message = err.message;
             if (httpStatus) {
                 result.httpStatus = httpStatus;
@@ -23,7 +23,5 @@ var BaseProcessor = (function () {
             return result;
         }
         return err;
-    };
-    return BaseProcessor;
-}());
-export { BaseProcessor };
+    }
+}

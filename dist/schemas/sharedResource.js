@@ -1,7 +1,5 @@
-var SharedResource = (function () {
-    function SharedResource() {
+export class SharedResource {
+    constructor() {
         this.description = null;
     }
-    return SharedResource;
-}());
-export { SharedResource };
+}

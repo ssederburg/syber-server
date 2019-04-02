@@ -1,8 +1,6 @@
-var SchemaDef = (function () {
-    function SchemaDef() {
+export class SchemaDef {
+    constructor() {
         this.id = '';
         this.schema = {};
     }
-    return SchemaDef;
-}());
-export { SchemaDef };
+}

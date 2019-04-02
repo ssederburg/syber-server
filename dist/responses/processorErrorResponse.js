@@ -1,5 +1,5 @@
-var ProcessorErrorResponse = (function () {
-    function ProcessorErrorResponse() {
+export class ProcessorErrorResponse {
+    constructor() {
         this.source = 'unknown';
         this.successful = false;
         this.message = null;
@@ -7,6 +7,4 @@ var ProcessorErrorResponse = (function () {
         this.data = {};
         this.err = {};
     }
-    return ProcessorErrorResponse;
-}());
-export { ProcessorErrorResponse };
+}

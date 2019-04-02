@@ -1,5 +1,5 @@
-var Parameter = (function () {
-    function Parameter() {
+export class Parameter {
+    constructor() {
         this.required = false;
         this.dataType = 'string';
         this.validators = [];
@@ -7,6 +7,4 @@ var Parameter = (function () {
         this.whiteList = [];
         this.blackList = [];
     }
-    return Parameter;
-}());
-export { Parameter };
+}

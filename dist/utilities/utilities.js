@@ -1,16 +1,14 @@
 import * as _ from 'lodash';
 import * as config from 'config';
 import * as util from 'util';
-var Utilities = (function () {
-    function Utilities() {
-    }
-    Utilities.evalExpression = function (expression, source) {
-        var exprs = expression.split('||');
+export class Utilities {
+    static evalExpression(expression, source) {
+        const exprs = expression.split('||');
         if (!exprs || exprs.length === 0) {
             return null;
         }
-        var result = null;
-        _.forEach(exprs, function (expr) {
+        let result = null;
+        _.forEach(exprs, (expr) => {
             if (Utilities.isNullOrUndefined(result) && expr) {
                 if (expr.indexOf('req.query.') === 0) {
                     result = source.query[expr.replace('req.query.', '')];
@@ -45,8 +43,8 @@ var Utilities = (function () {
             }
         });
         return result;
-    };
-    Utilities.isDataType = function (value, dataType) {
+    }
+    static isDataType(value, dataType) {
         switch (dataType) {
             case 'string':
                 return Utilities.isString(value);
@@ -63,60 +61,58 @@ var Utilities = (function () {
             default:
                 return false;
         }
-    };
-    Utilities.isNullOrUndefined = function (value) {
+    }
+    static isNullOrUndefined(value) {
         return value === null || value === undefined;
-    };
-    Utilities.isArray = function (value) {
+    }
+    static isArray(value) {
         return Array.isArray(value);
-    };
-    Utilities.isDate = function (value) {
+    }
+    static isDate(value) {
         return util.types.isDate(value);
-    };
-    Utilities.isRegEx = function (value) {
+    }
+    static isRegEx(value) {
         return util.types.isRegExp(value);
-    };
-    Utilities.isBoolean = function (value) {
+    }
+    static isBoolean(value) {
         return typeof value === 'boolean';
-    };
-    Utilities.isFunction = function (value) {
+    }
+    static isFunction(value) {
         return typeof value === 'function';
-    };
-    Utilities.isNull = function (value) {
+    }
+    static isNull(value) {
         return value === null;
-    };
-    Utilities.isNumber = function (value) {
+    }
+    static isNumber(value) {
         return !isNaN(value);
-    };
-    Utilities.isObject = function (value) {
+    }
+    static isObject(value) {
         return value !== null && typeof value === 'object';
-    };
-    Utilities.isString = function (value) {
+    }
+    static isString(value) {
         return typeof value === 'string';
-    };
-    Utilities.prototype.readValue = function (documentPath, source) {
+    }
+    readValue(documentPath, source) {
         if (documentPath.indexOf('/') < 0)
             return source[documentPath];
-        var paths = documentPath.split('/');
-        var reader = source;
-        paths.forEach(function (element) {
+        const paths = documentPath.split('/');
+        let reader = source;
+        paths.forEach((element) => {
             if (reader !== null)
                 reader = reader[element];
         });
         return reader;
-    };
-    Utilities.prototype.writeValue = function (documentPath, value, source) {
+    }
+    writeValue(documentPath, value, source) {
         if (documentPath.indexOf('.') < 0)
             return source[documentPath] = value;
-        var paths = documentPath.split('/');
-        var reader = source;
-        paths.forEach(function (element, index) {
+        const paths = documentPath.split('/');
+        let reader = source;
+        paths.forEach((element, index) => {
             if (index >= paths.length - 1) {
                 return reader[element] = value;
             }
             reader = reader[element];
         });
-    };
-    return Utilities;
-}());
-export { Utilities };
+    }
+}
