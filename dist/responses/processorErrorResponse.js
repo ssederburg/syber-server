@@ -1,5 +1,7 @@
-export class ProcessorErrorResponse {
-    constructor() {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var ProcessorErrorResponse = (function () {
+    function ProcessorErrorResponse() {
         this.source = 'unknown';
         this.successful = false;
         this.message = null;
@@ -7,4 +9,6 @@ export class ProcessorErrorResponse {
         this.data = {};
         this.err = {};
     }
-}
+    return ProcessorErrorResponse;
+}());
+exports.ProcessorErrorResponse = ProcessorErrorResponse;

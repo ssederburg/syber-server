@@ -1,4 +1,7 @@
-import { Utilities } from '../utilities/utilities';
-export function IsObject(value) {
-    return Utilities.isObject(value);
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var utilities_1 = require("../utilities/utilities");
+function IsObject(value) {
+    return utilities_1.Utilities.isObject(value);
 }
+exports.IsObject = IsObject;

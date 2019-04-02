@@ -1,6 +1,9 @@
-import { Utilities } from '../utilities/utilities';
-export function Max(max, value) {
-    if (!Utilities.isNumber(value))
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var utilities_1 = require("../utilities/utilities");
+function Max(max, value) {
+    if (!utilities_1.Utilities.isNumber(value))
         return false;
     return value <= max;
 }
+exports.Max = Max;

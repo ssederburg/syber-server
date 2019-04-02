@@ -1,18 +1,20 @@
-import { ProcessorErrorResponse } from '../responses';
-export class BaseProcessor {
-    constructor(executionContext, processorDef) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var responses_1 = require("../responses");
+var BaseProcessor = (function () {
+    function BaseProcessor(executionContext, processorDef) {
         this.executionContext = executionContext;
         this.processorDef = processorDef;
         this.logger = null;
     }
-    fx() {
+    BaseProcessor.prototype.fx = function () {
         return Promise.resolve({
             successful: false
         });
-    }
-    handleError(err, source, httpStatus) {
-        if (!(err instanceof (ProcessorErrorResponse))) {
-            const result = new ProcessorErrorResponse();
+    };
+    BaseProcessor.prototype.handleError = function (err, source, httpStatus) {
+        if (!(err instanceof (responses_1.ProcessorErrorResponse))) {
+            var result = new responses_1.ProcessorErrorResponse();
             result.message = err.message;
             if (httpStatus) {
                 result.httpStatus = httpStatus;
@@ -23,5 +25,7 @@ export class BaseProcessor {
             return result;
         }
         return err;
-    }
-}
+    };
+    return BaseProcessor;
+}());
+exports.BaseProcessor = BaseProcessor;

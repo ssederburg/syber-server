@@ -1,38 +1,44 @@
-export class Logger {
-    log(id, output, source) {
-        return new Promise((resolve) => {
-            console.log(source ? `${source}: ${output}` : `${output}`);
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Logger = (function () {
+    function Logger() {
+    }
+    Logger.prototype.log = function (id, output, source) {
+        return new Promise(function (resolve) {
+            console.log(source ? source + ": " + output : "" + output);
             resolve();
         });
-    }
-    info(id, output, source) {
-        return new Promise((resolve) => {
-            console.info(source ? `${source}: ${output}` : `${output}`);
+    };
+    Logger.prototype.info = function (id, output, source) {
+        return new Promise(function (resolve) {
+            console.info(source ? source + ": " + output : "" + output);
             resolve();
         });
-    }
-    warn(id, output, source) {
-        return new Promise((resolve) => {
-            console.warn(source ? `${source}: ${output}` : `${output}`);
+    };
+    Logger.prototype.warn = function (id, output, source) {
+        return new Promise(function (resolve) {
+            console.warn(source ? source + ": " + output : "" + output);
             resolve();
         });
-    }
-    error(id, output, source) {
-        return new Promise((resolve) => {
-            console.error(source ? `${source}: ${output}` : `${output}`);
+    };
+    Logger.prototype.error = function (id, output, source) {
+        return new Promise(function (resolve) {
+            console.error(source ? source + ": " + output : "" + output);
             resolve();
         });
-    }
-    debug(id, output, source) {
-        return new Promise((resolve) => {
-            console.debug(source ? `${source}: ${output}` : `${output}`);
+    };
+    Logger.prototype.debug = function (id, output, source) {
+        return new Promise(function (resolve) {
+            console.debug(source ? source + ": " + output : "" + output);
             resolve();
         });
-    }
-    dir(id, output, source) {
-        return new Promise((resolve) => {
-            console.dir(source ? `${source}:\n${output}` : `${output}`);
+    };
+    Logger.prototype.dir = function (id, output, source) {
+        return new Promise(function (resolve) {
+            console.dir(source ? source + ":\n" + output : "" + output);
             resolve();
         });
-    }
-}
+    };
+    return Logger;
+}());
+exports.Logger = Logger;

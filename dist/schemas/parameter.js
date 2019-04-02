@@ -1,5 +1,7 @@
-export class Parameter {
-    constructor() {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Parameter = (function () {
+    function Parameter() {
         this.required = false;
         this.dataType = 'string';
         this.validators = [];
@@ -7,4 +9,6 @@ export class Parameter {
         this.whiteList = [];
         this.blackList = [];
     }
-}
+    return Parameter;
+}());
+exports.Parameter = Parameter;

@@ -1,5 +1,7 @@
-export class RouteOptions {
-    constructor() {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var RouteOptions = (function () {
+    function RouteOptions() {
         this.verb = 'GET';
         this.path = '';
         this.schematic = null;
@@ -7,7 +9,9 @@ export class RouteOptions {
         this.useResolver = false;
         this.sharedResources = [];
     }
-    resolve(req) {
+    RouteOptions.prototype.resolve = function (req) {
         return null;
-    }
-}
+    };
+    return RouteOptions;
+}());
+exports.RouteOptions = RouteOptions;

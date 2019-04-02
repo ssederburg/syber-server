@@ -1,25 +1,47 @@
-import { BaseProcessor } from '../processors';
-export class HttpStatusResponse extends BaseProcessor {
-    fx() {
-        const result = new Promise((resolve, reject) => {
+"use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var processors_1 = require("../processors");
+var HttpStatusResponse = (function (_super) {
+    __extends(HttpStatusResponse, _super);
+    function HttpStatusResponse() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    HttpStatusResponse.prototype.fx = function () {
+        var _this = this;
+        var result = new Promise(function (resolve, reject) {
             try {
-                if (!this.processorDef || !this.processorDef.args || !this.processorDef.args.httpStatus) {
-                    this.logger.warn(this.executionContext.correlationId, `Attempted to use HttpStatusResponse without setting argument for httpStatus in processor definition element`, `httpStatusResponse.fx`);
-                    this.processorDef.args = {
+                if (!_this.processorDef || !_this.processorDef.args || !_this.processorDef.args.httpStatus) {
+                    _this.logger.warn(_this.executionContext.correlationId, "Attempted to use HttpStatusResponse without setting argument for httpStatus in processor definition element", "httpStatusResponse.fx");
+                    _this.processorDef.args = {
                         httpStatus: 200
                     };
                 }
                 return resolve({
                     successful: true,
                     message: 'OK',
-                    httpStatus: this.processorDef.args.httpStatus || 200,
+                    httpStatus: _this.processorDef.args.httpStatus || 200,
                     data: null
                 });
             }
             catch (err) {
-                reject(this.handleError(err, 'HttpStatusResponse'));
+                reject(_this.handleError(err, 'HttpStatusResponse'));
             }
         });
         return result;
-    }
-}
+    };
+    return HttpStatusResponse;
+}(processors_1.BaseProcessor));
+exports.HttpStatusResponse = HttpStatusResponse;
