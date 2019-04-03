@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var responses_1 = require("../responses");
 var BaseProcessor = (function () {
-    function BaseProcessor(executionContext, processorDef) {
+    function BaseProcessor(executionContext, processorDef, logger) {
         this.executionContext = executionContext;
         this.processorDef = processorDef;
-        this.logger = null;
+        this.logger = logger;
     }
     BaseProcessor.prototype.fx = function () {
         return Promise.resolve({

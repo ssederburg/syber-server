@@ -5,7 +5,7 @@ export declare class BaseProcessor {
     protected executionContext: ExecutionContext;
     protected processorDef: ProcessorDef;
     protected logger: ILogger;
-    constructor(executionContext: ExecutionContext, processorDef: ProcessorDef);
+    constructor(executionContext: ExecutionContext, processorDef: ProcessorDef, logger: ILogger);
     fx(): Promise<ProcessorResponse | ProcessorErrorResponse>;
     protected handleError(err: any, source: any, httpStatus?: any): ProcessorErrorResponse;
 }

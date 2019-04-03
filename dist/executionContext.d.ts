@@ -1,5 +1,5 @@
 import { Schematic } from './schematics';
-import { RequestContext, SharedResource, ILogger } from './schemas';
+import { RequestContext, SharedResource } from './schemas';
 import { SyberServer } from './syberServer';
 export declare class ExecutionContext {
     req: RequestContext;
@@ -8,12 +8,12 @@ export declare class ExecutionContext {
     private syberServer;
     httpStatus: number;
     correlationId: string;
-    logger: ILogger;
     errors: any[];
     warnings: any[];
     document: any;
     private parameters;
     private wasOneCriticalFailure;
+    private logger;
     constructor(req: RequestContext, schematic: Schematic, sharedResources: Array<SharedResource>, syberServer: SyberServer);
     execute(): Promise<any>;
     getParameterValue(name: string): any;

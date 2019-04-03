@@ -47,12 +47,12 @@ var ExecutionContext = (function () {
         this.syberServer = syberServer;
         this.httpStatus = 200;
         this.correlationId = '';
-        this.logger = null;
         this.errors = [];
         this.warnings = [];
         this.document = {};
         this.parameters = [];
         this.wasOneCriticalFailure = false;
+        this.logger = null;
         this.correlationId = req.id;
         this.logger = syberServer.logger;
     }
@@ -191,7 +191,7 @@ var ExecutionContext = (function () {
                                 processor: process.class.name.toString()
                             });
                             if (process.class && !process.className) {
-                                var test = new process.class(_this, process);
+                                var test = new process.class(_this, process, _this.logger);
                                 tasks_1.push(_this.tryCatchWrapperForProcess(test, process).then(function (response) {
                                     _this.syberServer.events.emit(events_1.SyberServerEvents.ProcessorEnded, {
                                         source: "ExecutionContext.runProcesses",
@@ -244,7 +244,7 @@ var ExecutionContext = (function () {
                         else {
                             theType = test.class;
                         }
-                        task = new theType(this, test);
+                        task = new theType(this, test, this.logger);
                         return [4, this.tryCatchWrapperForProcess(task, test)];
                     case 1:
                         response = _a.sent();
@@ -382,7 +382,7 @@ var ExecutionContext = (function () {
                         test = {
                             class: responses_1.ErrorResponse
                         };
-                        task = new responses_1.ErrorResponse(this, test);
+                        task = new responses_1.ErrorResponse(this, test, this.logger);
                         return [4, this.tryCatchWrapperForProcess(task, test)];
                     case 1:
                         response = _a.sent();

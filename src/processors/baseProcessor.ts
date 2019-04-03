@@ -4,11 +4,7 @@ import { ProcessorResponse, ProcessorErrorResponse } from '../responses'
 
 export class BaseProcessor {
 
-    protected logger: ILogger = null
-
-    constructor(protected executionContext: ExecutionContext, protected processorDef: ProcessorDef) {
-        this.logger = executionContext.logger
-    }
+    constructor(protected executionContext: ExecutionContext, protected processorDef: ProcessorDef, protected logger: ILogger) {}
 
     public fx(): Promise<ProcessorResponse|ProcessorErrorResponse> {
         return Promise.resolve({

@@ -14,8 +14,6 @@ export class ExecutionContext {
 
     public httpStatus: number = 200
     public correlationId: string = ''
-    public logger: ILogger = null
-
     public errors = []
     public warnings = []
     
@@ -23,6 +21,8 @@ export class ExecutionContext {
 
     private parameters: Array<Parameter> = []
     private wasOneCriticalFailure: boolean = false
+    private logger: ILogger = null
+
 
     constructor(public req: RequestContext, public schematic: Schematic, private sharedResources: Array<SharedResource>, private syberServer: SyberServer) { // SyberServer
         this.correlationId = req.id
@@ -139,7 +139,7 @@ export class ExecutionContext {
                     // TODO: Load using Factory with name string
                     // TODO: Sequential vs. Concurrent
                     if (process.class && !process.className) {
-                        const test = new process.class(this, process)
+                        const test = new process.class(this, process, this.logger)
                         tasks.push(this.tryCatchWrapperForProcess(test, process).then((response) => {
                             this.syberServer.events.emit(SyberServerEvents.ProcessorEnded, {
                                 source: `ExecutionContext.runProcesses`,
@@ -189,7 +189,7 @@ export class ExecutionContext {
                     theType = test.class
                 }
                 // TODO: Load from String using Factory
-                const task = new theType(this, test)
+                const task = new theType(this, test, this.logger)
                 const response = await this.tryCatchWrapperForProcess(task, test)
                 return resolve(response.data || response)
             }
@@ -325,7 +325,7 @@ export class ExecutionContext {
                 const test = {
                     class: ErrorResponse
                 }
-                const task = new ErrorResponse(this, test)
+                const task = new ErrorResponse(this, test, this.logger)
                 const response = await this.tryCatchWrapperForProcess(task, test)
                 return resolve(response.data || response)
             }
