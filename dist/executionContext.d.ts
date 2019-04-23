@@ -1,5 +1,6 @@
 import { Schematic } from './schematics';
 import { RequestContext, SharedResource } from './schemas';
+import { IMockSyberServer } from './mocks';
 import { SyberServer } from './syberServer';
 export declare class ExecutionContext {
     req: RequestContext;
@@ -14,8 +15,9 @@ export declare class ExecutionContext {
     private parameters;
     private wasOneCriticalFailure;
     private logger;
-    constructor(req: RequestContext, schematic: Schematic, sharedResources: Array<SharedResource>, syberServer: SyberServer);
+    constructor(req: RequestContext, schematic: Schematic, sharedResources: Array<SharedResource>, syberServer: SyberServer | IMockSyberServer);
     execute(): Promise<any>;
+    setupForTesting(): Promise<any>;
     getParameterValue(name: string): any;
     getSharedResource(name: string): any;
     private runActivities;

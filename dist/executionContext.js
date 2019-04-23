@@ -98,6 +98,27 @@ var ExecutionContext = (function () {
         }); });
         return result;
     };
+    ExecutionContext.prototype.setupForTesting = function () {
+        var _this = this;
+        var result = new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
+            var err_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4, this.loadParameters()];
+                    case 1:
+                        _a.sent();
+                        return [2, resolve(true)];
+                    case 2:
+                        err_2 = _a.sent();
+                        return [2, reject(err_2.message)];
+                    case 3: return [2];
+                }
+            });
+        }); });
+        return result;
+    };
     ExecutionContext.prototype.getParameterValue = function (name) {
         var theParamRecord = _.find(this.parameters, { name: name });
         if (!theParamRecord)
@@ -172,7 +193,7 @@ var ExecutionContext = (function () {
     ExecutionContext.prototype.runProcesses = function (activityId, processes, executionMode) {
         var _this = this;
         var result = new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
-            var tasks_1, response, err_2;
+            var tasks_1, response, err_3;
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -191,8 +212,8 @@ var ExecutionContext = (function () {
                                 processor: process.class.name.toString()
                             });
                             if (process.class && !process.className) {
-                                var test = new process.class(_this, process, _this.logger);
-                                tasks_1.push(_this.tryCatchWrapperForProcess(test, process).then(function (response) {
+                                var test_1 = new process.class(_this, process, _this.logger);
+                                tasks_1.push(_this.tryCatchWrapperForProcess(test_1, process).then(function (response) {
                                     _this.syberServer.events.emit(events_1.SyberServerEvents.ProcessorEnded, {
                                         source: "ExecutionContext.runProcesses",
                                         correlationId: _this.correlationId,
@@ -212,9 +233,9 @@ var ExecutionContext = (function () {
                         }
                         return [2, resolve(true)];
                     case 2:
-                        err_2 = _a.sent();
-                        this.logger.log(this.req.id, "" + err_2.message, "executionContext.runProcesses");
-                        return [2, reject(err_2)];
+                        err_3 = _a.sent();
+                        this.logger.log(this.req.id, "" + err_3.message, "executionContext.runProcesses");
+                        return [2, reject(err_3)];
                     case 3: return [2];
                 }
             });
@@ -224,38 +245,38 @@ var ExecutionContext = (function () {
     ExecutionContext.prototype.respond = function () {
         var _this = this;
         var result = new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
-            var theType, test, task, response, err_3;
+            var theType, test_2, task, response, err_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
                         theType = null;
-                        test = _.find(this.schematic.responses, { httpStatus: this.httpStatus });
-                        if (!test) {
-                            test = this.syberServer.getGlobalSchematicResponse(this.httpStatus);
-                            if (!test) {
+                        test_2 = _.find(this.schematic.responses, { httpStatus: this.httpStatus });
+                        if (!test_2) {
+                            test_2 = this.syberServer.getGlobalSchematicResponse(this.httpStatus);
+                            if (!test_2) {
                                 this.logger.warn(this.req.id, "syber-server.executionContext.respond.error: no record of response for http status " + this.httpStatus, "executionContext.respond");
                                 theType = responses_1.RawResponse;
                             }
                             else {
-                                theType = test.class;
+                                theType = test_2.class;
                             }
                         }
                         else {
-                            theType = test.class;
+                            theType = test_2.class;
                         }
-                        task = new theType(this, test, this.logger);
-                        return [4, this.tryCatchWrapperForProcess(task, test)];
+                        task = new theType(this, test_2, this.logger);
+                        return [4, this.tryCatchWrapperForProcess(task, test_2)];
                     case 1:
                         response = _a.sent();
                         return [2, resolve(response.data || response)];
                     case 2:
-                        err_3 = _a.sent();
+                        err_4 = _a.sent();
                         if (this.httpStatus === 200) {
                             this.httpStatus = 500;
                         }
                         this.errors.push("syber-server.executionContext.respond().error");
-                        return [2, reject(err_3)];
+                        return [2, reject(err_4)];
                     case 3: return [2];
                 }
             });
@@ -265,7 +286,7 @@ var ExecutionContext = (function () {
     ExecutionContext.prototype.tryCatchWrapperForProcess = function (processor, process) {
         var _this = this;
         var result = new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
-            var response, err_4;
+            var response, err_5;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -275,11 +296,11 @@ var ExecutionContext = (function () {
                         response = _a.sent();
                         return [2, resolve(response)];
                     case 2:
-                        err_4 = _a.sent();
+                        err_5 = _a.sent();
                         if (this.httpStatus === 200) {
                             this.httpStatus = 500;
                         }
-                        return [2, reject(err_4)];
+                        return [2, reject(err_5)];
                     case 3: return [2];
                 }
             });
@@ -292,6 +313,9 @@ var ExecutionContext = (function () {
             try {
                 var wasOneInvalid_1 = false;
                 if (_this.schematic && _this.schematic.parameters && _this.schematic.parameters.length > 0) {
+                    if (_this.parameters) {
+                        _this.parameters = [];
+                    }
                     _this.syberServer.events.emit(events_1.SyberServerEvents.ExecutionContextBeforeLoadParameters, {
                         source: "ExecutionContext.loadParameters",
                         correlationId: _this.correlationId,
@@ -371,7 +395,7 @@ var ExecutionContext = (function () {
     ExecutionContext.prototype.errorResponse = function () {
         var _this = this;
         var result = new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
-            var test, task, response, err_5, test;
+            var test_3, task, response, err_6, test_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -379,22 +403,22 @@ var ExecutionContext = (function () {
                         if (this.httpStatus === 200) {
                             this.httpStatus = 500;
                         }
-                        test = {
+                        test_3 = {
                             class: responses_1.ErrorResponse
                         };
-                        task = new responses_1.ErrorResponse(this, test, this.logger);
-                        return [4, this.tryCatchWrapperForProcess(task, test)];
+                        task = new responses_1.ErrorResponse(this, test_3, this.logger);
+                        return [4, this.tryCatchWrapperForProcess(task, test_3)];
                     case 1:
                         response = _a.sent();
                         return [2, resolve(response.data || response)];
                     case 2:
-                        err_5 = _a.sent();
-                        test = Object.assign({}, {
+                        err_6 = _a.sent();
+                        test_4 = Object.assign({}, {
                             httpStatus: this.httpStatus || 500,
                             errors: this.errors || ['Unknown Error'],
                             warnings: this.warnings || []
                         });
-                        return [2, resolve(test)];
+                        return [2, resolve(test_4)];
                     case 3: return [2];
                 }
             });

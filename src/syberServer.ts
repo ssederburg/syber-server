@@ -96,6 +96,9 @@ export class SyberServer {
             }
         }
         
+        // TODO: ServerOption dynamicSwagger boolean defaults to false
+        // If false, assume swagger on root. Check if file exists and attach route handler if it does
+        // If true, consumer must call public method to instantiate/generate swagger AFTER all routes are declared e.g. all schematics are known
         this.logger.log(`SYS${uuidv4()}`, `Loading swagger from ${process.cwd() + '/swagger.json'}`, `syberServer.start`)
         const swaggerDocument = require(process.cwd() + '/swagger.json')
 

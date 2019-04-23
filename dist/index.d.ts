@@ -9,3 +9,4 @@ export { Utilities } from './utilities/utilities';
 export * from './validators';
 export * from './responses';
 export * from './processors';
+export * from './mocks';

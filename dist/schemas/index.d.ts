@@ -8,3 +8,4 @@ export * from './executionModes';
 export * from './schematicResponse';
 export * from './schemaDef';
 export * from './iLogger';
+export * from './iEventEmitter';

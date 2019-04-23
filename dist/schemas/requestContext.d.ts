@@ -23,5 +23,5 @@ export declare class RequestContext {
     user?: IUserContext;
     setTimeout?(interval: number): any;
     timedout?: boolean;
-    starttime: Date;
+    starttime?: Date;
 }

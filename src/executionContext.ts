@@ -1,6 +1,7 @@
 import { Schematic } from './schematics'
 import { RequestContext, Parameter, Activity, SharedResource, 
     ExecutionMode, ProcessorDef, SchematicResponse, ILogger } from './schemas'
+import { IMockSyberServer } from './mocks'
 import { ProcessorResponse, ProcessorErrorResponse } from './responses'
 import { BaseProcessor } from './processors'
 import { Utilities } from './utilities/utilities'
@@ -24,7 +25,8 @@ export class ExecutionContext {
     private logger: ILogger = null
 
 
-    constructor(public req: RequestContext, public schematic: Schematic, private sharedResources: Array<SharedResource>, private syberServer: SyberServer) { // SyberServer
+    constructor(public req: RequestContext, public schematic: Schematic, private sharedResources: Array<SharedResource>, 
+        private syberServer: SyberServer|IMockSyberServer) {
         this.correlationId = req.id
         this.logger = syberServer.logger
     }
@@ -58,6 +60,22 @@ export class ExecutionContext {
         })
 
         return result
+    }
+
+    public setupForTesting(): Promise<any> {
+
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                await this.loadParameters()
+                return resolve(true)
+            }
+            catch (err) {
+                return reject(err.message)
+            }
+        })
+
+        return result
+
     }
 
     public getParameterValue(name: string): any {
@@ -231,6 +249,9 @@ export class ExecutionContext {
             try {
                 let wasOneInvalid = false
                 if (this.schematic && this.schematic.parameters && this.schematic.parameters.length > 0) {
+                    if (this.parameters) {
+                        this.parameters = []
+                    }
                     this.syberServer.events.emit(SyberServerEvents.ExecutionContextBeforeLoadParameters, {
                         source: `ExecutionContext.loadParameters`,
                         correlationId: this.correlationId,
