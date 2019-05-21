@@ -9,3 +9,5 @@ export * from './schematicResponse';
 export * from './schemaDef';
 export * from './iLogger';
 export * from './iEventEmitter';
+export * from './ruleSchema';
+export * from './ruleLookup';

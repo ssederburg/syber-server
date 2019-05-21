@@ -96,6 +96,22 @@ var Utilities = (function () {
     Utilities.isString = function (value) {
         return typeof value === 'string';
     };
+    Utilities.toInt = function (value) {
+        return parseInt(value);
+    };
+    Utilities.toFloat = function (value) {
+        return parseFloat(value);
+    };
+    Utilities.toDate = function (value) {
+        return new Date(value.toString());
+    };
+    Utilities.toBoolean = function (value) {
+        var theValue = value.toString().toLowerCase();
+        if (theValue === 'true' || theValue === '1' || theValue === 'yes' || theValue === 'on') {
+            return true;
+        }
+        return false;
+    };
     Utilities.prototype.readValue = function (documentPath, source) {
         if (documentPath.indexOf('/') < 0)
             return source[documentPath];

@@ -11,3 +11,5 @@ __export(require("./sharedResource"));
 __export(require("./executionModes"));
 __export(require("./schematicResponse"));
 __export(require("./schemaDef"));
+__export(require("./ruleSchema"));
+__export(require("./ruleLookup"));

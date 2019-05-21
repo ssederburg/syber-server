@@ -111,6 +111,27 @@ export class Utilities {
         return typeof value === 'string'
     }
 
+    public static toInt(value: any): number {
+        return parseInt(value)
+    }
+
+    public static toFloat(value: any): number {
+        return parseFloat(value)
+    }
+
+    public static toDate(value: any): Date {
+        // TODO: Add formatting
+        return new Date(value.toString())
+    }
+
+    public static toBoolean(value: any): boolean {
+        const theValue = value.toString().toLowerCase()
+        if (theValue === 'true' || theValue === '1' || theValue === 'yes' || theValue === 'on') {
+            return true
+        }
+        return false
+    }
+
     public readValue(documentPath: string, source: any): string|any {
 
         if (documentPath.indexOf('/') < 0) return source[documentPath]

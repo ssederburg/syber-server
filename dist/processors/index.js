@@ -7,3 +7,4 @@ __export(require("./baseProcessor"));
 __export(require("./rawComposer"));
 __export(require("./fieldComposer"));
 __export(require("./testSyncSleepProcessor"));
+__export(require("./ruleProcessor"));
