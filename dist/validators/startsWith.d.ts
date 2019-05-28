@@ -1,1 +1,1 @@
-export declare function StartsWith(text: string, value?: any): Boolean;
+export declare function StartsWith(whereToLook: any, whatToLookFor: any): Boolean;

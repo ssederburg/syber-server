@@ -1,1 +1,1 @@
-export declare function MaxDate(maxDate: string, value?: any): Boolean;
+export declare function MaxDate(whereToLook: any, whatToLookFor: any): Boolean;

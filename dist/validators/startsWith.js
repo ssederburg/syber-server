@@ -1,9 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var utilities_1 = require("../utilities/utilities");
-function StartsWith(text, value) {
-    if (!utilities_1.Utilities.isString(value))
+function StartsWith(whereToLook, whatToLookFor) {
+    var options = utilities_1.Utilities.isObject(whatToLookFor) ? whatToLookFor : { value: whatToLookFor, ignoreCase: false };
+    if (!whereToLook || !options.value)
         return false;
-    return value.indexOf(text) === 0;
+    if (!utilities_1.Utilities.isString(options.value))
+        options.value = options.value.toString();
+    if (!utilities_1.Utilities.isString(whereToLook))
+        whereToLook = whereToLook.toString();
+    if (whereToLook.length < whatToLookFor.length)
+        return false;
+    if (options.ignoreCase) {
+        options.value = options.value.toLowerCase();
+        whereToLook = whereToLook.toLowerCase();
+    }
+    return whereToLook.substr(0, options.value.length) === options.value;
 }
 exports.StartsWith = StartsWith;

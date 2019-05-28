@@ -1,12 +1,33 @@
 import { Utilities } from '../utilities/utilities'
 
-export function ContainsAny(input: Array<any>, value?: any): Boolean {
-    if (!Utilities.isArray(input)) return false
+// READ AS "Does whereToLook Contain Any items in whatToLookFor?"
+// "Does field value '$123.00' have either ['$','USD']"
+// whatToLookFor: { value: [x], ignoreCase: true|false }
+
+export function ContainsAny(whereToLook: any, whatToLookFor: Array<any>|any): Boolean {
+    
+    const options = Utilities.isArray(whatToLookFor) ? {value: whatToLookFor, ignoreCase: false} : Object.assign({}, whatToLookFor)
+    
+    if (!whereToLook || !options || !options.value || !Utilities.isArray(options.value)) {
+        return false
+    }
+
+    if (!Utilities.isString(whereToLook)) whereToLook = whereToLook.toString()
+    
+    if (options.ignoreCase) {
+        whereToLook = whereToLook.toLowerCase()
+    }
+
     let wasOne = false
-    input.forEach((item) => {
-        if (!wasOne && value.indexOf(item) >= 0) {
+    options.value.forEach((item) => {
+        if (options.ignoreCase) {
+            item = item.toLowerCase()
+        }
+        if (!wasOne && whereToLook.indexOf(item) >= 0) {
             wasOne = true
+            return true
         }
     })
     return wasOne
+    
 }

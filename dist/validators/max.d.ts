@@ -1,1 +1,1 @@
-export declare function Max(max: number, value?: any): Boolean;
+export declare function Max(whereToLook: any, whatToLookFor: any): Boolean;

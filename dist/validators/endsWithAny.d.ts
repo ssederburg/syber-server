@@ -1,1 +1,1 @@
-export declare function EndsWithAny(text: Array<string>, value?: any): Boolean;
+export declare function EndsWithAny(whereToLook: any, whatToLookFor: Array<any> | any): Boolean;

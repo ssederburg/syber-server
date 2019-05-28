@@ -13,7 +13,8 @@ export declare class Utilities {
     static isString(value: any): boolean;
     static toInt(value: any): number;
     static toFloat(value: any): number;
-    static toDate(value: any): Date;
+    static toDate(value: any, format?: string): Date;
+    static parseDateInput(input: any, format: string): Date;
     static toBoolean(value: any): boolean;
     readValue(documentPath: string, source: any): string | any;
     writeValue(documentPath: string, value: any, source: any): any;

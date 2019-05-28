@@ -21,3 +21,7 @@ __export(require("./isObject"));
 __export(require("./isArray"));
 __export(require("./contains"));
 __export(require("./containsAny"));
+__export(require("./isNotNullOrEmpty"));
+__export(require("./equals"));
+__export(require("./equalsAny"));
+__export(require("./regEx"));

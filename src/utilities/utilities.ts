@@ -1,6 +1,7 @@
 import * as _ from 'lodash'
 import * as config from 'config'
 import * as util from 'util'
+import * as moment from 'moment'
 
 export class Utilities {
 
@@ -76,14 +77,17 @@ export class Utilities {
     }
 
     public static isArray(value: any): boolean {
+        if (!value) return false
         return Array.isArray(value)
     }
 
     public static isDate(value: any): boolean {
+        if (!value) return false
         return util.types.isDate(value)
     }
 
     public static isRegEx(value: any): boolean {
+        if (!value) return false
         return util.types.isRegExp(value)
     }
 
@@ -92,6 +96,7 @@ export class Utilities {
     }
 
     public static isFunction(value: any): boolean {
+        if (!value) return false
         return typeof value === 'function'
     }
 
@@ -100,11 +105,13 @@ export class Utilities {
     }
 
     public static isNumber(value: any): boolean {
+        if (value === null || value === undefined) return false
         return !isNaN(value)
     }
 
     public static isObject(value: any): boolean {
-        return value !== null && typeof value === 'object'
+        if (!value) return false
+        return value !== null && typeof value === 'object' && !Utilities.isArray(value)
     }
 
     public static isString(value: any): boolean {
@@ -112,19 +119,64 @@ export class Utilities {
     }
 
     public static toInt(value: any): number {
+        if (!Utilities.isNumber(value)) return null
         return parseInt(value)
     }
 
     public static toFloat(value: any): number {
+        if (!Utilities.isNumber(value)) return null
         return parseFloat(value)
     }
 
-    public static toDate(value: any): Date {
+    public static toDate(value: any, format?: string): Date {
         // TODO: Add formatting
-        return new Date(value.toString())
+        if (!value) return null
+        return Utilities.parseDateInput(value, format)
     }
 
+    public static parseDateInput (input: any, format: string): Date {
+
+        let theDate = null
+    
+        try {
+            if (!Utilities.isDate(input)) {
+                if (input.indexOf('now') >= 0) {
+                    if (input.indexOf('+') >= 0 || input.indexOf('-') >= 0) {
+                        const trimmed = input.replace(/\s/g, '')
+                        const baseDate = moment.utc()
+                        const sign = trimmed.indexOf('+') >= 0 ? '+' : '-'
+                        const offset = trimmed.substr(trimmed.indexOf(sign) + 1)
+                        theDate = sign === '+' ? baseDate.add(offset , 'days') : baseDate.subtract(offset, 'days')
+                        //console.log(`1. ${input} ${trimmed} ${baseDate} ${sign} ${offset} ${theDate.format()}`)
+                    } else {
+                        theDate = moment.utc()
+                        //console.log(`2. ${input} ${theDate.format()}`)
+                    }
+                } else {
+                    theDate = moment(input, format)
+                    if (!theDate.isValid()) {
+                        return null
+                    }
+                    //console.log(`3. ${input} ${theDate.format()}`)
+                }
+            } else {
+                theDate = moment(input)
+                if (!theDate.isValid()) {
+                    return null
+                }
+                //console.log(`4. ${input} ${theDate.format()}`)
+            }
+            //console.log(`Parsing Date: ${input} with format ${format}: ${theDate.format()}`)
+            return theDate
+        } catch (err) {
+            //console.log(`Unable to parse MaxDate: ${input} with format ${format}`)
+            return null
+        }
+    
+    }
+    
     public static toBoolean(value: any): boolean {
+        if (value === null || value === undefined) return null
         const theValue = value.toString().toLowerCase()
         if (theValue === 'true' || theValue === '1' || theValue === 'yes' || theValue === 'on') {
             return true

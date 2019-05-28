@@ -18,6 +18,7 @@ describe('index tests work', () => {
 // Reusable on every test
 const mockSyberServer = new MockSyberServer()
 
+// #region Basic Request Body Parameters
 // Test Basic Processor
 const mockRequestContextTest1 = new MockRequestContext({
     test: 'Hello World'
@@ -49,8 +50,6 @@ describe('Basic Request Body Parameters', () => {
                 //     The ExecutionContext's document property is where all processors usually put their updates
                 //     We can read the contents of document at any time in the process to see if values are written properly
                 //     This test does NOT use activities or run any workflow. It only demonstrates how to execute any processor
-                console.log('Test1: Response from FieldComposer:\n' + JSON.stringify(response, null, 1))
-                console.log('Test1: ExecutionContext document:\n:' + JSON.stringify(mockExecutionContextTest1.document, null, 1))
                 if (response && response.successful) {
                     if (mockExecutionContextTest1.document && mockExecutionContextTest1.document.test) {
                         return resolve(true)
@@ -65,3 +64,5 @@ describe('Basic Request Body Parameters', () => {
         return result
     })
 })
+// #endregion
+

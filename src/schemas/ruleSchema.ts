@@ -72,19 +72,21 @@ IsObject - none - args: null
 IsDate - value, format - args: {value: '01/15/2019', format: 'MM/dd/yyyy'}
 Length - min, max, exact - args: {exact: 3} - args: {min: 1, max: 10}
 Max - value - args: 100
-MaxDate - value - args: '12/31/2030' - args: 'sysdate' - args: 'sysdate + 1'
+MaxDate - value - args: '12/31/2030' - args: 'now' - args: 'now + 1'
 MaxLength - value - args: 10
 Min - value - args: 0
-MinDate - value - args: '01/01/2012' - args: 'sysdate' - args: 'sysdate - 365'
+MinDate - value - args: '01/01/2012' - args: 'now' - args: 'now - 365'
 MinLength - value - args: 1
 Range - min, max - args: {min: 0, max: 100} - may be numeric or date or datetime
 StartsWith - value, caseSensitive - args: {value: '1', caseSensitive: false}
 StartsWithAny - array<value>, caseSensitive - args: {values: ['1','2'], caseSensitive: false}
-
 IsNotNullOrEmpty - trim, keywordMatch - args: {trim: true, keywordMatch: true} e.g. undefined is null, null text is null etc
-RegEx - value - args: 's^g'
 Equals - value - args: '123' - args: 123 MUST match same data type. asType is applied before test
-IsNumeric - value - args: null
+EqualsAny
+RegEx - value - args: 's^g'
+
+IsNumber - value - args: null
 IsString - value
+DateRange - min, max
 
 */

@@ -1,9 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var utilities_1 = require("../utilities/utilities");
-function MaxDate(maxDate, value) {
-    if (!utilities_1.Utilities.isDate(value))
+function MaxDate(whereToLook, whatToLookFor) {
+    var options = utilities_1.Utilities.isObject(whatToLookFor) ? whatToLookFor : { max: whatToLookFor, maxFormat: 'YYYY-MM-DD', sourceFormat: 'YYYY-MM-DD' };
+    whereToLook = utilities_1.Utilities.parseDateInput(whereToLook, options.sourceFormat || 'YYYY-MM-DD');
+    options.max = utilities_1.Utilities.parseDateInput(options.max, options.maxFormat || 'YYYY-MM-DD');
+    if (!whereToLook || !options.max)
         return false;
-    return value <= new Date(maxDate);
+    return whereToLook <= options.max;
 }
 exports.MaxDate = MaxDate;

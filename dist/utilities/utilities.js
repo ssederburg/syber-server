@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("lodash");
 var config = require("config");
 var util = require("util");
+var moment = require("moment");
 var Utilities = (function () {
     function Utilities() {
     }
@@ -70,42 +71,97 @@ var Utilities = (function () {
         return value === null || value === undefined;
     };
     Utilities.isArray = function (value) {
+        if (!value)
+            return false;
         return Array.isArray(value);
     };
     Utilities.isDate = function (value) {
+        if (!value)
+            return false;
         return util.types.isDate(value);
     };
     Utilities.isRegEx = function (value) {
+        if (!value)
+            return false;
         return util.types.isRegExp(value);
     };
     Utilities.isBoolean = function (value) {
         return typeof value === 'boolean';
     };
     Utilities.isFunction = function (value) {
+        if (!value)
+            return false;
         return typeof value === 'function';
     };
     Utilities.isNull = function (value) {
         return value === null;
     };
     Utilities.isNumber = function (value) {
+        if (value === null || value === undefined)
+            return false;
         return !isNaN(value);
     };
     Utilities.isObject = function (value) {
-        return value !== null && typeof value === 'object';
+        if (!value)
+            return false;
+        return value !== null && typeof value === 'object' && !Utilities.isArray(value);
     };
     Utilities.isString = function (value) {
         return typeof value === 'string';
     };
     Utilities.toInt = function (value) {
+        if (!Utilities.isNumber(value))
+            return null;
         return parseInt(value);
     };
     Utilities.toFloat = function (value) {
+        if (!Utilities.isNumber(value))
+            return null;
         return parseFloat(value);
     };
-    Utilities.toDate = function (value) {
-        return new Date(value.toString());
+    Utilities.toDate = function (value, format) {
+        if (!value)
+            return null;
+        return Utilities.parseDateInput(value, format);
+    };
+    Utilities.parseDateInput = function (input, format) {
+        var theDate = null;
+        try {
+            if (!Utilities.isDate(input)) {
+                if (input.indexOf('now') >= 0) {
+                    if (input.indexOf('+') >= 0 || input.indexOf('-') >= 0) {
+                        var trimmed = input.replace(/\s/g, '');
+                        var baseDate = moment.utc();
+                        var sign = trimmed.indexOf('+') >= 0 ? '+' : '-';
+                        var offset = trimmed.substr(trimmed.indexOf(sign) + 1);
+                        theDate = sign === '+' ? baseDate.add(offset, 'days') : baseDate.subtract(offset, 'days');
+                    }
+                    else {
+                        theDate = moment.utc();
+                    }
+                }
+                else {
+                    theDate = moment(input, format);
+                    if (!theDate.isValid()) {
+                        return null;
+                    }
+                }
+            }
+            else {
+                theDate = moment(input);
+                if (!theDate.isValid()) {
+                    return null;
+                }
+            }
+            return theDate;
+        }
+        catch (err) {
+            return null;
+        }
     };
     Utilities.toBoolean = function (value) {
+        if (value === null || value === undefined)
+            return null;
         var theValue = value.toString().toLowerCase();
         if (theValue === 'true' || theValue === '1' || theValue === 'yes' || theValue === 'on') {
             return true;

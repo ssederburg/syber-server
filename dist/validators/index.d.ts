@@ -16,3 +16,7 @@ export * from './isObject';
 export * from './isArray';
 export * from './contains';
 export * from './containsAny';
+export * from './isNotNullOrEmpty';
+export * from './equals';
+export * from './equalsAny';
+export * from './regEx';

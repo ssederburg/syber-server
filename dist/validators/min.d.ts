@@ -1,1 +1,1 @@
-export declare function Min(min: number, value?: any): Boolean;
+export declare function Min(whereToLook: any, whatToLookFor: any): Boolean;

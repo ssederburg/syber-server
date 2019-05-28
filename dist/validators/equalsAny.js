@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var utilities_1 = require("../utilities/utilities");
-function EndsWithAny(whereToLook, whatToLookFor) {
-    var options = utilities_1.Utilities.isArray(whatToLookFor) ? { value: whatToLookFor, ignoreCase: false } : Object.assign({}, whatToLookFor);
+function EqualsAny(whereToLook, whatToLookFor) {
+    var options = utilities_1.Utilities.isArray(whatToLookFor) ? { value: whatToLookFor, ignoreCase: false, trim: false } : Object.assign({}, whatToLookFor);
     if (!whereToLook || !options || !options.value || !utilities_1.Utilities.isArray(options.value)) {
         return false;
     }
@@ -11,16 +11,22 @@ function EndsWithAny(whereToLook, whatToLookFor) {
     if (options.ignoreCase) {
         whereToLook = whereToLook.toLowerCase();
     }
+    if (options.trim) {
+        whereToLook = whereToLook.replace(/\s/g, '');
+    }
     var wasOne = false;
     options.value.forEach(function (item) {
         if (options.ignoreCase) {
             item = item.toLowerCase();
         }
-        if (!wasOne && whereToLook.substr(whereToLook.length - item.length) === item) {
+        if (options.trim) {
+            item = item.replace(/\s/g, '');
+        }
+        if (!wasOne && whereToLook === item) {
             wasOne = true;
             return true;
         }
     });
     return wasOne;
 }
-exports.EndsWithAny = EndsWithAny;
+exports.EqualsAny = EqualsAny;
