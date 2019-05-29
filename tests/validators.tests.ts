@@ -2,7 +2,7 @@ import * as chai from 'chai'
 
 import { Contains, ContainsAny, EndsWith, EndsWithAny, IsArray, IsFloat, IsObject, Length, Max, MaxDate,
     MaxLength, Min, MinDate, MinLength, Range, StartsWith, StartsWithAny, IsNotNullOrEmpty, Equals, EqualsAny,
-    RegEx } from '../src'
+    RegEx, IsNullOrEmpty, IsDate, IsNumber } from '../src'
 
 const should = chai.should()
 const expect = chai.expect
@@ -664,7 +664,247 @@ describe(`Validator Tests`, () => {
         })
         return result
     })
+    it (`IsFloat: '123.4501' {precision: 7} should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsFloat('123.4501', {precision: 7})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsFloat: '123.4501' {precision: 5} should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsFloat('123.4501', {precision: 5})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsFloat: '123.4501' {minPrecision: 3} should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsFloat('123.4501', {minPrecision: 3})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsFloat: '123.4501' {minPrecision: 8} should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsFloat('123.4501', {minPrecision: 8})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsFloat: '123.4501' {maxPrecision: 8} should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsFloat('123.4501', {maxPrecision: 8})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsFloat: '123.4501' {maxPrecision: 6} should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsFloat('123.4501', {maxPrecision: 6})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsFloat: '123.4501' {minPrecision: 3, maxPrecision: 8} should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsFloat('123.4501', {minPrecision: 3, maxPrecision: 8})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsFloat: '123.4501' {minPrecision: 8, maxPrecision: 10} should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsFloat('123.4501', {minPrecision: 8, maxPrecision: 10})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsFloat: '123.4501' {minPrecision: 3, maxPrecision: 5} should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsFloat('123.4501', {minPrecision: 3, maxPrecision: 5})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsFloat: '123.4501' {scale: 4} should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsFloat('123.4501', {scale: 4})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsFloat: '123.4501' {scale: 3} should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsFloat('123.4501', {scale: 3})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsFloat: '123.4501' {scale: 5} should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsFloat('123.4501', {scale: 5})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsFloat: '123.4501' {minScale: 4} should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsFloat('123.4501', {minScale: 1})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsFloat: '123.4501' {minScale: 5} should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsFloat('123.4501', {minScale: 5})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsFloat: '123.4501' {maxScale: 4} should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsFloat('123.4501', {maxScale: 4})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsFloat: '123.4501' {maxScale: 3} should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsFloat('123.4501', {maxScale: 3})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsFloat: '123,4501' {decimalChar: ','} should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsFloat('123,4501', {decimalChar: ','})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsFloat: '123,4501' {decimalChar: ',', precision: 7, scale: 4} should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsFloat('123,4501', {decimalChar: ',', precision: 7, scale: 4})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsFloat: '123,4501' {decimalChar: ',', precision: 6, scale: 4} should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsFloat('123,4501', {decimalChar: ',', precision: 6, scale: 4})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
 
+    it (`IsFloat: '123,4501' {decimalChar: ',', precision: 7, scale: 3} should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsFloat('123,4501', {decimalChar: ',', precision: 7, scale: 3})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
     // #endregion
 
     // #region IsObject
@@ -728,6 +968,55 @@ describe(`Validator Tests`, () => {
         })
         return result
     })
+    it (`IsObject: 'A String' should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsObject('A String')
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsObject: '{notvalid; json}' should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsObject('{notvalid; json}')
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsObject: '{"valid": "json"}' should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsObject('{"valid": "json"}')
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsObject: '{invalid: "json"}' should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsObject('{invalid: "json"}')
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+
     // #endregion
 
     // #region Length
@@ -917,7 +1206,7 @@ describe(`Validator Tests`, () => {
     it (`Max: 0 with max of 4 should be true`, async() => {
         const result = new Promise(async(resolve, reject) => {
             try {
-                const pass = Max(4, 4)
+                const pass = Max(0, 4)
                 expect(pass).to.equal(true)
                 return resolve()
             } catch (err) {
@@ -1113,6 +1402,42 @@ describe(`Validator Tests`, () => {
         const result = new Promise(async(resolve, reject) => {
             try {
                 const pass = MaxDate('', { max: 'now', sourceFormat: 'MM/DD/YYYY'})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`MaxDate: '20180913144636' with max of 'now+1' should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = MaxDate('20180913144636', { max: 'now+1', sourceFormat: 'YYYYMMDDHHmmss'})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`MaxDate: '20180913144636' with max of '20180913144637' should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = MaxDate('20180913144636', { max: '20180913144637', sourceFormat: 'YYYYMMDDHHmmss', maxFormat: 'YYYYMMDDHHmmss'})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`MaxDate: '20180913144636' with min of '20180913144635' should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = MaxDate('20180913144636', { max: '20180913144635', sourceFormat: 'YYYYMMDDHHmmss', maxFormat: 'YYYYMMDDHHmmss'})
                 expect(pass).to.equal(false)
                 return resolve()
             } catch (err) {
@@ -1454,6 +1779,43 @@ describe(`Validator Tests`, () => {
         })
         return result
     })
+    it (`MinDate: '20380913144636' with min of 'now+1' should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = MinDate('20380913144636', { min: 'now+1', sourceFormat: 'YYYYMMDDHHmmss'})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`MinDate: '20180913144636' with min of '20180913144635' should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = MinDate('20180913144636', { min: '20180913144635', sourceFormat: 'YYYYMMDDHHmmss', minFormat: 'YYYYMMDDHHmmss'})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`MinDate: '20180913144636' with min of '20180913144637' should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = MinDate('20180913144636', { min: '20180913144637', sourceFormat: 'YYYYMMDDHHmmss', minFormat: 'YYYYMMDDHHmmss'})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+
     // #endregion
 
     // #region MinLength
@@ -2050,7 +2412,7 @@ describe(`Validator Tests`, () => {
     it (`IsNotNullOrEmpty: '   UNDEFINED   ' with keywordMatch and trim should be false`, async() => {
         const result = new Promise(async(resolve, reject) => {
             try {
-                const pass = IsNotNullOrEmpty('   NULL   ', {trim: true, keywordMatch: true})
+                const pass = IsNotNullOrEmpty('   UNDEFINED   ', {trim: true, keywordMatch: true})
                 expect(pass).to.equal(false)
                 return resolve()
             } catch (err) {
@@ -2062,8 +2424,179 @@ describe(`Validator Tests`, () => {
     it (`IsNotNullOrEmpty: '   UNDEFINED   ' with keywordMatch but without trim should be true`, async() => {
         const result = new Promise(async(resolve, reject) => {
             try {
-                const pass = IsNotNullOrEmpty('   NULL   ', {trim: false, keywordMatch: true})
+                const pass = IsNotNullOrEmpty('   UNDEFINED   ', {trim: false, keywordMatch: true})
                 expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    // #endregion
+
+    // #region IsNullOrEmpty
+    it (`IsNullOrEmpty: string 0123456123 should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNullOrEmpty(`0123456123`, null)
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsNullOrEmpty: null should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNullOrEmpty(null, null)
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsNullOrEmpty: '' should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNullOrEmpty('', null)
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsNullOrEmpty: '   ' without trim should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNullOrEmpty('   ', null)
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsNullOrEmpty: '   ' with trim should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNullOrEmpty('   ', {trim: true})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsNullOrEmpty: 'null' should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNullOrEmpty('null', null)
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsNullOrEmpty: 'null' with keywordMatch should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNullOrEmpty('null', {keywordMatch: true})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsNullOrEmpty: 'NULL' with keywordMatch should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNullOrEmpty('NULL', {keywordMatch: true})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsNullOrEmpty: '   NULL   ' with keywordMatch and trim should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNullOrEmpty('   NULL   ', {trim: true, keywordMatch: true})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsNullOrEmpty: '   NULL   ' with keywordMatch but without trim should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNullOrEmpty('   NULL   ', {trim: false, keywordMatch: true})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsNullOrEmpty: 'undefined' with keywordMatch should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNullOrEmpty('undefined', {keywordMatch: true})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsNullOrEmpty: 'UNDEFINED' with keywordMatch should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNullOrEmpty('UNDEFINED', {keywordMatch: true})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsNullOrEmpty: '   UNDEFINED   ' with keywordMatch and trim should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNullOrEmpty('   UNDEFINED   ', {trim: true, keywordMatch: true})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsNullOrEmpty: '   UNDEFINED   ' with keywordMatch but without trim should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNullOrEmpty('   UNDEFINED   ', {trim: false, keywordMatch: true})
+                expect(pass).to.equal(false)
                 return resolve()
             } catch (err) {
                 return reject(err.message)
@@ -2488,6 +3021,206 @@ describe(`Validator Tests`, () => {
         })
         return result
     })
+    // #endregion
+
+    // #region IsDate
+    it (`IsDate: '2019-12-31' with format of 'YYYY-MM-DD' should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsDate('2019-12-31', { format: 'YYYY-MM-DD'})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsDate: '2019-12-31' with format of 'MM-DD-YYYY' should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsDate('2019-12-31', { format: 'MM-DD-YYYY'})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsDate: '31-DEC-2019' with format of 'DD-MMM-YYYY' should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsDate('31-DEC-2019', { format: 'DD-MMM-YYYY'})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsDate: '31-DEC-2019T13:44' with format of 'DD-MMM-YYYYTHH:mm' should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsDate('31-DEC-2019T13:44', { format: 'DD-MMM-YYYYTHH:mm'})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsDate: '31-DEC-2019T33:44' with format of 'DD-MMM-YYYYTHH:mm' should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsDate('31-DEC-2019T33:44', { format: 'DD-MMM-YYYYTHH:mm'})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsDate: 'not a date' with format of 'DD-MMM-YYYYTHH:mm' should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsDate('not a date', { format: 'DD-MMM-YYYYTHH:mm'})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsDate: null with format of 'MM/DD/YYYY' should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsDate(null, { format: 'MM/DD/YYYY'})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsDate: '12/31/2019' with format of 'MM/DD/YYYY' should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsDate('12/31/2019', { format: 'MM/DD/YYYY'})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsDate: '12/33/2019' with format of 'MM/DD/YYYY' should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsDate('12/33/2019', { format: 'MM/DD/YYYY'})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsDate: '12//31//2019' with format of 'MM/DD/YYYY' should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsDate('12//33//2019', { format: 'MM/DD/YYYY'})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+
+    // #endregion
+
+    // #region IsNumber
+    it (`IsNumber: 1 should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNumber(1)
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsNumber: '1' should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNumber('1')
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsNumber: 'X' should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNumber('X')
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsNumber: '0001' should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNumber('0001')
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsNumber: null should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNumber(null)
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsNumber: '11000A' should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNumber('11000A')
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+
     // #endregion
 
 })

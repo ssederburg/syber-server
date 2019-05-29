@@ -1,1 +1,2 @@
-export declare function IsFloat(value: string): Boolean;
+import { IsFloatOptions } from '../schemas';
+export declare function IsFloat(whereToLook: string, whatToLookFor?: IsFloatOptions): Boolean;

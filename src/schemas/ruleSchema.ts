@@ -62,15 +62,14 @@ Some Samples
 }
 
 BAKED IN syber-server rule classes
-Contains - value, caseSensitive - args: {value: '1', caseSensitive: false}
-ContainsAny - values: array<value>, caseSensitive - args: {values: ['1', '2'], caseSensitive: false}
-EndsWith - value, caseSensitive - args: {value: '1', caseSensitive: false}
-EndsWithAny - array<value>, caseSensitive - args: {values: ['1','2'], caseSensitive: false}
+Contains - value, ignoreCase - args: {value: '1', ignoreCase: false}
+ContainsAny - values: array<value>, ignoreCase - args: {values: ['1', '2'], ignoreCase: false}
+EndsWith - value, ignoreCase - args: {value: '1', ignoreCase: false}
+EndsWithAny - array<value>, ignoreCase - args: {values: ['1','2'], ignoreCase: false}
 IsArray - none - args: null
 IsFloat - none - args: null
 IsObject - none - args: null
-IsDate - value, format - args: {value: '01/15/2019', format: 'MM/dd/yyyy'}
-Length - min, max, exact - args: {exact: 3} - args: {min: 1, max: 10}
+Length - min, max, length - args: {length: 3} - args: {min: 1, max: 10}
 Max - value - args: 100
 MaxDate - value - args: '12/31/2030' - args: 'now' - args: 'now + 1'
 MaxLength - value - args: 10
@@ -78,14 +77,16 @@ Min - value - args: 0
 MinDate - value - args: '01/01/2012' - args: 'now' - args: 'now - 365'
 MinLength - value - args: 1
 Range - min, max - args: {min: 0, max: 100} - may be numeric or date or datetime
-StartsWith - value, caseSensitive - args: {value: '1', caseSensitive: false}
-StartsWithAny - array<value>, caseSensitive - args: {values: ['1','2'], caseSensitive: false}
+StartsWith - value, ignoreCase - args: {value: '1', ignoreCase: false}
+StartsWithAny - array<value>, ignoreCase - args: {values: ['1','2'], ignoreCase: false}
 IsNotNullOrEmpty - trim, keywordMatch - args: {trim: true, keywordMatch: true} e.g. undefined is null, null text is null etc
+IsNullOrEmpty - value, trim: true|false, keywordMatch: true|false
 Equals - value - args: '123' - args: 123 MUST match same data type. asType is applied before test
 EqualsAny
 RegEx - value - args: 's^g'
-
+IsDate - value, format - args: {format: 'MM/DD/YYYY'}
 IsNumber - value - args: null
+
 IsString - value
 DateRange - min, max
 
