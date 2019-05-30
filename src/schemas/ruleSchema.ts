@@ -86,7 +86,6 @@ EqualsAny
 RegEx - value - args: 's^g'
 IsDate - value, format - args: {format: 'MM/DD/YYYY'}
 IsNumber - value - args: null
-
 IsString - value
 DateRange - min, max
 

@@ -2,7 +2,7 @@ import * as chai from 'chai'
 
 import { Contains, ContainsAny, EndsWith, EndsWithAny, IsArray, IsFloat, IsObject, Length, Max, MaxDate,
     MaxLength, Min, MinDate, MinLength, Range, StartsWith, StartsWithAny, IsNotNullOrEmpty, Equals, EqualsAny,
-    RegEx, IsNullOrEmpty, IsDate, IsNumber } from '../src'
+    RegEx, IsNullOrEmpty, IsDate, IsNumber, IsString, DateRange } from '../src'
 
 const should = chai.should()
 const expect = chai.expect
@@ -3212,6 +3212,230 @@ describe(`Validator Tests`, () => {
         const result = new Promise(async(resolve, reject) => {
             try {
                 const pass = IsNumber('11000A')
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+
+    // #endregion
+
+    // #region IsString
+    it (`IsString: 'string' should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsString('string')
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsString: 1 should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsString(1)
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsString: null should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsString(null)
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsString: undefined should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsString(undefined)
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsString: [1] should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsString([1])
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsString: {some: 'object'} should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsString({some: 'object'})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsString: true should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsString(true)
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsString: false should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsString(false)
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+
+    // #endregion
+
+    // #region DateRange
+    it (`DateRange: '13-JAN-1987' {min: '19800101', max: '12/31/2050', sourceFormat: 'DD-MMM-YYYY', minFormat: 'YYYYMMDD', maxFormat: 'MM/DD/YYYY'} should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = DateRange('13-JAN-1987', {min: '19800101', max: '12/31/2050', sourceFormat: 'DD-MMM-YYYY', minFormat: 'YYYYMMDD', maxFormat: 'MM/DD/YYYY'})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`DateRange: '13-JAN-1987' {min: '19900101', max: '12/31/2050', sourceFormat: 'DD-MMM-YYYY', minFormat: 'YYYYMMDD', maxFormat: 'MM/DD/YYYY'} should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = DateRange('13-JAN-1987', {min: '19900101', max: '12/31/2050', sourceFormat: 'DD-MMM-YYYY', minFormat: 'YYYYMMDD', maxFormat: 'MM/DD/YYYY'})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`DateRange: '13-JAN-1987' {min: '19800101', max: '12/31/1985', sourceFormat: 'DD-MMM-YYYY', minFormat: 'YYYYMMDD', maxFormat: 'MM/DD/YYYY'} should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = DateRange('13-JAN-1987', {min: '19800101', max: '12/31/1985', sourceFormat: 'DD-MMM-YYYY', minFormat: 'YYYYMMDD', maxFormat: 'MM/DD/YYYY'})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`DateRange: null {min: '19800101', max: '12/31/1985', sourceFormat: 'DD-MMM-YYYY', minFormat: 'YYYYMMDD', maxFormat: 'MM/DD/YYYY'} should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = DateRange(null, {min: '19800101', max: '12/31/1985', sourceFormat: 'DD-MMM-YYYY', minFormat: 'YYYYMMDD', maxFormat: 'MM/DD/YYYY'})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`DateRange: 'not a date' {min: '19800101', max: '12/31/1985', sourceFormat: 'DD-MMM-YYYY', minFormat: 'YYYYMMDD', maxFormat: 'MM/DD/YYYY'} should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = DateRange('not a date', {min: '19800101', max: '12/31/1985', sourceFormat: 'DD-MMM-YYYY', minFormat: 'YYYYMMDD', maxFormat: 'MM/DD/YYYY'})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`DateRange: '13-JAN-1987' {min: null, max: '12/31/1985', sourceFormat: 'DD-MMM-YYYY', minFormat: 'YYYYMMDD', maxFormat: 'MM/DD/YYYY'} should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = DateRange('13-JAN-1987', {min: null, max: '12/31/1985', sourceFormat: 'DD-MMM-YYYY', minFormat: 'YYYYMMDD', maxFormat: 'MM/DD/YYYY'})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`DateRange: '13-JAN-1987' {min: '19800101', max: null, sourceFormat: 'DD-MMM-YYYY', minFormat: 'YYYYMMDD', maxFormat: 'MM/DD/YYYY'} should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = DateRange('13-JAN-1987', {min: '19800101', max: null, sourceFormat: 'DD-MMM-YYYY', minFormat: 'YYYYMMDD', maxFormat: 'MM/DD/YYYY'})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`DateRange: '13-JAN-1987' {min: '19800101', max: '12/31/1985', sourceFormat: null, minFormat: 'YYYYMMDD', maxFormat: 'MM/DD/YYYY'} should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = DateRange('13-JAN-1987', {min: '19800101', max: '12/31/1985', sourceFormat: null, minFormat: 'YYYYMMDD', maxFormat: 'MM/DD/YYYY'})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`DateRange: '13-JAN-1987' {min: '19800101', max: '12/31/1985', sourceFormat: 'DD-MMM-YYYY', minFormat: null, maxFormat: 'MM/DD/YYYY'} should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = DateRange('13-JAN-1987', {min: '19800101', max: '12/31/1985', sourceFormat: 'DD-MMM-YYYY', minFormat: null, maxFormat: 'MM/DD/YYYY'})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`DateRange: '13-JAN-1987' {min: '19800101', max: '12/31/1985', sourceFormat: 'DD-MMM-YYYY', minFormat: 'YYYYMMDD', maxFormat: null} should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = DateRange('13-JAN-1987', {min: '19800101', max: '12/31/1985', sourceFormat: 'DD-MMM-YYYY', minFormat: 'YYYYMMDD', maxFormat: null})
                 expect(pass).to.equal(false)
                 return resolve()
             } catch (err) {

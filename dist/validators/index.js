@@ -28,3 +28,5 @@ __export(require("./equalsAny"));
 __export(require("./regEx"));
 __export(require("./isDate"));
 __export(require("./isNumber"));
+__export(require("./isString"));
+__export(require("./dateRange"));
