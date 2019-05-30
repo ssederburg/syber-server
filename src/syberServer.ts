@@ -15,7 +15,7 @@ import * as _ from 'lodash'
 import * as config from 'config'
 import { RequestContext, SchematicResponse, ILogger } from './schemas'
 import { ExecutionContext } from './executionContext'
-import { Logger } from './utilities'
+import { Logger, RuleEngineHelper } from './utilities'
 
 const uuidv4 = require('uuid/v4')
 const swaggerUi = require('swagger-ui-express')
@@ -26,6 +26,7 @@ export class SyberServer {
     private shuttingDown: boolean = false
     private globalSchematic: typeof GlobalSchematic = null
     private sharedResources: Array<any> = []
+    private ruleEngineHelper: RuleEngineHelper = null
     
     public logger: ILogger = null
     public events = new EventEmitter()
@@ -67,6 +68,19 @@ export class SyberServer {
             return
         }
 
+        if (!this.ruleEngineHelper) {
+            this.ruleEngineHelper = new RuleEngineHelper(this.logger)
+            this.ruleEngineHelper.loadDefaultRuleFunctions()
+        }
+
+        if (!options.sharedResources) {
+            options.sharedResources = []
+        }
+        options.sharedResources.push({
+            name: 'RuleEngineHelper',
+            instanceOfType: this.ruleEngineHelper
+        })
+        
         const routeHandler = new RouteHandler(this)
         routeHandler.register(this.express, options)
 

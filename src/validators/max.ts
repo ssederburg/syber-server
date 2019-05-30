@@ -13,6 +13,7 @@ export function Max(whereToLook: any, whatToLookFor: any): Boolean {
 
     const whereToLookNumber = Number(whereToLook)
     const whatToLookForNumber = Number(whatToLookFor)
+
     return whereToLookNumber <= whatToLookForNumber
 
 }

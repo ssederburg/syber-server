@@ -4,7 +4,15 @@ import { Min, Max } from '../validators'
 export function Range(whereToLook: any, whatToLookFor: any): Boolean {
 
     const options = Utilities.isObject(whatToLookFor) ? whatToLookFor : null
-    if (!options || !options.max || !options.min) {
+    
+    if (!options) {
+        return false
+    }
+
+    if (!options.max && options.max !== 0) {
+        return false
+    }
+    if (!options.min && options.min !== 0) {
         return false
     }
 

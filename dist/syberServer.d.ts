@@ -8,6 +8,7 @@ export declare class SyberServer {
     private shuttingDown;
     private globalSchematic;
     private sharedResources;
+    private ruleEngineHelper;
     logger: ILogger;
     events: any;
     express: any;

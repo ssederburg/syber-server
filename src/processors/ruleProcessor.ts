@@ -4,7 +4,7 @@ import { IRuleContainerSchema, IRuleGroup, Rule, ILogger, ProcessorDef } from '.
 import { RuleEngineHelper, Utilities, Logger } from '../utilities'
 import { ExecutionContext } from '../executionContext'
 
-import { SortBy, Filter } from 'lodash'
+import { sortBy, filter } from 'lodash'
 
 /*
     Rules are loaded into a Dictionary at application startup index.ts via RuleEngineHelper.loadDefaultRuleFunctions()
@@ -78,10 +78,10 @@ export class RuleProcessor extends BaseProcessor {
                     })
                 }
         
-                const sortedGroups = SortBy(ruleset.groups, 'ordinal')
+                const sortedGroups = sortBy(ruleset.groups, 'ordinal')
                 const allNotes = []
                 sortedGroups.forEach((group) => {
-                    const groupRules = Filter(ruleset.rules, { group: group.id })
+                    const groupRules = filter(ruleset.rules, { group: group.id })
                     this.processRuleGroup(value, group, groupRules)
                     allNotes.push(group.notes)
                 })
@@ -92,12 +92,12 @@ export class RuleProcessor extends BaseProcessor {
                     // Just one group so whatever outcome it had is the answer
                     return resolve({
                         successful: sortedGroups[0].result,
-                        data: [].concat(allNotes)
+                        data: [].concat(...allNotes)
                     })
                 }
                 // We have more than one group. Determine based on conjunction if is PASS or FAIL
                 // First, look for any 'or' conjunction. If an 'or' exists and is valid, return PASS
-                const orGroups = Filter(sortedGroups, { conjunction: 'or' })
+                const orGroups = filter(sortedGroups, { conjunction: 'or' })
                 if (orGroups && orGroups.length > 0) {
                     orGroups.forEach((group) => {
                         if (group.result) {
@@ -110,7 +110,7 @@ export class RuleProcessor extends BaseProcessor {
                 }
                 // Either an or group failed or we are left with only and groups
                 // Process now looking for any failure
-                const andGroups = Filter(sortedGroups, { conjunction: 'and' })
+                const andGroups = filter(sortedGroups, { conjunction: 'and' })
                 let isFailure = true
                 if (andGroups && andGroups.length > 0) {
                     // It could have been only OR groups
@@ -135,7 +135,7 @@ export class RuleProcessor extends BaseProcessor {
 
     private processRuleGroup(value: any, group: IRuleGroup, rules: Array<Rule>): RuleExecutionResponse {
         
-        const sortedRules = SortBy(rules, 'ordinal')
+        const sortedRules = sortBy(rules, 'ordinal')
         let isFailure = false
         sortedRules.forEach((rule) => {
             const ruleResponse = this.processRule(value, rule)
@@ -143,13 +143,13 @@ export class RuleProcessor extends BaseProcessor {
             if (!ruleResponse || !ruleResponse.pass) {
                 isFailure = true
             }
-            group.notes.concat(ruleResponse.notes)
+            group.notes.concat(...ruleResponse.notes)
         })
         // TODO: Handle 'or' conjunction within group
-        group.result = isFailure
+        group.result = !isFailure
         return {
-            pass: isFailure,
-            notes: [].concat(group.notes)
+            pass: !isFailure,
+            notes: [].concat(...group.notes)
         }
 
     }
@@ -160,7 +160,7 @@ export class RuleProcessor extends BaseProcessor {
         if (!ruleFunction) {
             return {
                 pass: false,
-                notes: []
+                notes: [`Unable to locate RuleFunction ${rule.className}`]
             }
         }
         // Convert value if necessary
@@ -184,6 +184,7 @@ export class RuleProcessor extends BaseProcessor {
             default:
                 convertedValue = value
         }
+        //console.log(`Processing rule ${rule.className} with args ${JSON.stringify(rule.args)}`)
         const result = ruleFunction(convertedValue, rule.args)
         return {
             pass: result,

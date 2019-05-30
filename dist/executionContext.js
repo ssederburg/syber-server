@@ -53,6 +53,7 @@ var ExecutionContext = (function () {
         this.parameters = [];
         this.wasOneCriticalFailure = false;
         this.logger = null;
+        this.didSetupForTesting = false;
         this.correlationId = req.id;
         this.logger = syberServer.logger;
     }
@@ -100,6 +101,9 @@ var ExecutionContext = (function () {
     };
     ExecutionContext.prototype.setupForTesting = function () {
         var _this = this;
+        if (this.didSetupForTesting)
+            return;
+        this.didSetupForTesting = true;
         var result = new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
             var err_2;
             return __generator(this, function (_a) {

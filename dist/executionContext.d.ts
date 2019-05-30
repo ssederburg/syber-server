@@ -15,6 +15,7 @@ export declare class ExecutionContext {
     private parameters;
     private wasOneCriticalFailure;
     private logger;
+    private didSetupForTesting;
     constructor(req: RequestContext, schematic: Schematic, sharedResources: Array<SharedResource>, syberServer: SyberServer | IMockSyberServer);
     execute(): Promise<any>;
     setupForTesting(): Promise<any>;

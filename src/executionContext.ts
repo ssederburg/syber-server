@@ -23,7 +23,7 @@ export class ExecutionContext {
     private parameters: Array<Parameter> = []
     private wasOneCriticalFailure: boolean = false
     private logger: ILogger = null
-
+    private didSetupForTesting = false
 
     constructor(public req: RequestContext, public schematic: Schematic, private sharedResources: Array<SharedResource>, 
         private syberServer: SyberServer|IMockSyberServer) {
@@ -64,6 +64,9 @@ export class ExecutionContext {
 
     public setupForTesting(): Promise<any> {
 
+        if (this.didSetupForTesting) return
+
+        this.didSetupForTesting = true
         const result = new Promise(async(resolve, reject) => {
             try {
                 await this.loadParameters()

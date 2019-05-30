@@ -54,6 +54,7 @@ var SyberServer = (function () {
         this.shuttingDown = false;
         this.globalSchematic = null;
         this.sharedResources = [];
+        this.ruleEngineHelper = null;
         this.logger = null;
         this.events = new EventEmitter();
         this.express = null;
@@ -85,6 +86,17 @@ var SyberServer = (function () {
             this.logger.error("SYS" + uuidv4(), "Attempted to SyberServer.registerRoute after server started. Route Registration ignored...", "syberServer.registerRoute");
             return;
         }
+        if (!this.ruleEngineHelper) {
+            this.ruleEngineHelper = new utilities_1.RuleEngineHelper(this.logger);
+            this.ruleEngineHelper.loadDefaultRuleFunctions();
+        }
+        if (!options.sharedResources) {
+            options.sharedResources = [];
+        }
+        options.sharedResources.push({
+            name: 'RuleEngineHelper',
+            instanceOfType: this.ruleEngineHelper
+        });
         var routeHandler = new routes_1.RouteHandler(this);
         routeHandler.register(this.express, options);
     };

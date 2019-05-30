@@ -2,7 +2,7 @@ import { RuleLookup, ILogger } from '../schemas'
 import { RuleExecutionResponse } from '../responses'
 import * as Validators from '../validators'
 
-import { Find } from 'lodash'
+import { find } from 'lodash'
 
 export class RuleEngineHelper {
 
@@ -12,7 +12,7 @@ export class RuleEngineHelper {
 
     public getRuleFunction(className: string): Function {
         
-        const result = Find(this._functions, { className })
+        const result = find(this._functions, { className })
         if (!result) {
             this.logger.warn(`SYSTEM`, `No record of rule ${className}`, `RuleEngineHelper.getRuleFunction()`)
             return this.noop
@@ -24,11 +24,19 @@ export class RuleEngineHelper {
     public loadDefaultRuleFunctions(): void {
         this.registerRuleFunction('Contains', Validators.Contains)
         this.registerRuleFunction('ContainsAny', Validators.ContainsAny)
+        this.registerRuleFunction('DateRange', Validators.DateRange)
         this.registerRuleFunction('EndsWith', Validators.EndsWith)
         this.registerRuleFunction('EndsWithAny', Validators.EndsWithAny)
+        this.registerRuleFunction('Equals', Validators.Equals)
+        this.registerRuleFunction('EqualsAny', Validators.EqualsAny)
         this.registerRuleFunction('IsArray', Validators.IsArray)
+        this.registerRuleFunction('IsDate', Validators.IsDate)
         this.registerRuleFunction('IsFloat', Validators.IsFloat)
+        this.registerRuleFunction('IsNotNullOrEmpty', Validators.IsNotNullOrEmpty)
+        this.registerRuleFunction('IsNullOrEmpty', Validators.IsNullOrEmpty)
+        this.registerRuleFunction('IsNumber', Validators.IsNumber)
         this.registerRuleFunction('IsObject', Validators.IsObject)
+        this.registerRuleFunction('IsString', Validators.IsString)
         this.registerRuleFunction('Length', Validators.Length)
         this.registerRuleFunction('Max', Validators.Max)
         this.registerRuleFunction('MaxDate', Validators.MaxDate)
@@ -37,13 +45,14 @@ export class RuleEngineHelper {
         this.registerRuleFunction('MinDate', Validators.MinDate)
         this.registerRuleFunction('MinLength', Validators.MinLength)
         this.registerRuleFunction('Range', Validators.Range)
+        this.registerRuleFunction('RegEx', Validators.RegEx)
         this.registerRuleFunction('StartsWith', Validators.StartsWith)
         this.registerRuleFunction('StartsWithAny', Validators.StartsWithAny)
     }
 
     public registerRuleFunction(className: string, fx: Function): void {
 
-        const result = Find(this._functions, { className })
+        const result = find(this._functions, { className })
         if (result) {
             this.logger.warn(`SYSTEM`, `Attempted to reregister Rule Function ${className}`, `RuleEngineHelper.registerRuleFunction()`)
             return

@@ -6,3 +6,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./mockSyberServer"));
 __export(require("./mockRequestContext"));
 __export(require("./mockSchematic"));
+__export(require("./mockRuleProcessor"));

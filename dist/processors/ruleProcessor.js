@@ -69,20 +69,20 @@ var RuleProcessor = (function (_super) {
                         rule.group = 'A';
                     });
                 }
-                var sortedGroups = lodash_1.SortBy(ruleset.groups, 'ordinal');
+                var sortedGroups = lodash_1.sortBy(ruleset.groups, 'ordinal');
                 var allNotes_1 = [];
                 sortedGroups.forEach(function (group) {
-                    var groupRules = lodash_1.Filter(ruleset.rules, { group: group.id });
+                    var groupRules = lodash_1.filter(ruleset.rules, { group: group.id });
                     _this.processRuleGroup(value, group, groupRules);
                     allNotes_1.push(group.notes);
                 });
                 if (sortedGroups.length === 1) {
                     return resolve({
                         successful: sortedGroups[0].result,
-                        data: [].concat(allNotes_1)
+                        data: [].concat.apply([], allNotes_1)
                     });
                 }
-                var orGroups = lodash_1.Filter(sortedGroups, { conjunction: 'or' });
+                var orGroups = lodash_1.filter(sortedGroups, { conjunction: 'or' });
                 if (orGroups && orGroups.length > 0) {
                     orGroups.forEach(function (group) {
                         if (group.result) {
@@ -93,7 +93,7 @@ var RuleProcessor = (function (_super) {
                         }
                     });
                 }
-                var andGroups = lodash_1.Filter(sortedGroups, { conjunction: 'and' });
+                var andGroups = lodash_1.filter(sortedGroups, { conjunction: 'and' });
                 var isFailure_1 = true;
                 if (andGroups && andGroups.length > 0) {
                     isFailure_1 = false;
@@ -115,20 +115,21 @@ var RuleProcessor = (function (_super) {
     };
     RuleProcessor.prototype.processRuleGroup = function (value, group, rules) {
         var _this = this;
-        var sortedRules = lodash_1.SortBy(rules, 'ordinal');
+        var sortedRules = lodash_1.sortBy(rules, 'ordinal');
         var isFailure = false;
         sortedRules.forEach(function (rule) {
+            var _a;
             var ruleResponse = _this.processRule(value, rule);
             rule.result = ruleResponse.pass;
             if (!ruleResponse || !ruleResponse.pass) {
                 isFailure = true;
             }
-            group.notes.concat(ruleResponse.notes);
+            (_a = group.notes).concat.apply(_a, ruleResponse.notes);
         });
-        group.result = isFailure;
+        group.result = !isFailure;
         return {
-            pass: isFailure,
-            notes: [].concat(group.notes)
+            pass: !isFailure,
+            notes: [].concat.apply([], group.notes)
         };
     };
     RuleProcessor.prototype.processRule = function (value, rule) {
@@ -136,7 +137,7 @@ var RuleProcessor = (function (_super) {
         if (!ruleFunction) {
             return {
                 pass: false,
-                notes: []
+                notes: ["Unable to locate RuleFunction " + rule.className]
             };
         }
         var convertedValue = value;
