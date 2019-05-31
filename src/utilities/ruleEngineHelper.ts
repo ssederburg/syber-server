@@ -67,7 +67,7 @@ export class RuleEngineHelper {
     public noop(): RuleExecutionResponse {
         return {
             pass: false,
-            notes: ['Invalid Rule className or arguments']
+            note: 'Invalid Rule className or arguments'
         }
     }
 

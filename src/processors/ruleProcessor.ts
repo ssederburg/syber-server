@@ -1,5 +1,5 @@
 import { BaseProcessor } from './baseProcessor'
-import { ProcessorResponse, ProcessorErrorResponse, RuleExecutionResponse } from '../responses'
+import { ProcessorResponse, ProcessorErrorResponse, RuleExecutionResponse, GroupRuleExecutionResponse } from '../responses'
 import { IRuleContainerSchema, IRuleGroup, Rule, ILogger, ProcessorDef } from '../schemas'
 import { RuleEngineHelper, Utilities, Logger } from '../utilities'
 import { ExecutionContext } from '../executionContext'
@@ -95,6 +95,7 @@ export class RuleProcessor extends BaseProcessor {
                         data: [].concat(...allNotes)
                     })
                 }
+                
                 // We have more than one group. Determine based on conjunction if is PASS or FAIL
                 // First, look for any 'or' conjunction. If an 'or' exists and is valid, return PASS
                 const orGroups = filter(sortedGroups, { conjunction: 'or' })
@@ -133,23 +134,33 @@ export class RuleProcessor extends BaseProcessor {
 
     }
 
-    private processRuleGroup(value: any, group: IRuleGroup, rules: Array<Rule>): RuleExecutionResponse {
+    private processRuleGroup(value: any, group: IRuleGroup, rules: Array<Rule>): GroupRuleExecutionResponse {
         
         const sortedRules = sortBy(rules, 'ordinal')
-        let isFailure = false
+        let andFailure = false
+        let orSuccess = false
         sortedRules.forEach((rule) => {
+            if (!rule.conjunction) {
+                rule.conjunction = 'and'
+            }
             const ruleResponse = this.processRule(value, rule)
             rule.result = ruleResponse.pass
-            if (!ruleResponse || !ruleResponse.pass) {
-                isFailure = true
+            if (!ruleResponse || !ruleResponse.pass && rule.conjunction === 'and') {
+                andFailure = true
             }
-            group.notes.concat(...ruleResponse.notes)
+            if (ruleResponse && ruleResponse.pass && rule.conjunction === 'or') {
+                orSuccess = true
+            }
+            if (ruleResponse.note) {
+                group.notes.push(ruleResponse.note)
+            }
         })
         // TODO: Handle 'or' conjunction within group
-        group.result = !isFailure
+        group.result = !andFailure || orSuccess
         return {
-            pass: !isFailure,
-            notes: [].concat(...group.notes)
+            pass: group.result,
+            notes: [].concat(...group.notes),
+            groupConjunction: group.conjunction
         }
 
     }
@@ -160,8 +171,11 @@ export class RuleProcessor extends BaseProcessor {
         if (!ruleFunction) {
             return {
                 pass: false,
-                notes: [`Unable to locate RuleFunction ${rule.className}`]
+                note: `Unable to locate RuleFunction ${rule.className}`
             }
+        }
+        if (!rule.shouldBe) {
+            rule.shouldBe = true
         }
         // Convert value if necessary
         let convertedValue: any = value
@@ -184,11 +198,13 @@ export class RuleProcessor extends BaseProcessor {
             default:
                 convertedValue = value
         }
-        //console.log(`Processing rule ${rule.className} with args ${JSON.stringify(rule.args)}`)
+        
         const result = ruleFunction(convertedValue, rule.args)
+        const didPass = result === rule.shouldBe
+        
         return {
-            pass: result,
-            notes: !result ? [].concat(rule.note): []
+            pass: didPass,
+            note: !didPass ? rule.note : null
         }
 
     }

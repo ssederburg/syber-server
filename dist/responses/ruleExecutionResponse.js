@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var RuleExecutionResponse = (function () {
     function RuleExecutionResponse() {
         this.pass = false;
-        this.notes = [];
+        this.note = null;
     }
     return RuleExecutionResponse;
 }());

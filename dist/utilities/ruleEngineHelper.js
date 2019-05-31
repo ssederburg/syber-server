@@ -57,7 +57,7 @@ var RuleEngineHelper = (function () {
     RuleEngineHelper.prototype.noop = function () {
         return {
             pass: false,
-            notes: ['Invalid Rule className or arguments']
+            note: 'Invalid Rule className or arguments'
         };
     };
     return RuleEngineHelper;

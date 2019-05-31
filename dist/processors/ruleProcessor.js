@@ -116,20 +116,29 @@ var RuleProcessor = (function (_super) {
     RuleProcessor.prototype.processRuleGroup = function (value, group, rules) {
         var _this = this;
         var sortedRules = lodash_1.sortBy(rules, 'ordinal');
-        var isFailure = false;
+        var andFailure = false;
+        var orSuccess = false;
         sortedRules.forEach(function (rule) {
-            var _a;
+            if (!rule.conjunction) {
+                rule.conjunction = 'and';
+            }
             var ruleResponse = _this.processRule(value, rule);
             rule.result = ruleResponse.pass;
-            if (!ruleResponse || !ruleResponse.pass) {
-                isFailure = true;
+            if (!ruleResponse || !ruleResponse.pass && rule.conjunction === 'and') {
+                andFailure = true;
             }
-            (_a = group.notes).concat.apply(_a, ruleResponse.notes);
+            if (ruleResponse && ruleResponse.pass && rule.conjunction === 'or') {
+                orSuccess = true;
+            }
+            if (ruleResponse.note) {
+                group.notes.push(ruleResponse.note);
+            }
         });
-        group.result = !isFailure;
+        group.result = !andFailure || orSuccess;
         return {
-            pass: !isFailure,
-            notes: [].concat.apply([], group.notes)
+            pass: group.result,
+            notes: [].concat.apply([], group.notes),
+            groupConjunction: group.conjunction
         };
     };
     RuleProcessor.prototype.processRule = function (value, rule) {
@@ -137,8 +146,11 @@ var RuleProcessor = (function (_super) {
         if (!ruleFunction) {
             return {
                 pass: false,
-                notes: ["Unable to locate RuleFunction " + rule.className]
+                note: "Unable to locate RuleFunction " + rule.className
             };
+        }
+        if (!rule.shouldBe) {
+            rule.shouldBe = true;
         }
         var convertedValue = value;
         switch (rule.dataType) {
@@ -160,9 +172,10 @@ var RuleProcessor = (function (_super) {
                 convertedValue = value;
         }
         var result = ruleFunction(convertedValue, rule.args);
+        var didPass = result === rule.shouldBe;
         return {
-            pass: result,
-            notes: !result ? [].concat(rule.note) : []
+            pass: didPass,
+            note: !didPass ? rule.note : null
         };
     };
     return RuleProcessor;
