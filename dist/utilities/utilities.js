@@ -4,6 +4,7 @@ var _ = require("lodash");
 var config = require("config");
 var util = require("util");
 var moment = require("moment");
+var validators_1 = require("../validators");
 var Utilities = (function () {
     function Utilities() {
     }
@@ -59,6 +60,9 @@ var Utilities = (function () {
                 return Utilities.isBoolean(value);
             case 'number':
                 return Utilities.isNumber(value);
+            case 'float':
+            case 'decimal':
+                return validators_1.IsFloat(value);
             case 'array':
                 return Utilities.isArray(value);
             case 'object':
@@ -78,7 +82,7 @@ var Utilities = (function () {
     Utilities.isDate = function (value) {
         if (!value)
             return false;
-        return util.types.isDate(value);
+        return util.isDate(value);
     };
     Utilities.isRegEx = function (value) {
         if (!value)

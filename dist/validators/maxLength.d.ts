@@ -1,1 +1,1 @@
-export declare function MaxLength(whereToLook: any, whatToLookFor: any): Boolean;
+export declare function MaxLength(whereToLook: any, whatToLookFor: any): boolean;

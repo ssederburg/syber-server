@@ -1,1 +1,1 @@
-export declare function Contains(whereToLook: any, whatToLookFor: any): Boolean;
+export declare function Contains(whereToLook: any, whatToLookFor: any): boolean;

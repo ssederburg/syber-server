@@ -1,1 +1,1 @@
-export declare function Range(whereToLook: any, whatToLookFor: any): Boolean;
+export declare function Range(whereToLook: any, whatToLookFor: any): boolean;

@@ -3,7 +3,7 @@ import { Utilities } from '../utilities/utilities'
 // Read as: Does whereToLook End With whatToLookFor?
 // whatToLookFor: { value: x, ignoreCase: true|false }
 
-export function EndsWith(whereToLook: any, whatToLookFor: any): Boolean {
+export function EndsWith(whereToLook: any, whatToLookFor: any): boolean {
     
     const options = Utilities.isObject(whatToLookFor) ? whatToLookFor : {value: whatToLookFor, ignoreCase: false}
 

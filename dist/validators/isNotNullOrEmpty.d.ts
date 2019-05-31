@@ -1,1 +1,1 @@
-export declare function IsNotNullOrEmpty(whereToLook: any, whatToLookFor: any): Boolean;
+export declare function IsNotNullOrEmpty(whereToLook: any, whatToLookFor: any): boolean;

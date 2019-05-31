@@ -1,7 +1,9 @@
 export interface IRuleContainerSchema {
     rules: Array<Rule>;         // Longhand list of Rules to be evaluated. May or may not have a groupId (be in a group)
-    groups: Array<IRuleGroup>;  // If evaluating multiple groups of expressions, the list of groups and their ordering
-    required: boolean;        // If the very first test before all others should be IsNotNullOrEmpty. If isRequired = false and value is null, no rules are executed.
+    groups?: Array<IRuleGroup>;  // If evaluating multiple groups of expressions, the list of groups and their ordering
+    required?: boolean;        // If the very first test before all others should be IsNotNullOrEmpty. If isRequired = false and value is null, no rules are executed.
+    name: string;
+    dataType?: string; // string, date, boolean, number, array, object, float|decimal
 }
 
 export class Rule {

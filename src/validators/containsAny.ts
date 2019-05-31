@@ -4,7 +4,7 @@ import { Utilities } from '../utilities/utilities'
 // "Does field value '$123.00' have either ['$','USD']"
 // whatToLookFor: { value: [x], ignoreCase: true|false }
 
-export function ContainsAny(whereToLook: any, whatToLookFor: Array<any>|any): Boolean {
+export function ContainsAny(whereToLook: any, whatToLookFor: Array<any>|any): boolean {
     
     const options = Utilities.isArray(whatToLookFor) ? {value: whatToLookFor, ignoreCase: false} : Object.assign({}, whatToLookFor)
     

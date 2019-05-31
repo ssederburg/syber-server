@@ -1,7 +1,7 @@
 import { Utilities } from '../utilities/utilities'
 import { Min, Max } from '../validators'
 
-export function Range(whereToLook: any, whatToLookFor: any): Boolean {
+export function Range(whereToLook: any, whatToLookFor: any): boolean {
 
     const options = Utilities.isObject(whatToLookFor) ? whatToLookFor : null
     

@@ -2,6 +2,7 @@ import * as _ from 'lodash'
 import * as config from 'config'
 import * as util from 'util'
 import * as moment from 'moment'
+import { IsFloat } from '../validators'
 
 export class Utilities {
 
@@ -63,6 +64,9 @@ export class Utilities {
                 return Utilities.isBoolean(value)
             case 'number':
                 return Utilities.isNumber(value)
+            case 'float':
+            case 'decimal':
+                return IsFloat(value)
             case 'array':
                 return Utilities.isArray(value)
             case 'object':
@@ -83,7 +87,7 @@ export class Utilities {
 
     public static isDate(value: any): boolean {
         if (!value) return false
-        return util.types.isDate(value)
+        return util.isDate(value)
     }
 
     public static isRegEx(value: any): boolean {

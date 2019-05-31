@@ -2038,9 +2038,68 @@ describe(`Validator Tests`, () => {
         })
         return result
     })
-
+    it (`Range: .5 with {min: 0.400, max: 999.000} should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = Range(`0.5`, {min: `0.400`, max: `999.000`})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`Range: .35 with {min: 0.400, max: 999.000} should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = Range(`0.35`, {min: `0.400`, max: `999.000`})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`Range: 999.35 with {min: 0.400, max: 999.000} should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = Range(`999.35`, {min: `0.400`, max: `999.000`})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`Range: 999.000 with {min: 0.400, max: 999.000} should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = Range(`999.000`, {min: `0.400`, max: `999.000`})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`Range: 998.999 with {min: 0.400, max: 999.000} should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = Range(`998.999`, {min: `0.400`, max: `999.000`})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+ 
     // #endregion
-
     // #region StartsWith
     it (`StartsWith: string 0123456123 starts with 0123 should be true`, async() => {
         const result = new Promise(async(resolve, reject) => {

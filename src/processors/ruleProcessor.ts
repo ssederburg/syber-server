@@ -56,10 +56,18 @@ export class RuleProcessor extends BaseProcessor {
             4. Response should be PASS or FAIL with an array of messages
             5. Decide if Groups as a whole PASS based on micro group responses
         */
-        if (Utilities.isNullOrUndefined(value) && !ruleset.required) {
+        if (Utilities.isNullOrUndefined(value)) {
             return Promise.resolve({
-                successful: true
+                successful: ruleset.required ? false : true
             })
+        }
+
+        if (ruleset.dataType) {
+            if (!Utilities.isDataType(value, ruleset.dataType)) {
+                return Promise.resolve({
+                    successful: false
+                })
+            }
         }
 
         return new Promise((resolve, reject) => {
@@ -104,7 +112,7 @@ export class RuleProcessor extends BaseProcessor {
                         if (group.result) {
                             return resolve({
                                 successful: true,
-                                data: [].concat(allNotes)
+                                data: [].concat(...allNotes)
                             })
                         }
                     })
@@ -123,8 +131,8 @@ export class RuleProcessor extends BaseProcessor {
                     })
                 }
                 return resolve({
-                    successful: isFailure,
-                    data: [].concat(allNotes)
+                    successful: !isFailure,
+                    data: [].concat(...allNotes)
                 })
             }
             catch (err) {

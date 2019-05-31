@@ -1,6 +1,6 @@
 import { Utilities } from '../utilities/utilities'
 
-export function IsObject(whereToLook: any): Boolean {
+export function IsObject(whereToLook: any): boolean {
     if (!whereToLook) {
         return false
     }

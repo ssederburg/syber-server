@@ -1,6 +1,6 @@
 import { Utilities } from '../utilities/utilities'
 
-export function Min(whereToLook: any, whatToLookFor: any): Boolean {
+export function Min(whereToLook: any, whatToLookFor: any): boolean {
     
     if (!whereToLook && whereToLook !== 0) {
         return false

@@ -42,6 +42,7 @@ class Tester {
         await mockExecutionContextTest1.setupForTesting()
 
         const trial1: IRuleContainerSchema = {
+            name: 'trial1',
             rules: [{
                 className: 'IsNotNullOrEmpty',
                 args: {trim: false, keywordMatch: false},
@@ -77,12 +78,13 @@ class Tester {
         })
 
         const trial2: IRuleContainerSchema = {
+            name: 'trial2',
             rules: [{
                 className: 'IsNullOrEmpty',
                 args: {trim: true, keywordMatch: true},
                 ordinal: 0
             }],
-            required: true,
+            required: false,
             groups: []
         }
 
@@ -112,6 +114,7 @@ class Tester {
         })
 
         const trial3: IRuleContainerSchema = {
+            name: 'trial3',
             rules: [{
                 className: 'IsNumber',
                 args: null,
@@ -217,6 +220,130 @@ class Tester {
                     class: MockRuleProcessor
                 }, mockSyberServer.logger)
                 const response = await mockProcessor.mockFx(998, trial3)
+                expect(response).not.null
+                expect(response.successful).to.equal(false)
+
+            })
+
+        })
+
+        const trial4: IRuleContainerSchema = {
+            name: 'trial4',
+            rules: [{
+                className: 'IsNumber',
+                args: null,
+                ordinal: 0,
+                dataType: 'number',
+                group: 'A'
+            },{
+                className: 'Range',
+                args: {min: 0, max: 100},
+                ordinal: 1,
+                dataType: 'number',
+                group: 'A'
+            },{
+                className: 'Range',
+                args: {min: 1000, max: 1999},
+                ordinal: 2,
+                dataType: 'number',
+                conjunction: 'or',
+                group: 'A'
+            },{
+                className: 'Equals',
+                args: 999,
+                ordinal: 3,
+                conjunction: 'or',
+                dataType: 'number',
+                group: 'A'
+            }],
+            groups: [{
+                id: 'A',
+                ordinal: 0,
+                notes: [],
+                conjunction: 'and'
+            }],
+            required: true
+
+        }
+
+        describe('Rule Engine Tests: Trial 4 - Should be a number AND from 0 to 100 OR 1000 to 1999 OR 999', async() => {
+            
+            it (`Field Value: 0 should be true`, async() => {
+
+                const mockProcessor = new MockRuleProcessor(mockExecutionContextTest1, {
+                    class: MockRuleProcessor
+                }, mockSyberServer.logger)
+                const response = await mockProcessor.mockFx(0, trial4)
+                expect(response).not.null
+                expect(response.successful).to.equal(true)
+            
+            })
+            it (`Field Value: null should be false`, async() => {
+
+                const mockProcessor = new MockRuleProcessor(mockExecutionContextTest1, {
+                    class: MockRuleProcessor
+                }, mockSyberServer.logger)
+                const response = await mockProcessor.mockFx(null, trial4)
+                expect(response).not.null
+                expect(response.successful).to.equal(false)
+
+            })
+            it (`Field Value: '55' should be true`, async() => {
+
+                const mockProcessor = new MockRuleProcessor(mockExecutionContextTest1, {
+                    class: MockRuleProcessor
+                }, mockSyberServer.logger)
+                const response = await mockProcessor.mockFx('55', trial4)
+                expect(response).not.null
+                expect(response.successful).to.equal(true)
+
+            })
+            it (`Field Value: 101 should be false`, async() => {
+
+                const mockProcessor = new MockRuleProcessor(mockExecutionContextTest1, {
+                    class: MockRuleProcessor
+                }, mockSyberServer.logger)
+                const response = await mockProcessor.mockFx(101, trial4)
+                expect(response).not.null
+                expect(response.successful).to.equal(false)
+
+            })
+            it (`Field Value: 1001 should be true`, async() => {
+
+                const mockProcessor = new MockRuleProcessor(mockExecutionContextTest1, {
+                    class: MockRuleProcessor
+                }, mockSyberServer.logger)
+                const response = await mockProcessor.mockFx(1001, trial4)
+                expect(response).not.null
+                expect(response.successful).to.equal(true)
+
+            })
+            it (`Field Value: 2000 should be false`, async() => {
+
+                const mockProcessor = new MockRuleProcessor(mockExecutionContextTest1, {
+                    class: MockRuleProcessor
+                }, mockSyberServer.logger)
+                const response = await mockProcessor.mockFx(2000, trial4)
+                expect(response).not.null
+                expect(response.successful).to.equal(false)
+
+            })
+            it (`Field Value: 999 should be true`, async() => {
+
+                const mockProcessor = new MockRuleProcessor(mockExecutionContextTest1, {
+                    class: MockRuleProcessor
+                }, mockSyberServer.logger)
+                const response = await mockProcessor.mockFx(999, trial4)
+                expect(response).not.null
+                expect(response.successful).to.equal(true)
+
+            })
+            it (`Field Value: 998 should be false`, async() => {
+
+                const mockProcessor = new MockRuleProcessor(mockExecutionContextTest1, {
+                    class: MockRuleProcessor
+                }, mockSyberServer.logger)
+                const response = await mockProcessor.mockFx(998, trial4)
                 expect(response).not.null
                 expect(response.successful).to.equal(false)
 

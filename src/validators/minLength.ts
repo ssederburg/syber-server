@@ -1,6 +1,6 @@
 import { Utilities } from '../utilities/utilities'
 
-export function MinLength(whereToLook: any, whatToLookFor: any): Boolean {
+export function MinLength(whereToLook: any, whatToLookFor: any): boolean {
 
     const options = Utilities.isObject(whatToLookFor) ? whatToLookFor : {min: whatToLookFor}
 

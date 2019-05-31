@@ -1,1 +1,1 @@
-export declare function Length(whereToLook: any, whatToLookFor: any): Boolean;
+export declare function Length(whereToLook: any, whatToLookFor: any): boolean;

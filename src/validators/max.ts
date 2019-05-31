@@ -1,6 +1,6 @@
 import { Utilities } from '../utilities/utilities'
 
-export function Max(whereToLook: any, whatToLookFor: any): Boolean {
+export function Max(whereToLook: any, whatToLookFor: any): boolean {
     
     if (!whereToLook && whereToLook !== 0) {
         return false

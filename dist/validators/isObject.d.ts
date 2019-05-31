@@ -1,1 +1,1 @@
-export declare function IsObject(whereToLook: any): Boolean;
+export declare function IsObject(whereToLook: any): boolean;

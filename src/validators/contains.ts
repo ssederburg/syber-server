@@ -3,7 +3,7 @@ import { Utilities } from '../utilities/utilities'
 // Read as: Does whereToLook Contain whatToLookFor
 // whatToLookFor: { value: x, ignoreCase: true|false }
 
-export function Contains(whereToLook: any, whatToLookFor: any): Boolean {
+export function Contains(whereToLook: any, whatToLookFor: any): boolean {
     
     const options = Utilities.isObject(whatToLookFor) ? whatToLookFor : {value: whatToLookFor, ignoreCase: false}
 

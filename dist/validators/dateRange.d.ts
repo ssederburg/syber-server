@@ -1,1 +1,1 @@
-export declare function DateRange(whereToLook: any, whatToLookFor: any): Boolean;
+export declare function DateRange(whereToLook: any, whatToLookFor: any): boolean;

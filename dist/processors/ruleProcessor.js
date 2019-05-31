@@ -49,10 +49,17 @@ var RuleProcessor = (function (_super) {
                 successful: true
             });
         }
-        if (utilities_1.Utilities.isNullOrUndefined(value) && !ruleset.required) {
+        if (utilities_1.Utilities.isNullOrUndefined(value)) {
             return Promise.resolve({
-                successful: true
+                successful: ruleset.required ? false : true
             });
+        }
+        if (ruleset.dataType) {
+            if (!utilities_1.Utilities.isDataType(value, ruleset.dataType)) {
+                return Promise.resolve({
+                    successful: false
+                });
+            }
         }
         return new Promise(function (resolve, reject) {
             try {
@@ -88,7 +95,7 @@ var RuleProcessor = (function (_super) {
                         if (group.result) {
                             return resolve({
                                 successful: true,
-                                data: [].concat(allNotes_1)
+                                data: [].concat.apply([], allNotes_1)
                             });
                         }
                     });
@@ -104,8 +111,8 @@ var RuleProcessor = (function (_super) {
                     });
                 }
                 return resolve({
-                    successful: isFailure_1,
-                    data: [].concat(allNotes_1)
+                    successful: !isFailure_1,
+                    data: [].concat.apply([], allNotes_1)
                 });
             }
             catch (err) {

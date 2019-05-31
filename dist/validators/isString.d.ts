@@ -1,1 +1,1 @@
-export declare function IsString(whereToLook: any): Boolean;
+export declare function IsString(whereToLook: any): boolean;

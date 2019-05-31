@@ -1,6 +1,6 @@
 import { Utilities } from '../utilities/utilities'
 
-export function MaxLength(whereToLook: any, whatToLookFor: any): Boolean {
+export function MaxLength(whereToLook: any, whatToLookFor: any): boolean {
 
     const options = Utilities.isObject(whatToLookFor) ? whatToLookFor : {max: whatToLookFor}
 

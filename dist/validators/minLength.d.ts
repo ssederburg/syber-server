@@ -1,1 +1,1 @@
-export declare function MinLength(whereToLook: any, whatToLookFor: any): Boolean;
+export declare function MinLength(whereToLook: any, whatToLookFor: any): boolean;

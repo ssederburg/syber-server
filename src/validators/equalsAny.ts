@@ -4,7 +4,7 @@ import { Utilities } from '../utilities/utilities'
 // "Does field value '$123.00' equal either ['USD123.00','$123.00']"
 // whatToLookFor: { value: [x], ignoreCase: true|false, trim: true|false }
 
-export function EqualsAny(whereToLook: any, whatToLookFor: Array<any>|any): Boolean {
+export function EqualsAny(whereToLook: any, whatToLookFor: Array<any>|any): boolean {
     
     const options = Utilities.isArray(whatToLookFor) ? {value: whatToLookFor, ignoreCase: false, trim: false} : Object.assign({}, whatToLookFor)
     

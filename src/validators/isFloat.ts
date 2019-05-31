@@ -1,7 +1,7 @@
 import { Utilities } from '../utilities/utilities'
 import { IsFloatOptions } from '../schemas'
 
-export function IsFloat(whereToLook: string, whatToLookFor?: IsFloatOptions): Boolean {
+export function IsFloat(whereToLook: string, whatToLookFor?: IsFloatOptions): boolean {
 
     if (!whereToLook) return false
 

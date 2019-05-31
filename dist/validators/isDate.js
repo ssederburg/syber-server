@@ -6,14 +6,14 @@ function IsDate(whereToLook, whatToLookFor) {
     var options = utilities_1.Utilities.isObject(whatToLookFor) ? whatToLookFor : { format: 'YYYY-MM-DD' };
     if (!whereToLook)
         return false;
-    if (moment.isDate(whereToLook) || moment.isMoment(whereToLook))
-        return true;
+    var fallbackAnswer = (moment.isDate(whereToLook) || moment.isMoment(whereToLook));
     try {
         if (!utilities_1.Utilities.isString(whereToLook))
             whereToLook = whereToLook.toString();
         var trial1 = utilities_1.Utilities.parseDateInput(whereToLook, options.format);
-        if (!trial1)
-            return false;
+        if (!trial1) {
+            return fallbackAnswer;
+        }
         return true;
     }
     catch (_a) {

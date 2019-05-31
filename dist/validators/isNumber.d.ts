@@ -1,1 +1,1 @@
-export declare function IsNumber(whereToLook: any): Boolean;
+export declare function IsNumber(whereToLook: any): boolean;

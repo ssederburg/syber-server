@@ -9,7 +9,7 @@ import { Utilities } from '../utilities/utilities'
 //  e.g. 'now - 30' (spaces are ignored) is current day - 30 days. 'now + 1' is current day + 1 day
 // sourceFormat argument is the format of the whereToLook parameter
 
-export function MinDate(whereToLook: any, whatToLookFor: any): Boolean {
+export function MinDate(whereToLook: any, whatToLookFor: any): boolean {
 
     const options = Utilities.isObject(whatToLookFor) ? whatToLookFor : {min: whatToLookFor, minFormat: 'YYYY-MM-DD', sourceFormat: 'YYYY-MM-DD'}
 

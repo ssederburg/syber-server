@@ -1,1 +1,1 @@
-export declare function IsArray(value?: any): Boolean;
+export declare function IsArray(value?: any): boolean;

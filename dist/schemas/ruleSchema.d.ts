@@ -1,7 +1,9 @@
 export interface IRuleContainerSchema {
     rules: Array<Rule>;
-    groups: Array<IRuleGroup>;
-    required: boolean;
+    groups?: Array<IRuleGroup>;
+    required?: boolean;
+    name: string;
+    dataType?: string;
 }
 export declare class Rule {
     className: string;

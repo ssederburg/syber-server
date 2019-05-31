@@ -1,1 +1,1 @@
-export declare function EndsWith(whereToLook: any, whatToLookFor: any): Boolean;
+export declare function EndsWith(whereToLook: any, whatToLookFor: any): boolean;

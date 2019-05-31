@@ -1,1 +1,1 @@
-export declare function RegEx(whereToLook: any, whatToLookFor: any): Boolean;
+export declare function RegEx(whereToLook: any, whatToLookFor: any): boolean;

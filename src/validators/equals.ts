@@ -3,7 +3,7 @@ import { Utilities } from '../utilities/utilities'
 // Read as: Does whereToLook Equal whatToLookFor?
 // whatToLookFor: { value: x, ignoreCase: true|false, trim: true|false }
 
-export function Equals(whereToLook: any, whatToLookFor: any): Boolean {
+export function Equals(whereToLook: any, whatToLookFor: any): boolean {
     
     const options = Utilities.isObject(whatToLookFor) ? whatToLookFor : {value: whatToLookFor, ignoreCase: false, trim: false}
 
