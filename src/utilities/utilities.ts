@@ -188,6 +188,35 @@ export class Utilities {
         return false
     }
 
+    public static toDataType(value: any, dataType: string): any {
+
+        let convertedValue: any = value
+        switch(dataType) {
+            case 'string':
+                convertedValue = value.toString()
+                break
+            case 'number':
+                convertedValue = Utilities.toInt(value)
+                break
+            case 'decimal':
+            case 'float':
+                convertedValue = Utilities.toFloat(value)
+                break
+            case 'date':
+                convertedValue = Utilities.toDate(value)
+                break
+            case 'boolean':
+            case 'bool':
+                convertedValue = Utilities.toBoolean(value)
+                break
+            default:
+                convertedValue = value
+        }
+
+        return convertedValue
+
+    }
+
     public readValue(documentPath: string, source: any): string|any {
 
         if (documentPath.indexOf('/') < 0) return source[documentPath]

@@ -182,33 +182,12 @@ export class RuleProcessor extends BaseProcessor {
                 note: `Unable to locate RuleFunction ${rule.className}`
             }
         }
-        if (!rule.shouldBe) {
-            rule.shouldBe = true
-        }
+
         // Convert value if necessary
-        let convertedValue: any = value
-        switch(rule.dataType) {
-            case 'string':
-                convertedValue = value.toString()
-                break
-            case 'number':
-                convertedValue = Utilities.toInt(value)
-                break
-            case 'decimal':
-            case 'float':
-                convertedValue = Utilities.toFloat(value)
-            case 'date':
-                // TODO: Add formatting
-                convertedValue = Utilities.toDate(value)
-            case 'boolean':
-            case 'bool':
-                convertedValue = Utilities.toBoolean(value)
-            default:
-                convertedValue = value
-        }
-        
+        const convertedValue: any = Utilities.toDataType(value, rule.dataType)
+         
         const result = ruleFunction(convertedValue, rule.args)
-        const didPass = result === rule.shouldBe
+        const didPass = result === !rule.expectFalse
         
         return {
             pass: didPass,

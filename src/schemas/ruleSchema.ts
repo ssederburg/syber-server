@@ -13,7 +13,7 @@ export class Rule {
     public conjunction?: string = 'and';    // and or or. ALWAYS LEADS the phrase e.g. 'and' means "previous rule AND this rule". Ignored if single rule in array.
     public dataType?: string = 'string';      // The type to treat the subject BEFORE evaluation e.g. string, number, float, date, boolean
     public group?: string;                  // If more than one group of expressions are involved. The group this rule belongs to.
-    public shouldBe?: boolean = true;       // whether should eval to true or false e.g. (Length === 1) is true or false. If it evalulates to true, for this rule to pass, this requirement must be "true"
+    public expectFalse?: boolean = false;       // whether should eval to true or false e.g. (Length === 1) is true or false. If it evalulates to true, for this rule to pass, this requirement must be "true"
     public note?: string;
     public result?: boolean = false;               // Optional contextual note. Will be placed into rule engine results array if rule fails
 }
