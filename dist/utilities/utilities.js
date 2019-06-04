@@ -172,6 +172,31 @@ var Utilities = (function () {
         }
         return false;
     };
+    Utilities.toDataType = function (value, dataType) {
+        var convertedValue = value;
+        switch (dataType) {
+            case 'string':
+                convertedValue = value.toString();
+                break;
+            case 'number':
+                convertedValue = Utilities.toInt(value);
+                break;
+            case 'decimal':
+            case 'float':
+                convertedValue = Utilities.toFloat(value);
+                break;
+            case 'date':
+                convertedValue = Utilities.toDate(value);
+                break;
+            case 'boolean':
+            case 'bool':
+                convertedValue = Utilities.toBoolean(value);
+                break;
+            default:
+                convertedValue = value;
+        }
+        return convertedValue;
+    };
     Utilities.prototype.readValue = function (documentPath, source) {
         if (documentPath.indexOf('/') < 0)
             return source[documentPath];

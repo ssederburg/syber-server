@@ -5,7 +5,7 @@ var Rule = (function () {
         this.ordinal = 0;
         this.conjunction = 'and';
         this.dataType = 'string';
-        this.shouldBe = true;
+        this.expectFalse = false;
         this.result = false;
     }
     return Rule;

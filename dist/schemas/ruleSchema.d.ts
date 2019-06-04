@@ -4,22 +4,23 @@ export interface IRuleContainerSchema {
     required?: boolean;
     name: string;
     dataType?: string;
+    note?: string;
 }
 export declare class Rule {
     className: string;
     args: any;
-    ordinal?: number;
+    ordinal: number;
     conjunction?: string;
     dataType?: string;
     group?: string;
-    shouldBe?: boolean;
+    expectFalse?: boolean;
     note?: string;
     result?: boolean;
 }
 export interface IRuleGroup {
     id: string;
     ordinal: number;
-    conjunction: string;
+    conjunction?: string;
     result?: boolean;
-    notes: Array<string>;
+    notes?: Array<string>;
 }

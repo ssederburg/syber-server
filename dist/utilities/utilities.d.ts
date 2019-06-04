@@ -16,6 +16,7 @@ export declare class Utilities {
     static toDate(value: any, format?: string): Date;
     static parseDateInput(input: any, format: string): Date;
     static toBoolean(value: any): boolean;
+    static toDataType(value: any, dataType: string): any;
     readValue(documentPath: string, source: any): string | any;
     writeValue(documentPath: string, value: any, source: any): any;
 }

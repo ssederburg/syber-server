@@ -12,3 +12,4 @@ export * from './iEventEmitter';
 export * from './ruleSchema';
 export * from './ruleLookup';
 export * from './isFloatOptions';
+export * from './keyValuePair';

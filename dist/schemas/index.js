@@ -13,3 +13,4 @@ __export(require("./schematicResponse"));
 __export(require("./schemaDef"));
 __export(require("./ruleSchema"));
 __export(require("./ruleLookup"));
+__export(require("./keyValuePair"));
