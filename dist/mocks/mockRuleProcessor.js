@@ -70,6 +70,22 @@ var MockRuleProcessor = (function (_super) {
             });
         });
     };
+    MockRuleProcessor.prototype.mockFx2 = function (objectOfValues, policies) {
+        return __awaiter(this, void 0, void 0, function () {
+            var result;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, _super.prototype.processRuleExecutionObject.call(this, objectOfValues, policies)];
+                    case 1:
+                        result = _a.sent();
+                        return [2, {
+                                successful: result.pass,
+                                data: [].concat(result.notes)
+                            }];
+                }
+            });
+        });
+    };
     return MockRuleProcessor;
 }(processors_1.RuleProcessor));
 exports.MockRuleProcessor = MockRuleProcessor;

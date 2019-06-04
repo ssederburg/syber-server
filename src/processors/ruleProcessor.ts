@@ -33,6 +33,26 @@ export class RuleProcessor extends BaseProcessor {
         throw new Error('Not implemented on Base Class RuleProcessor. Must override method fx and call base method getRuleResult.')
     }
 
+    protected processRuleExecutionObject(ObjectOfValues: any, policies: Array<IRuleContainerSchema>): Promise<any> {
+
+        if (!ObjectOfValues || Object.getOwnPropertyNames(ObjectOfValues).length <= 0 || !policies || policies.length <= 0) {
+            return Promise.resolve({
+                pass: false,
+                notes: [`Invalid ObjectOfValues parameter or policy list`],
+                results: []
+            })
+        }
+        const documentOfValues: Array<KeyValuePair> = []
+        const keys = Object.getOwnPropertyNames(ObjectOfValues)
+        keys.forEach((key) => {
+            documentOfValues.push({
+                key,
+                value: ObjectOfValues[key]
+            })
+        })
+        return this.processRuleExecutionDocument(documentOfValues, policies)
+    }
+
     protected processRuleExecutionDocument(documentOfValues: Array<KeyValuePair>, policies: Array<IRuleContainerSchema>): Promise<any> {
 
         let allNotes = []

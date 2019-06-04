@@ -71,6 +71,24 @@ var RuleProcessor = (function (_super) {
     RuleProcessor.prototype.fx = function () {
         throw new Error('Not implemented on Base Class RuleProcessor. Must override method fx and call base method getRuleResult.');
     };
+    RuleProcessor.prototype.processRuleExecutionObject = function (ObjectOfValues, policies) {
+        if (!ObjectOfValues || Object.getOwnPropertyNames(ObjectOfValues).length <= 0 || !policies || policies.length <= 0) {
+            return Promise.resolve({
+                pass: false,
+                notes: ["Invalid ObjectOfValues parameter or policy list"],
+                results: []
+            });
+        }
+        var documentOfValues = [];
+        var keys = Object.getOwnPropertyNames(ObjectOfValues);
+        keys.forEach(function (key) {
+            documentOfValues.push({
+                key: key,
+                value: ObjectOfValues[key]
+            });
+        });
+        return this.processRuleExecutionDocument(documentOfValues, policies);
+    };
     RuleProcessor.prototype.processRuleExecutionDocument = function (documentOfValues, policies) {
         var _this = this;
         var allNotes = [];

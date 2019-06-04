@@ -10,6 +10,7 @@ export declare class RuleProcessor extends BaseProcessor {
     private ruleEngineHelper;
     constructor(executionContext: ExecutionContext, processDef: ProcessorDef, logger: ILogger);
     fx(): Promise<ProcessorResponse | ProcessorErrorResponse>;
+    protected processRuleExecutionObject(ObjectOfValues: any, policies: Array<IRuleContainerSchema>): Promise<any>;
     protected processRuleExecutionDocument(documentOfValues: Array<KeyValuePair>, policies: Array<IRuleContainerSchema>): Promise<any>;
     private getRuleResult;
     private processRuleGroup;

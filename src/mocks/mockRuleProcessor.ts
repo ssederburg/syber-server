@@ -15,4 +15,15 @@ export class MockRuleProcessor extends RuleProcessor {
 
     }
 
+    public async mockFx2(objectOfValues: any, policies: Array<IRuleContainerSchema>): Promise<ProcessorResponse|ProcessorErrorResponse> {
+
+        const result = await super.processRuleExecutionObject(objectOfValues, policies)
+        
+        return {
+            successful: result.pass,
+            data: [].concat(result.notes)
+        }
+
+    }
+
 }

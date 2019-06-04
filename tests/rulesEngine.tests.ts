@@ -585,6 +585,74 @@ class Tester {
 
         })
 
+        const trial16ValuesPass = {
+            SOMETHING: 'ABC',
+            SOMETHINGELSE: '456'
+        }
+        const trial16ValuesFail1 = {
+            SOMETHING: 'abc',
+            SOMETHINGELSE: '456'
+        }
+        const trial16ValuesFail2 = {
+            SOMETHING: 'ABC',
+            SOMETHINGELSE: 'NOTANUMBER'
+        }
+        const trial16: Array<IRuleContainerSchema> = [{
+            name: 'SOMETHING',
+            required: true,
+            note: 'Must equal ABC',
+            dataType: 'string',
+            rules: [{
+                className: 'Equals',
+                args: 'ABC',
+                ordinal: 0
+            }]
+        },{
+            name: 'SOMETHINGELSE',
+            required: false,
+            note: 'Should have a length of 3 and be numeric',
+            dataType: 'number',
+            rules: [{
+                className: 'Length',
+                args: 3,
+                ordinal: 0
+            }]
+        }]
+        describe('Rule Engine Tests: Trial 16 - Object of Values with Policies', async() => {
+            
+            it (`Field Value: All object items pass should be true`, async() => {
+
+                const mockProcessor = new MockRuleProcessor(mockExecutionContextTest1, {
+                    class: MockRuleProcessor
+                }, mockSyberServer.logger)
+                const response = await mockProcessor.mockFx2(trial16ValuesPass, trial16)
+                expect(response).not.null
+                expect(response.successful).to.equal(true)
+            
+            })
+            it (`Field Value: First fail object values should be false`, async() => {
+
+                const mockProcessor = new MockRuleProcessor(mockExecutionContextTest1, {
+                    class: MockRuleProcessor
+                }, mockSyberServer.logger)
+                const response = await mockProcessor.mockFx2(trial16ValuesFail1, trial16)
+                expect(response).not.null
+                expect(response.successful).to.equal(false)
+            
+            })
+            it (`Field Value: Second fail object values should be false`, async() => {
+
+                const mockProcessor = new MockRuleProcessor(mockExecutionContextTest1, {
+                    class: MockRuleProcessor
+                }, mockSyberServer.logger)
+                const response = await mockProcessor.mockFx2(trial16ValuesFail2, trial16)
+                expect(response).not.null
+                expect(response.successful).to.equal(false)
+            
+            })
+
+        })
+
     }
 }
 
