@@ -1,29 +1,30 @@
 export interface IRuleContainerSchema {
-    rules: Array<Rule>;         // Longhand list of Rules to be evaluated. May or may not have a groupId (be in a group)
-    groups?: Array<IRuleGroup>;  // If evaluating multiple groups of expressions, the list of groups and their ordering
-    required?: boolean;        // If the very first test before all others should be IsNotNullOrEmpty. If isRequired = false and value is null, no rules are executed.
-    name: string;
-    dataType?: string; // string, date, boolean, number, array, object, float|decimal
+    rules: Array<Rule>       // Longhand list of Rules to be evaluated. May or may not have a groupId (be in a group)
+    groups?: Array<IRuleGroup>  // If evaluating multiple groups of expressions, the list of groups and their ordering
+    required?: boolean       // If the very first test before all others should be IsNotNullOrEmpty. If isRequired = false and value is null, no rules are executed.
+    name: string
+    dataType?: string // string, date, boolean, number, array, object, float|decimal
+    note?: string
 }
 
 export class Rule {
-    public className: string;               // The className of the rule. Can be syber-server classNames OR custom if registered with syber-server at runtime
-    public args: any;                       // Based on the requirement of the rule method e.g. Length requires an argument of min, max, match
-    public ordinal?: number = 0;            // The order the rules will be evaluated in
-    public conjunction?: string = 'and';    // and or or. ALWAYS LEADS the phrase e.g. 'and' means "previous rule AND this rule". Ignored if single rule in array.
-    public dataType?: string = 'string';      // The type to treat the subject BEFORE evaluation e.g. string, number, float, date, boolean
-    public group?: string;                  // If more than one group of expressions are involved. The group this rule belongs to.
-    public expectFalse?: boolean = false;       // whether should eval to true or false e.g. (Length === 1) is true or false. If it evalulates to true, for this rule to pass, this requirement must be "true"
-    public note?: string;
-    public result?: boolean = false;               // Optional contextual note. Will be placed into rule engine results array if rule fails
+    public className: string               // The className of the rule. Can be syber-server classNames OR custom if registered with syber-server at runtime
+    public args: any                      // Based on the requirement of the rule method e.g. Length requires an argument of min, max, match
+    public ordinal: number = 0            // The order the rules will be evaluated in
+    public conjunction?: string = 'and'    // and or or. ALWAYS LEADS the phrase e.g. 'and' means "previous rule AND this rule". Ignored if single rule in array.
+    public dataType?: string = 'string'      // The type to treat the subject BEFORE evaluation e.g. string, number, float, date, boolean
+    public group?: string                  // If more than one group of expressions are involved. The group this rule belongs to.
+    public expectFalse?: boolean = false       // whether should eval to true or false e.g. (Length === 1) is true or false. If it evalulates to true, for this rule to pass, this requirement must be "true"
+    public note?: string
+    public result?: boolean = false               // Optional contextual note. Will be placed into rule engine results array if rule fails
 }
 
 export interface IRuleGroup {
-    id: string;
-    ordinal: number;
-    conjunction: string;
-    result?: boolean;
-    notes: Array<string>;
+    id: string
+    ordinal: number
+    conjunction?: string
+    result?: boolean
+    notes?: Array<string>
 }
 
 /*

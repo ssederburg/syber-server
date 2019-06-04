@@ -2100,6 +2100,7 @@ describe(`Validator Tests`, () => {
     })
  
     // #endregion
+
     // #region StartsWith
     it (`StartsWith: string 0123456123 starts with 0123 should be true`, async() => {
         const result = new Promise(async(resolve, reject) => {
@@ -2348,6 +2349,18 @@ describe(`Validator Tests`, () => {
         })
         return result
     })
+    it (`IsNotNullOrEmpty: false should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNotNullOrEmpty(false, null)
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
     it (`IsNotNullOrEmpty: '' should be false`, async() => {
         const result = new Promise(async(resolve, reject) => {
             try {
@@ -2512,6 +2525,18 @@ describe(`Validator Tests`, () => {
             try {
                 const pass = IsNullOrEmpty(null, null)
                 expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsNullOrEmpty: false should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNullOrEmpty(false, null)
+                expect(pass).to.equal(false)
                 return resolve()
             } catch (err) {
                 return reject(err.message)

@@ -1,12 +1,17 @@
 import { RuleProcessor } from '../processors'
 import { ProcessorResponse, ProcessorErrorResponse } from '../responses'
-import { IRuleContainerSchema } from '../schemas'
+import { IRuleContainerSchema, KeyValuePair } from '../schemas'
 
 export class MockRuleProcessor extends RuleProcessor {
 
-    public mockFx(value: any, ruleset: IRuleContainerSchema): Promise<ProcessorResponse|ProcessorErrorResponse> {
+    public async mockFx(documentOfValues: Array<KeyValuePair>, policies: Array<IRuleContainerSchema>): Promise<ProcessorResponse|ProcessorErrorResponse> {
 
-        return super.getRuleResult(value, ruleset)
+        const result = await super.processRuleExecutionDocument(documentOfValues, policies)
+        
+        return {
+            successful: result.pass,
+            data: [].concat(result.notes)
+        }
 
     }
 
