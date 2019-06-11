@@ -84,7 +84,7 @@ var RuleProcessor = (function (_super) {
         keys.forEach(function (key) {
             documentOfValues.push({
                 key: key,
-                value: ObjectOfValues[key]
+                value: ObjectOfValues[key] || ''
             });
         });
         return this.processRuleExecutionDocument(documentOfValues, policies);

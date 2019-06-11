@@ -47,7 +47,7 @@ export class RuleProcessor extends BaseProcessor {
         keys.forEach((key) => {
             documentOfValues.push({
                 key,
-                value: ObjectOfValues[key]
+                value: ObjectOfValues[key] || ''
             })
         })
         return this.processRuleExecutionDocument(documentOfValues, policies)
