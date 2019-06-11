@@ -4,7 +4,7 @@ export function MinLength(whereToLook: any, whatToLookFor: any): boolean {
 
     const options = Utilities.isObject(whatToLookFor) ? whatToLookFor : {min: whatToLookFor}
 
-    if (!whereToLook || !options.min && options.min !== 0) {
+    if (!whereToLook && whereToLook !== '' || !options.min && options.min !== 0) {
         return false
     }
     if (!Utilities.isString(whereToLook)) whereToLook = whereToLook.toString()

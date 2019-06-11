@@ -4,7 +4,7 @@ export function Length(whereToLook: any, whatToLookFor: any): boolean {
     const options = Utilities.isObject(whatToLookFor) ? whatToLookFor : {length: whatToLookFor}
 
     if (!whatToLookFor) return false
-    if (!whereToLook) return false
+    if (!whereToLook && whereToLook !== '') return false
 
     if (!Utilities.isString(whereToLook)) whereToLook = whereToLook.toString()
 

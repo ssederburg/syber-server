@@ -4,7 +4,7 @@ export function MaxLength(whereToLook: any, whatToLookFor: any): boolean {
 
     const options = Utilities.isObject(whatToLookFor) ? whatToLookFor : {max: whatToLookFor}
 
-    if (!whereToLook || !options.max && options.max !== 0) {
+    if (!whereToLook && whereToLook !== '' || !options.max && options.max !== 0) {
         return false
     }
     if (!Utilities.isString(whereToLook)) whereToLook = whereToLook.toString()

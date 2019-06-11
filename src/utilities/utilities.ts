@@ -113,6 +113,12 @@ export class Utilities {
         return !isNaN(value)
     }
 
+    public static isInteger(value: any): boolean {
+        if (value === null || value === undefined) return false
+        const isNumber = !isNaN(value)
+        return isNumber && value.toString().indexOf('.') <= 0
+    }
+
     public static isObject(value: any): boolean {
         if (!value) return false
         return value !== null && typeof value === 'object' && !Utilities.isArray(value)
@@ -158,7 +164,7 @@ export class Utilities {
                     }
                 } else {
                     theDate = moment(input, format)
-                    if (!theDate.isValid()) {
+                    if (!theDate.isValid() || input.length !== format.length) {
                         return null
                     }
                     //console.log(`3. ${input} ${theDate.format()}`)
