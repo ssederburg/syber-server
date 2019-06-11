@@ -146,6 +146,10 @@ export class RuleProcessor extends BaseProcessor {
                 if (Utilities.isNullOrUndefined(value) && !ruleset.required) {
                    getOutOfJailFree = true
                 }
+
+                if (value === '' && !ruleset.required) {
+                    getOutOfJailFree = true
+                }
         
                 if (ruleset.dataType) {
                     if (!Utilities.isDataType(value, ruleset.dataType)) {

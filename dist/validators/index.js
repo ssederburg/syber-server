@@ -30,3 +30,4 @@ __export(require("./isDate"));
 __export(require("./isNumber"));
 __export(require("./isString"));
 __export(require("./dateRange"));
+__export(require("./isInteger"));

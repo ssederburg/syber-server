@@ -177,6 +177,9 @@ var RuleProcessor = (function (_super) {
                 if (utilities_1.Utilities.isNullOrUndefined(value) && !ruleset.required) {
                     getOutOfJailFree = true;
                 }
+                if (value === '' && !ruleset.required) {
+                    getOutOfJailFree = true;
+                }
                 if (ruleset.dataType) {
                     if (!utilities_1.Utilities.isDataType(value, ruleset.dataType)) {
                         return resolve({

@@ -1248,6 +1248,18 @@ describe(`Validator Tests`, () => {
         })
         return result
     })
+    it (`Length: '' {min: 0, max: 24} should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = Length('', {min: 0, max: 24})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
     // #endregion
 
     // #region Max

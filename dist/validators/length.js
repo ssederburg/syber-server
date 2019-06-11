@@ -5,7 +5,7 @@ function Length(whereToLook, whatToLookFor) {
     var options = utilities_1.Utilities.isObject(whatToLookFor) ? whatToLookFor : { length: whatToLookFor };
     if (!whatToLookFor)
         return false;
-    if (!whereToLook)
+    if (!whereToLook && whereToLook !== '')
         return false;
     if (!utilities_1.Utilities.isString(whereToLook))
         whereToLook = whereToLook.toString();

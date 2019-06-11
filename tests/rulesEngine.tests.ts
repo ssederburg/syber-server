@@ -653,6 +653,47 @@ class Tester {
 
         })
 
+        const trial17ValuesPass = {
+            SOMETHING: '',
+            SOMETHINGELSE: '456'
+        }
+        const trial17: Array<IRuleContainerSchema> = [{
+            name: 'SOMETHING',
+            required: true,
+            note: 'Length between 0 and 24',
+            rules: [{
+                className: 'Length',
+                args: {
+                    min: 0,
+                    max: 24
+                },
+                ordinal: 0
+            }]
+        },{
+            name: 'SOMETHINGELSE',
+            required: true,
+            note: 'Length between 0 and 24',
+            rules: [{
+                className: 'Length',
+                args: {
+                    min: 0,
+                    max: 24
+                },
+                ordinal: 0
+            }]
+        }]
+        describe('Rule Engine Tests: Trial 17 - Object of Values with Policies', async() => {
+            it (`Field Value: All object items pass should be true`, async() => {
+
+                const mockProcessor = new MockRuleProcessor(mockExecutionContextTest1, {
+                    class: MockRuleProcessor
+                }, mockSyberServer.logger)
+                const response = await mockProcessor.mockFx2(trial17ValuesPass, trial17)
+                expect(response).not.null
+                expect(response.successful).to.equal(true)
+            
+            })
+        })
     }
 }
 

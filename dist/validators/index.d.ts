@@ -25,3 +25,4 @@ export * from './isDate';
 export * from './isNumber';
 export * from './isString';
 export * from './dateRange';
+export * from './isInteger';

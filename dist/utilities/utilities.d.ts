@@ -9,6 +9,7 @@ export declare class Utilities {
     static isFunction(value: any): boolean;
     static isNull(value: any): boolean;
     static isNumber(value: any): boolean;
+    static isInteger(value: any): boolean;
     static isObject(value: any): boolean;
     static isString(value: any): boolean;
     static toInt(value: any): number;

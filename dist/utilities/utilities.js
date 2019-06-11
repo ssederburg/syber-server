@@ -105,6 +105,12 @@ var Utilities = (function () {
             return false;
         return !isNaN(value);
     };
+    Utilities.isInteger = function (value) {
+        if (value === null || value === undefined)
+            return false;
+        var isNumber = !isNaN(value);
+        return isNumber && value.toString().indexOf('.') <= 0;
+    };
     Utilities.isObject = function (value) {
         if (!value)
             return false;
@@ -146,7 +152,7 @@ var Utilities = (function () {
                 }
                 else {
                     theDate = moment(input, format);
-                    if (!theDate.isValid()) {
+                    if (!theDate.isValid() || input.length !== format.length) {
                         return null;
                     }
                 }
