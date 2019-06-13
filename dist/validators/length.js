@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var utilities_1 = require("../utilities/utilities");
 function Length(whereToLook, whatToLookFor) {
-    var options = utilities_1.Utilities.isObject(whatToLookFor) ? whatToLookFor : { length: whatToLookFor };
+    var options = utilities_1.Utilities.isObject(whatToLookFor) ? Object.assign({}, whatToLookFor) : { length: whatToLookFor };
     if (!whatToLookFor)
         return false;
     if (!whereToLook && whereToLook !== '')

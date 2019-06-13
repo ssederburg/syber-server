@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var utilities_1 = require("../utilities/utilities");
 var validators_1 = require("../validators");
 function Range(whereToLook, whatToLookFor) {
-    var options = utilities_1.Utilities.isObject(whatToLookFor) ? whatToLookFor : null;
+    var options = utilities_1.Utilities.isObject(whatToLookFor) ? Object.assign({}, whatToLookFor) : null;
     if (!options) {
         return false;
     }

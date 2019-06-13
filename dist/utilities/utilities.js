@@ -109,7 +109,7 @@ var Utilities = (function () {
         if (value === null || value === undefined)
             return false;
         var isNumber = !isNaN(value);
-        return isNumber && value.toString().indexOf('.') <= 0;
+        return isNumber && value.toString().indexOf('.') < 0;
     };
     Utilities.isObject = function (value) {
         if (!value)

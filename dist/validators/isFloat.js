@@ -11,16 +11,19 @@ function IsFloat(whereToLook, whatToLookFor) {
         theChar = whatToLookFor.decimalChar;
     }
     var localNumberText = whereToLook.replace(theChar, '.');
+    if (localNumberText.indexOf('+') === 0 || localNumberText.indexOf('-') === 0) {
+        localNumberText = localNumberText.replace('+', '').replace('-', '');
+    }
     try {
         if (utilities_1.Utilities.isNumber(localNumberText) && !isNaN(parseFloat(localNumberText)) && whereToLook.indexOf(theChar) >= 0) {
             if (whatToLookFor) {
-                if (whatToLookFor.precision && whereToLook.length - 1 !== whatToLookFor.precision) {
+                if (whatToLookFor.precision && localNumberText.length - 1 !== whatToLookFor.precision) {
                     return false;
                 }
-                if (whatToLookFor.maxPrecision && whereToLook.length - 1 > whatToLookFor.maxPrecision) {
+                if (whatToLookFor.maxPrecision && localNumberText.length - 1 > whatToLookFor.maxPrecision) {
                     return false;
                 }
-                if (whatToLookFor.minPrecision && whereToLook.length - 1 < whatToLookFor.minPrecision) {
+                if (whatToLookFor.minPrecision && localNumberText.length - 1 < whatToLookFor.minPrecision) {
                     return false;
                 }
                 if (whatToLookFor.scale || whatToLookFor.minScale || whatToLookFor.maxScale) {
@@ -38,6 +41,7 @@ function IsFloat(whereToLook, whatToLookFor) {
             }
             return true;
         }
+        console.log("Value " + localNumberText + " is not a number");
         return false;
     }
     catch (_a) {

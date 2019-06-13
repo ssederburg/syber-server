@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var utilities_1 = require("../utilities/utilities");
 var moment = require("moment");
 function IsDate(whereToLook, whatToLookFor) {
-    var options = utilities_1.Utilities.isObject(whatToLookFor) ? whatToLookFor : { format: 'YYYY-MM-DD' };
+    var options = utilities_1.Utilities.isObject(whatToLookFor) ? Object.assign({}, whatToLookFor) : { format: 'YYYY-MM-DD' };
     if (!whereToLook)
         return false;
     var fallbackAnswer = (moment.isDate(whereToLook) || moment.isMoment(whereToLook));

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var utilities_1 = require("../utilities/utilities");
 function IsNotNullOrEmpty(whereToLook, whatToLookFor) {
-    var options = utilities_1.Utilities.isObject(whatToLookFor) ? whatToLookFor : { trim: false, keywordMatch: false };
+    var options = utilities_1.Utilities.isObject(whatToLookFor) ? Object.assign({}, whatToLookFor) : { trim: false, keywordMatch: false };
     if (!whereToLook && typeof whereToLook !== 'boolean')
         return false;
     if (!utilities_1.Utilities.isString(whereToLook))

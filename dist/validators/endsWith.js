@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var utilities_1 = require("../utilities/utilities");
 function EndsWith(whereToLook, whatToLookFor) {
-    var options = utilities_1.Utilities.isObject(whatToLookFor) ? whatToLookFor : { value: whatToLookFor, ignoreCase: false };
+    var options = utilities_1.Utilities.isObject(whatToLookFor) ? Object.assign({}, whatToLookFor) : { value: whatToLookFor, ignoreCase: false };
     if (!whereToLook || !options.value)
         return false;
     if (!utilities_1.Utilities.isString(options.value))
