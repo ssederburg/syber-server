@@ -11,7 +11,7 @@ import { Utilities } from '../utilities/utilities'
 
 export function MaxDate(whereToLook: any, whatToLookFor: any): boolean {
 
-    const options = Utilities.isObject(whatToLookFor) ? whatToLookFor : {max: whatToLookFor, maxFormat: 'YYYY-MM-DD', sourceFormat: 'YYYY-MM-DD'}
+    const options = Utilities.isObject(whatToLookFor) ? Object.assign({}, whatToLookFor) : {max: whatToLookFor, maxFormat: 'YYYY-MM-DD', sourceFormat: 'YYYY-MM-DD'}
 
     whereToLook = Utilities.parseDateInput(whereToLook, options.sourceFormat || 'YYYY-MM-DD')
     options.max = Utilities.parseDateInput(options.max, options.maxFormat || 'YYYY-MM-DD')

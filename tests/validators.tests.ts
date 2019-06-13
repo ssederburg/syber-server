@@ -905,6 +905,54 @@ describe(`Validator Tests`, () => {
         })
         return result
     })
+    it (`IsFloat: '+123.4501' {precision: 7, scale: 4} should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsFloat('+123.4501', {precision: 7, scale: 4})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsFloat: '-123.4501' {precision: 7, scale: 4} should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsFloat('+123.4501', {precision: 7, scale: 4})
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsFloat: '+123.4501' {precision: 7, scale: 2} should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsFloat('+123.4501', {precision: 7, scale: 2})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsFloat: '-123.4501' {precision: 7, scale: 2} should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsFloat('+123.4501', {precision: 7, scale: 2})
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
     // #endregion
 
     // #region IsObject
@@ -1497,7 +1545,7 @@ describe(`Validator Tests`, () => {
     it (`MaxDate: '20180913144636' with max of 'now+1' should be true`, async() => {
         const result = new Promise(async(resolve, reject) => {
             try {
-                const pass = MaxDate('20180913144636', { max: 'now+1', sourceFormat: 'YYYYMMDDHHmmss'})
+                const pass = MaxDate('20190612144636', { max: 'now+1', sourceFormat: 'YYYYMMDDHHmmss'})
                 expect(pass).to.equal(true)
                 return resolve()
             } catch (err) {
@@ -1518,7 +1566,7 @@ describe(`Validator Tests`, () => {
         })
         return result
     })
-    it (`MaxDate: '20180913144636' with min of '20180913144635' should be false`, async() => {
+    it (`MaxDate: '20180913144636' with max of '20180913144635' should be false`, async() => {
         const result = new Promise(async(resolve, reject) => {
             try {
                 const pass = MaxDate('20180913144636', { max: '20180913144635', sourceFormat: 'YYYYMMDDHHmmss', maxFormat: 'YYYYMMDDHHmmss'})
@@ -3579,7 +3627,90 @@ describe(`Validator Tests`, () => {
         })
         return result
     })
-
+    it (`IsNumber: '+10' should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNumber('+10')
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsNumber: '-10' should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNumber('-10')
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsNumber: '+10.05' should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNumber('+10.05')
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsNumber: '-10.05' should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNumber('-10.05')
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsNumber: '--10.05' should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNumber('--10.05')
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsNumber: '++10' should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNumber('++10')
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsNumber: '+-10' should be false`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsNumber('+-10')
+                expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
     // #endregion
 
     // #region IsString
@@ -3908,6 +4039,54 @@ describe(`Validator Tests`, () => {
             try {
                 const pass = IsInteger('0.0')
                 expect(pass).to.equal(false)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsInteger: '+10' should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsInteger('+10')
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsInteger: '-10' should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsInteger('-10')
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsInteger: +10 should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsInteger(+10)
+                expect(pass).to.equal(true)
+                return resolve()
+            } catch (err) {
+                return reject(err.message)
+            }
+        })
+        return result
+    })
+    it (`IsInteger: -10 should be true`, async() => {
+        const result = new Promise(async(resolve, reject) => {
+            try {
+                const pass = IsInteger(-10)
+                expect(pass).to.equal(true)
                 return resolve()
             } catch (err) {
                 return reject(err.message)

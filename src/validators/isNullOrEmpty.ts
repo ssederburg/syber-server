@@ -5,6 +5,7 @@ import { IsNotNullOrEmpty } from '../validators'
 
 export function IsNullOrEmpty(whereToLook: any, whatToLookFor: any): boolean {
     
-    return !IsNotNullOrEmpty(whereToLook, whatToLookFor)
+    const options = Object.assign({}, whatToLookFor)
+    return !IsNotNullOrEmpty(whereToLook, options)
     
 }

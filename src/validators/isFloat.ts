@@ -11,18 +11,21 @@ export function IsFloat(whereToLook: string, whatToLookFor?: IsFloatOptions): bo
         theChar = whatToLookFor.decimalChar
     }
 
-    const localNumberText = whereToLook.replace(theChar, '.')
+    let localNumberText = whereToLook.replace(theChar, '.')
+    if (localNumberText.indexOf('+') === 0 || localNumberText.indexOf('-') === 0) {
+        localNumberText = localNumberText.replace('+','').replace('-','')
+    }
     try {
         if (Utilities.isNumber(localNumberText) && !isNaN(parseFloat(localNumberText)) && whereToLook.indexOf(theChar) >= 0) {
             if (whatToLookFor) {
                 // Requested explicit handling of validation of this float through options
-                if (whatToLookFor.precision && whereToLook.length - 1 !== whatToLookFor.precision) {
+                if (whatToLookFor.precision && localNumberText.length - 1 !== whatToLookFor.precision) {
                     return false
                 }
-                if (whatToLookFor.maxPrecision && whereToLook.length - 1 > whatToLookFor.maxPrecision) {
+                if (whatToLookFor.maxPrecision && localNumberText.length - 1 > whatToLookFor.maxPrecision) {
                     return false
                 }
-                if (whatToLookFor.minPrecision && whereToLook.length - 1 < whatToLookFor.minPrecision) {
+                if (whatToLookFor.minPrecision && localNumberText.length - 1 < whatToLookFor.minPrecision) {
                     return false
                 }
                 if (whatToLookFor.scale || whatToLookFor.minScale || whatToLookFor.maxScale) {
@@ -40,6 +43,7 @@ export function IsFloat(whereToLook: string, whatToLookFor?: IsFloatOptions): bo
             }
             return true
         }
+        console.log(`Value ${localNumberText} is not a number`)
         return false    
     } catch {
         return false

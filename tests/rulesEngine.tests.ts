@@ -694,6 +694,80 @@ class Tester {
             
             })
         })
+        const trial18ValuesPass = {
+            SOMETHING: '20190614020030',
+            SOMETHINGELSE: '456'
+        }
+        const trial18: Array<IRuleContainerSchema> = [{
+            name: 'SOMETHING',
+            required: true,
+            note: 'Date in format YYYYMMDDHHmmss less than or equal to todays date',
+            rules: [{
+                className: 'Length',
+                args: 14,
+                ordinal: 0
+            },
+            {
+                className: 'IsDate',
+                args: {
+                    format: 'YYYYMMDDHHmmss'
+                },
+                ordinal: 1
+            },
+            {
+                className: 'MaxDate',
+                args: {
+                    max: 'now+1',
+                    sourceFormat: 'YYYYMMDDHHmmss'
+                },
+                ordinal: 1
+            }
+        ]
+        },{
+            name: 'SOMETHINGELSE',
+            required: true,
+            note: 'Length between 0 and 24',
+            rules: [{
+                className: 'Length',
+                args: {
+                    min: 0,
+                    max: 24
+                },
+                ordinal: 0
+            }]
+        }]
+        describe('Rule Engine Tests: Trial 18 - Object of Values with Policies', async() => {
+            it (`Field Value 1: All object items pass should be true`, async() => {
+
+                const mockProcessor = new MockRuleProcessor(mockExecutionContextTest1, {
+                    class: MockRuleProcessor
+                }, mockSyberServer.logger)
+                const response = await mockProcessor.mockFx2(trial18ValuesPass, trial18)
+                expect(response).not.null
+                expect(response.successful).to.equal(true)
+            
+            })
+            it (`Field Value 2: All object items pass should be true`, async() => {
+
+                const mockProcessor = new MockRuleProcessor(mockExecutionContextTest1, {
+                    class: MockRuleProcessor
+                }, mockSyberServer.logger)
+                const response = await mockProcessor.mockFx2(trial18ValuesPass, trial18)
+                expect(response).not.null
+                expect(response.successful).to.equal(true)
+            
+            })
+            it (`Field Value 3: All object items pass should be true`, async() => {
+
+                const mockProcessor = new MockRuleProcessor(mockExecutionContextTest1, {
+                    class: MockRuleProcessor
+                }, mockSyberServer.logger)
+                const response = await mockProcessor.mockFx2(trial18ValuesPass, trial18)
+                expect(response).not.null
+                expect(response.successful).to.equal(true)
+            
+            })
+        })
     }
 }
 

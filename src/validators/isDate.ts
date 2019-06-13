@@ -3,7 +3,7 @@ import moment = require('moment');
 
 export function IsDate(whereToLook: any, whatToLookFor: any): boolean {
 
-    const options = Utilities.isObject(whatToLookFor) ? whatToLookFor : {format: 'YYYY-MM-DD'}
+    const options = Utilities.isObject(whatToLookFor) ? Object.assign({}, whatToLookFor) : {format: 'YYYY-MM-DD'}
 
     if (!whereToLook) return false
 

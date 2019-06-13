@@ -11,7 +11,7 @@ import { Utilities } from '../utilities/utilities'
 
 export function MinDate(whereToLook: any, whatToLookFor: any): boolean {
 
-    const options = Utilities.isObject(whatToLookFor) ? whatToLookFor : {min: whatToLookFor, minFormat: 'YYYY-MM-DD', sourceFormat: 'YYYY-MM-DD'}
+    const options = Utilities.isObject(whatToLookFor) ? Object.assign({}, whatToLookFor) : {min: whatToLookFor, minFormat: 'YYYY-MM-DD', sourceFormat: 'YYYY-MM-DD'}
 
     whereToLook = Utilities.parseDateInput(whereToLook, options.sourceFormat || 'YYYY-MM-DD')
     options.min = Utilities.parseDateInput(options.min, options.minFormat || 'YYYY-MM-DD')

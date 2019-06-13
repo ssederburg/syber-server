@@ -5,7 +5,7 @@ import { Utilities } from '../utilities/utilities'
 
 export function Contains(whereToLook: any, whatToLookFor: any): boolean {
     
-    const options = Utilities.isObject(whatToLookFor) ? whatToLookFor : {value: whatToLookFor, ignoreCase: false}
+    const options = Utilities.isObject(whatToLookFor) ? Object.assign({}, whatToLookFor) : {value: whatToLookFor, ignoreCase: false}
 
     if (!whereToLook || !options.value) return false
 

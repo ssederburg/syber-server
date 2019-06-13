@@ -3,7 +3,7 @@ import { Min, Max } from '../validators'
 
 export function Range(whereToLook: any, whatToLookFor: any): boolean {
 
-    const options = Utilities.isObject(whatToLookFor) ? whatToLookFor : null
+    const options = Utilities.isObject(whatToLookFor) ? Object.assign({}, whatToLookFor) : null
     
     if (!options) {
         return false

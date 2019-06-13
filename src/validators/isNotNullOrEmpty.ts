@@ -6,7 +6,7 @@ import { isBoolean } from 'util';
 
 export function IsNotNullOrEmpty(whereToLook: any, whatToLookFor: any): boolean {
     
-    const options = Utilities.isObject(whatToLookFor) ? whatToLookFor : {trim: false, keywordMatch: false}
+    const options = Utilities.isObject(whatToLookFor) ? Object.assign({}, whatToLookFor) : {trim: false, keywordMatch: false}
 
     if (!whereToLook && typeof whereToLook !== 'boolean') return false
 

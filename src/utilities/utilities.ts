@@ -116,7 +116,7 @@ export class Utilities {
     public static isInteger(value: any): boolean {
         if (value === null || value === undefined) return false
         const isNumber = !isNaN(value)
-        return isNumber && value.toString().indexOf('.') <= 0
+        return isNumber && value.toString().indexOf('.') < 0
     }
 
     public static isObject(value: any): boolean {
@@ -179,7 +179,7 @@ export class Utilities {
             //console.log(`Parsing Date: ${input} with format ${format}: ${theDate.format()}`)
             return theDate
         } catch (err) {
-            //console.log(`Unable to parse MaxDate: ${input} with format ${format}`)
+            //console.log(`Unable to parse Date: ${input} with format ${format}`)
             return null
         }
     

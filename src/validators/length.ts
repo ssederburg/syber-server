@@ -1,7 +1,8 @@
 import { Utilities } from '../utilities/utilities'
 
 export function Length(whereToLook: any, whatToLookFor: any): boolean {
-    const options = Utilities.isObject(whatToLookFor) ? whatToLookFor : {length: whatToLookFor}
+    
+    const options = Utilities.isObject(whatToLookFor) ? Object.assign({}, whatToLookFor) : {length: whatToLookFor}
 
     if (!whatToLookFor) return false
     if (!whereToLook && whereToLook !== '') return false
