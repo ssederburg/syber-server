@@ -10,3 +10,4 @@ __export(require("./processorResponse"));
 __export(require("./ruleExecutionResponse"));
 __export(require("./groupRuleExecutionResponse"));
 __export(require("./ruleContainerExecutionResponse"));
+__export(require("./httpStatusResponse"));

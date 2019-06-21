@@ -5,3 +5,4 @@ export * from './processorResponse';
 export * from './ruleExecutionResponse';
 export * from './groupRuleExecutionResponse';
 export * from './ruleContainerExecutionResponse';
+export * from './httpStatusResponse';
